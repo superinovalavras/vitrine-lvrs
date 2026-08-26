@@ -1,24 +1,27 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const NotFound = () => {
-  const location = useLocation();
+const NotFound = () => (
+  <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
+    <img src="/marca/lvrs-pacto.png" alt="LVRS+" className="w-[min(260px,70vw)]" />
 
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    <p className="mt-12 text-[13px] font-medium uppercase tracking-[0.22em] text-accent">
+      Página não encontrada
+    </p>
+    <h1 className="mt-4 max-w-lg text-[clamp(24px,5vw,34px)] font-medium leading-tight tracking-[-0.02em]">
+      Esse endereço não existe por aqui.
+    </h1>
+    <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-white/65">
+      Pode ter sido um link antigo ou um erro de digitação.
+    </p>
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
-      </div>
-    </div>
-  );
-};
+    <Link
+      to="/"
+      className="mt-10 inline-flex items-center gap-3 rounded-xl bg-accent px-8 py-4 text-[15px] font-semibold text-accent-foreground transition-transform hover:-translate-y-0.5"
+    >
+      Voltar para o início
+      <span aria-hidden="true">→</span>
+    </Link>
+  </div>
+);
 
 export default NotFound;

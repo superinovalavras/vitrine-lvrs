@@ -40,29 +40,29 @@ export default function FaixaProjetos() {
       <svg
         aria-hidden="true"
         viewBox="0 0 400 400"
-        className="pointer-events-none absolute -right-24 -top-40 h-[130%] w-auto opacity-[0.13]"
+        className="pointer-events-none absolute -right-24 -top-40 h-[130%] w-auto opacity-[0.13] max-sm:opacity-[0.08]"
       >
         <circle cx="330" cy="70" r="150" fill="none" stroke="currentColor" strokeWidth="30" />
         <circle cx="330" cy="70" r="228" fill="none" stroke="currentColor" strokeWidth="30" />
         <circle cx="330" cy="70" r="306" fill="none" stroke="currentColor" strokeWidth="30" />
       </svg>
 
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[auto_1fr] md:gap-16">
+      <div className="relative mx-auto grid max-w-6xl gap-8 px-5 py-16 sm:px-6 sm:py-20 md:grid-cols-[auto_1fr] md:gap-16 md:py-24">
         <div className="shrink-0">
-          <div className="text-[clamp(80px,11vw,150px)] font-semibold leading-[0.82] tracking-[-0.04em]">12</div>
+          <div className="text-[clamp(64px,17vw,150px)] font-semibold leading-[0.82] tracking-[-0.04em]">12</div>
           <div className="mt-2 text-[13px] font-medium uppercase tracking-[0.22em] opacity-75">
             {lang === "pt" ? "projetos prioritários" : "priority projects"}
           </div>
         </div>
 
         <div>
-          <h2 className="max-w-xl text-[clamp(24px,3vw,34px)] font-medium leading-[1.25] tracking-[-0.02em]">
+          <h2 className="max-w-xl text-[clamp(21px,5vw,34px)] font-medium leading-[1.25] tracking-[-0.02em]">
             {lang === "pt"
               ? "Governo, universidades e empresas tocando os mesmos doze projetos."
               : "Government, universities, and companies driving the same twelve projects."}
           </h2>
 
-          <ul className="mt-10 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+          <ul className="mt-8 grid gap-x-8 gap-y-2.5 sm:mt-10 sm:grid-cols-2">
             {PROJETOS.map((nome, i) => (
               <li key={nome} className="flex items-baseline gap-3 text-[14.5px]">
                 <span className="w-6 shrink-0 text-[12px] font-semibold tabular-nums opacity-55">
@@ -77,7 +77,7 @@ export default function FaixaProjetos() {
             href={URL_GESTAO}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-12 inline-flex items-center gap-3 rounded-xl bg-background px-8 py-4 text-[15px] font-semibold text-foreground transition-transform hover:-translate-y-0.5"
+            className="mt-10 inline-flex items-center gap-3 rounded-xl bg-background px-6 py-4 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5 sm:mt-12 sm:px-8 sm:text-[15px]"
           >
             {lang === "pt" ? "Acompanhar o andamento de cada projeto" : "Track each project's progress"}
             <span aria-hidden="true">→</span>

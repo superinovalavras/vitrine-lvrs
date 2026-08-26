@@ -18,6 +18,12 @@ export interface Iniciativa {
   descricao: { pt: string; en: string };
   url: string;
   logo: string;
+  /**
+   * Cada programa tem identidade propria, e o card veste a dele — nao a do
+   * LVRS+. Valores vindos do manual de cada um; contrastes medidos, todos
+   * passam AA sobre o proprio fundo.
+   */
+  tema: { fundo: string; texto: string; apoio: string; destaque: string };
 }
 
 export interface Vertical {
@@ -43,6 +49,8 @@ const iniciativasTech: Iniciativa[] = [
     },
     url: "https://launch.lvrs.com.br",
     logo: "/iniciativas/launch.png",
+    // Tema espacial escuro do manual do Launch: Orbita, Luz e Ignicao.
+    tema: { fundo: "#05070A", texto: "#F5F8FB", apoio: "#AEB8C4", destaque: "#FFCD00" },
   },
   {
     id: "lavras-lab",
@@ -53,6 +61,9 @@ const iniciativasTech: Iniciativa[] = [
     },
     url: "https://lavraslab.lvrs.com.br",
     logo: "/iniciativas/lavras-lab.png",
+    // O Lab e claro por natureza: off-white com azul-marinho e azul-violeta.
+    // A logo cursiva foi desenhada para esse fundo.
+    tema: { fundo: "#FCFDF4", texto: "#23244F", apoio: "#4A4B6B", destaque: "#5557E8" },
   },
   {
     id: "observatorio",
@@ -63,6 +74,8 @@ const iniciativasTech: Iniciativa[] = [
     },
     url: "https://observatorio.lvrs.com.br",
     logo: "/iniciativas/observatorio.png",
+    // Cores dos prototipos do censo: azul profundo com verde de destaque.
+    tema: { fundo: "#0A2540", texto: "#FFFFFF", apoio: "#B9C7D6", destaque: "#00F5A0" },
   },
 ];
 

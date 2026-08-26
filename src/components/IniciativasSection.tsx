@@ -1,11 +1,52 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useVertical } from "@/context/VerticalContext";
+import type { Iniciativa } from "@/data/verticais";
 
 /**
- * Os programas da vertical ativa, cada um com a propria logo e um link para o
- * seu subdominio. Some quando a vertical nao tem iniciativa definida — hoje so
- * o Tech tem (Launch, Lavras Lab, Observatorio).
+ * Os programas da vertical ativa. Cada card veste a identidade do proprio
+ * programa — fundo, texto e destaque saem do manual de cada um, nao do LVRS+.
+ * O Lavras Lab e claro, o Launch e quase preto, o Observatorio e azul profundo.
+ * Some quando a vertical nao tem iniciativa; hoje so o Tech tem.
  */
+
+function Card({ ini, lang }: { ini: Iniciativa; lang: "pt" | "en" }) {
+  const t = ini.tema;
+  return (
+    <a
+      href={ini.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ background: t.fundo, color: t.texto }}
+      className="group relative flex flex-col overflow-hidden rounded-3xl p-7 transition-transform duration-300 hover:-translate-y-1.5 sm:p-8"
+    >
+      {/* Faixa da cor do programa no topo, crescendo no hover. */}
+      <span
+        aria-hidden="true"
+        style={{ background: t.destaque }}
+        className="absolute inset-x-0 top-0 h-1.5 origin-top transition-transform duration-300 group-hover:scale-y-[2.4]"
+      />
+
+      <div className="flex h-10 items-center sm:h-12">
+        <img src={ini.logo} alt={ini.nome} className="max-h-10 w-auto max-w-[190px] sm:max-h-12 sm:max-w-[210px]" />
+      </div>
+
+      <p className="mt-6 flex-1 text-[13.5px] font-light leading-[1.68]" style={{ color: t.apoio }}>
+        {ini.descricao[lang]}
+      </p>
+
+      <span
+        style={{ color: t.destaque }}
+        className="mt-6 flex items-center gap-2 break-all text-[12.5px] font-medium transition-[gap] duration-200 group-hover:gap-3.5"
+      >
+        {ini.url.replace("https://", "")}
+        <span aria-hidden="true" className="shrink-0">
+          →
+        </span>
+      </span>
+    </a>
+  );
+}
+
 export default function IniciativasSection() {
   const { lang } = useLanguage();
   const { vertical } = useVertical();
@@ -13,44 +54,22 @@ export default function IniciativasSection() {
   if (vertical.iniciativas.length === 0) return null;
 
   return (
-    <section id="iniciativas" className="bg-background py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="iniciativas" className="bg-background py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="mb-3 h-1.5 w-14 rounded-full bg-accent" aria-hidden="true" />
-        <h2 className="text-[clamp(24px,3vw,34px)] font-medium leading-tight tracking-[-0.02em]">
+        <h2 className="text-[clamp(22px,5vw,34px)] font-medium leading-tight tracking-[-0.02em]">
           {lang === "pt" ? "Iniciativas " : "Initiatives in "}
           <span className="text-accent">{vertical.rotulo}</span>
         </h2>
-        <p className="mt-3 max-w-xl text-[15px] font-light leading-relaxed text-white/65">
+        <p className="mt-3 max-w-xl text-[14.5px] font-light leading-relaxed text-white/65 sm:text-[15px]">
           {lang === "pt"
             ? "Programas com site próprio, tocados pela Superintendência de Inovação."
             : "Programs with their own site, run by the Innovation Department."}
         </p>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {vertical.iniciativas.map((ini) => (
-            <a
-              key={ini.id}
-              href={ini.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.045] p-8 transition-colors hover:border-white/25 hover:bg-white/[0.075]"
-            >
-              {/* Faixa da cor da vertical no topo do card, crescendo no hover. */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-1 origin-left bg-accent transition-transform duration-300 group-hover:scale-y-[3]"
-              />
-              <div className="flex h-11 items-center">
-                <img src={ini.logo} alt={ini.nome} className="max-h-11 w-auto max-w-[210px]" />
-              </div>
-              <p className="mt-6 flex-1 text-[13.5px] font-light leading-[1.68] text-white/70">
-                {ini.descricao[lang]}
-              </p>
-              <span className="mt-6 flex items-center gap-2 text-[12.5px] font-medium text-accent transition-[gap] duration-200 group-hover:gap-3.5">
-                {ini.url.replace("https://", "")}
-                <span aria-hidden="true">→</span>
-              </span>
-            </a>
+            <Card key={ini.id} ini={ini} lang={lang} />
           ))}
         </div>
       </div>
