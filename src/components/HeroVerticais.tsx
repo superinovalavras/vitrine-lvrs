@@ -58,11 +58,20 @@ export default function HeroVerticais() {
   const abas = ORDEM_ABAS.map((id) => VERTICAIS.find((x) => x.id === id)!);
 
   // No celular a regua e mais larga que a tela e rola. Sem isto, a aba ativa
-  // pode nascer fora de vista — inclusive o Pacto, que abre no centro.
+  // pode nascer fora de vista.
+  //
+  // NAO usar scrollIntoView aqui: ele rola TODOS os conteineres rolaveis acima
+  // do elemento, e a secao do hero e um deles (tem overflow-hidden). Centralizar
+  // a aba arrastava a secao inteira 25px para o lado, e o escurecimento, que e
+  // absolute inset-0, ia junto — deixando uma faixa de foto crua na borda
+  // direita. Aqui a regua rola so a si mesma.
   const regua = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const alvo = regua.current?.querySelector('[aria-current="page"]');
-    alvo?.scrollIntoView({ block: "nearest", inline: "center" });
+    const el = regua.current;
+    const alvo = el?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!el || !alvo) return;
+    const destino = alvo.offsetLeft - (el.clientWidth - alvo.offsetWidth) / 2;
+    el.scrollTo({ left: Math.max(0, destino), behavior: "smooth" });
   }, [ativa]);
 
   return (
@@ -73,7 +82,7 @@ export default function HeroVerticais() {
           <div
             key={item.id}
             aria-hidden="true"
-            className="absolute inset-0 scale-[1.04] bg-cover bg-center transition-opacity duration-700"
+            className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
             style={{ backgroundImage: `url(${item.fundo})`, opacity: item.id === ativa ? 1 : 0 }}
           />
         ) : null,
