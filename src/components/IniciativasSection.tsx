@@ -4,8 +4,9 @@ import type { Iniciativa } from "@/data/verticais";
 
 /**
  * Os programas da vertical ativa. Cada card veste a identidade do proprio
- * programa — fundo, texto e destaque saem do manual de cada um, nao do LVRS+.
- * O Lavras Lab e claro, o Launch e quase preto, o Observatorio e azul profundo.
+ * programa: fundo, texto, cor de destaque e o simbolo dele como marca d'agua.
+ * Nada disso vem da paleta LVRS+ — o Lavras Lab e claro, o Launch e quase
+ * preto, o Observatorio e azul profundo, porque e assim que cada marca e.
  * Some quando a vertical nao tem iniciativa; hoje so o Tech tem.
  */
 
@@ -19,6 +20,17 @@ function Card({ ini, lang }: { ini: Iniciativa; lang: "pt" | "en" }) {
       style={{ background: t.fundo, color: t.texto }}
       className="group relative flex flex-col overflow-hidden rounded-3xl p-7 transition-transform duration-300 hover:-translate-y-1.5 sm:p-8"
     >
+      {/* Simbolo do programa como marca d'agua: o foguete do Launch, a estrela
+          do Lab, a espiral do Observatorio. Sai da borda de proposito, para dar
+          escala sem virar ilustracao centrada. */}
+      <img
+        src={ini.elemento}
+        alt=""
+        aria-hidden="true"
+        style={{ opacity: ini.elementoOpacidade }}
+        className="pointer-events-none absolute -right-10 -top-8 h-44 w-auto transition-transform duration-500 group-hover:scale-110 sm:-right-12 sm:h-52"
+      />
+
       {/* Faixa da cor do programa no topo, crescendo no hover. */}
       <span
         aria-hidden="true"
@@ -26,25 +38,26 @@ function Card({ ini, lang }: { ini: Iniciativa; lang: "pt" | "en" }) {
         className="absolute inset-x-0 top-0 h-1.5 origin-top transition-transform duration-300 group-hover:scale-y-[2.4]"
       />
 
-      {/* Caixa de altura fixa com teto de largura. Logo em faixa (Launch, Lab)
-          bate no limite de largura; logo quase quadrada (Observatorio) usa a
-          altura inteira. As duas terminam com peso visual parecido — limitar
-          so pela altura fazia a quadrada aparecer com um terco da area. */}
-      <div className="flex h-[72px] items-center sm:h-[88px]">
+      {/* Caixa de altura fixa com teto de largura, e a logo centrada dentro.
+          Logo em faixa (Launch, Lab) bate no limite de largura; logo quase
+          quadrada (Observatorio) usa a altura inteira. As tres terminam com
+          peso visual parecido — limitar so pela altura fazia a quadrada
+          aparecer com um terco da area das outras. */}
+      <div className="relative flex h-[96px] items-center justify-center sm:h-[112px]">
         <img
           src={ini.logo}
           alt={ini.nome}
-          className="max-h-full w-auto max-w-[200px] object-contain sm:max-w-[220px]"
+          className="max-h-full w-auto max-w-[230px] object-contain sm:max-w-[260px]"
         />
       </div>
 
-      <p className="mt-6 flex-1 text-[13.5px] font-light leading-[1.68]" style={{ color: t.apoio }}>
+      <p className="relative mt-6 flex-1 text-[13.5px] font-light leading-[1.68]" style={{ color: t.apoio }}>
         {ini.descricao[lang]}
       </p>
 
       <span
         style={{ color: t.destaque }}
-        className="mt-6 flex items-center gap-2 break-all text-[12.5px] font-medium transition-[gap] duration-200 group-hover:gap-3.5"
+        className="relative mt-6 flex items-center gap-2 break-all text-[12.5px] font-medium transition-[gap] duration-200 group-hover:gap-3.5"
       >
         {ini.url.replace("https://", "")}
         <span aria-hidden="true" className="shrink-0">

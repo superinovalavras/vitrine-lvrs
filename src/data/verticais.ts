@@ -24,6 +24,14 @@ export interface Iniciativa {
    * passam AA sobre o proprio fundo.
    */
   tema: { fundo: string; texto: string; apoio: string; destaque: string };
+  /** Simbolo proprio do programa, usado como marca d'agua no card. */
+  elemento: string;
+  /**
+   * Opacidade da marca d'agua. Precisa variar por card: sobre fundo escuro um
+   * simbolo claro aparece com pouco, mas sobre o off-white do Lab o mesmo valor
+   * sumiria.
+   */
+  elementoOpacidade: number;
 }
 
 export interface Vertical {
@@ -49,8 +57,12 @@ const iniciativasTech: Iniciativa[] = [
     },
     url: "https://launch.lvrs.com.br",
     logo: "/iniciativas/launch.png",
-    // Tema espacial escuro do manual do Launch: Orbita, Luz e Ignicao.
-    tema: { fundo: "#05070A", texto: "#F5F8FB", apoio: "#AEB8C4", destaque: "#FFCD00" },
+    // Tema espacial escuro do manual do Launch. O destaque e o Azul Launch, que
+    // e a cor que aparece na propria logo — o amarelo Ignicao e cor de apoio e,
+    // usado como destaque, competia com a marca.
+    tema: { fundo: "#05070A", texto: "#F5F8FB", apoio: "#AEB8C4", destaque: "#4C8AFF" },
+    elemento: "/iniciativas/elemento-launch.png", // o "A" de LAUNCH virado foguete
+    elementoOpacidade: 0.09,
   },
   {
     id: "lavras-lab",
@@ -64,6 +76,8 @@ const iniciativasTech: Iniciativa[] = [
     // O Lab e claro por natureza: off-white com azul-marinho e azul-violeta.
     // A logo cursiva foi desenhada para esse fundo.
     tema: { fundo: "#FCFDF4", texto: "#23244F", apoio: "#4A4B6B", destaque: "#5557E8" },
+    elemento: "/iniciativas/elemento-lavras-lab.png", // a estrela de raios do lockup
+    elementoOpacidade: 0.22, // fundo claro pede mais
   },
   {
     id: "observatorio",
@@ -76,6 +90,8 @@ const iniciativasTech: Iniciativa[] = [
     logo: "/iniciativas/observatorio.png",
     // Cores dos prototipos do censo: azul profundo com verde de destaque.
     tema: { fundo: "#0A2540", texto: "#FFFFFF", apoio: "#B9C7D6", destaque: "#00F5A0" },
+    elemento: "/iniciativas/elemento-observatorio.png", // a espiral da propria logo
+    elementoOpacidade: 0.1,
   },
 ];
 
@@ -152,8 +168,11 @@ export const VERTICAIS: Vertical[] = [
   },
 ];
 
-/** Ordem em que as abas aparecem na regua, com o Pacto no centro. */
-export const ORDEM_ABAS: VerticalId[] = ["tech", "agro", "pacto", "food", "sri"];
+/**
+ * Ordem das abas, definida pelo Ramon em 2026-08-26: o Pacto abre a fila por ser
+ * o guarda-chuva, e as verticais vem depois. Nao e mais o Pacto ao centro.
+ */
+export const ORDEM_ABAS: VerticalId[] = ["pacto", "agro", "food", "tech", "sri"];
 
 export const VERTICAL_PADRAO: VerticalId = "pacto";
 
