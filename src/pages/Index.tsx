@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import SecaoAdiada from "@/components/SecaoAdiada";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { VerticalProvider, useVertical } from "@/context/VerticalContext";
 import FaixaProjetos from "@/components/FaixaProjetos";
@@ -48,9 +49,11 @@ const Pagina = () => {
           <FaixaProjetos />
           <Vision2040Section />
           <GallerySection />
-          <Suspense fallback={<div className="h-96" aria-hidden="true" />}>
-            <CityDataSection />
-          </Suspense>
+          <SecaoAdiada>
+            <Suspense fallback={<div className="h-96" aria-hidden="true" />}>
+              <CityDataSection />
+            </Suspense>
+          </SecaoAdiada>
           <WhyLavrasSection />
           <ContactSection />
         </main>
