@@ -1,6 +1,6 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { translations, t } from "@/i18n/translations";
-import fadminasStudents from "@/assets/fadminas-students.png";
+import fadminasStudents from "@/assets/fadminas-students.jpg";
 
 const WhyLavrasSection = () => {
   const { lang } = useLanguage();

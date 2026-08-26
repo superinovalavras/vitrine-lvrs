@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { VerticalProvider, useVertical } from "@/context/VerticalContext";
 import FaixaProjetos from "@/components/FaixaProjetos";
@@ -7,7 +8,9 @@ import AboutSection from "@/components/AboutSection";
 import GlobalContextSection from "@/components/GlobalContextSection";
 import LocationSection from "@/components/LocationSection";
 import EcosystemSection from "@/components/EcosystemSection";
-import CityDataSection from "@/components/CityDataSection";
+// O painel de dados carrega o Recharts, que e a maior dependencia do site.
+// Fica no fim da pagina, entao so e baixado quando a pessoa chega la.
+const CityDataSection = lazy(() => import("@/components/CityDataSection"));
 import WhyInvestSection from "@/components/WhyInvestSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import Vision2040Section from "@/components/Vision2040Section";
@@ -45,7 +48,9 @@ const Pagina = () => {
           <FaixaProjetos />
           <Vision2040Section />
           <GallerySection />
-          <CityDataSection />
+          <Suspense fallback={<div className="h-96" aria-hidden="true" />}>
+            <CityDataSection />
+          </Suspense>
           <WhyLavrasSection />
           <ContactSection />
         </main>

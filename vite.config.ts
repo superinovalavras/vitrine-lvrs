@@ -18,4 +18,16 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Separa as bibliotecas pesadas do codigo do site. Recharts so e baixado
+        // por quem chega no painel de dados; o resto da pagina nao espera por ele.
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          graficos: ["recharts"],
+        },
+      },
+    },
+  },
 }));
