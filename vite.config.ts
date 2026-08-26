@@ -21,11 +21,16 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        // Separa as bibliotecas pesadas do codigo do site. Recharts so e baixado
-        // por quem chega no painel de dados; o resto da pagina nao espera por ele.
+        // So o react vai em chunk nomeado, porque ele e mesmo carga inicial.
+        //
+        // Recharts NAO entra aqui de proposito. Nomear um manualChunk faz o
+        // Vite trata-lo como parte do grafo inicial e escrever um
+        // <link rel="modulepreload"> no index.html — o que baixava a biblioteca
+        // no load e anulava o lazy do painel de dados. Sem a entrada, o Rollup
+        // separa sozinho a partir do import dinamico, e ai o chunk so e buscado
+        // quando a secao entra em cena.
         manualChunks: {
           react: ["react", "react-dom", "react-router-dom"],
-          graficos: ["recharts"],
         },
       },
     },
