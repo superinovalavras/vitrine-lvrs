@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Kaushan+Script&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Marca LVRS+ — valores amostrados do PDF da UONA. Ver marca/README.md */
+    --background: 178 95% 8%;      /* #012928 verde profundo */
+    --foreground: 0 0% 100%;
+
+    --chrome: 178 100% 5%;         /* #001B1A faixa das abas */
+
+    --card: 178 60% 11%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 178 95% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 151 82% 28%;        /* #0D8049 verde LVRS */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 178 50% 14%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 178 30% 17%;
+    --muted-foreground: 0 0% 72%;
+
+    --accent: 48 100% 50%;         /* #FFCD00 amarelo — vertical Pacto, padrao */
+    --accent-foreground: 178 95% 8%;
+
+    --icon: 48 100% 50%;
+
+    --glow: 48 100% 50%;
+    --gradient-start: 178 95% 8%;
+    --gradient-end: 151 82% 28%;
+
+    --destructive: 358 63% 54%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 178 25% 20%;
+    --input: 163 25% 18%;
+    --ring: 147 25% 63%;
+
+    --radius: 1.25rem;
+
+    --sidebar-background: 168 60% 7%;
+    --sidebar-foreground: 145 30% 85%;
+    --sidebar-primary: 147 25% 63%;
+    --sidebar-primary-foreground: 168 60% 7%;
+    --sidebar-accent: 163 50% 10%;
+    --sidebar-accent-foreground: 145 30% 85%;
+    --sidebar-border: 163 25% 18%;
+    --sidebar-ring: 147 25% 63%;
+  }
+
+  .dark {
+    /* O site ja e escuro por padrao. Este bloco espelha :root para o caso de
+       algum componente shadcn ligar a classe .dark. */
+    --background: 178 95% 8%;
+    --foreground: 0 0% 100%;
+    --chrome: 178 100% 5%;
+    --card: 178 60% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 178 95% 8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 151 82% 28%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 178 50% 14%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 178 30% 17%;
+    --muted-foreground: 0 0% 72%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 178 95% 8%;
+    --icon: 48 100% 50%;
+    --destructive: 358 63% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 178 25% 20%;
+    --input: 178 25% 20%;
+    --ring: 48 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+  }
+
+  /* Smooth scroll for anchor navigation */
+  html, body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Focus visible for keyboard navigation */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary rounded-sm;
+  }
+
+  /* Skip to content link for screen readers */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+  }
+  .font-body {
+    font-family: 'Inter', sans-serif;
+    text-align: justify;
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 30px -5px hsl(147 25% 63% / 0.3), 0 0 60px -10px hsl(155 40% 45% / 0.15);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 40px hsl(147 25% 63% / 0.4), 0 0 80px hsl(155 40% 45% / 0.2);
+  }
+
+  .gradient-border {
+    border-image: linear-gradient(135deg, hsl(147 25% 63% / 0.4), hsl(155 40% 45% / 0.1)) 1;
+  }
+
+  .bg-gradient-radial {
+    background: radial-gradient(ellipse at 30% 50%, hsl(155 40% 45% / 0.08) 0%, transparent 70%);
+  }
+
+  .bg-gradient-mesh {
+    background:
+      radial-gradient(ellipse at 20% 20%, hsl(147 25% 63% / 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, hsl(155 40% 45% / 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsl(168 60% 7% / 1) 0%, hsl(163 50% 10% / 1) 100%);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 8s ease-in-out 2s infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+  }
+}
+
+/* Cor por vertical. Trocam apenas --accent; todo componente dentro do wrapper
+   herda por cascata, sem precisar saber de cor. */
+/* --accent-foreground e o texto que vai POR CIMA da cor cheia. Escolhido por
+   medicao de contraste, nao por gosto (ver marca/README.md):
+   pacto escuro 10,37:1 · tech escuro 4,44:1 · food branco 4,57:1
+   sri branco 5,00:1 · agro escuro 4,66:1 (branco daria so 3,34 e reprova).
+   O tech passa apenas em texto grande — nao usar corpo de texto sobre ele. */
+[data-vertical="pacto"] { --accent: 48 100% 50%;  --accent-foreground: 178 95% 8%; }
+[data-vertical="tech"]  { --accent: 223 100% 66%; --accent-foreground: 178 95% 8%; }
+[data-vertical="food"]  { --accent: 358 63% 54%;  --accent-foreground: 0 0% 100%; }
+[data-vertical="sri"]   { --accent: 151 82% 28%;  --accent-foreground: 0 0% 100%; }
+[data-vertical="agro"]  { --accent: 183 100% 32%; --accent-foreground: 178 95% 8%; }
+
+/* Cantos concavos que fundem a aba ativa na regua, como aba de navegador. */
+.aba-flare-e, .aba-flare-d {
+  position: absolute; bottom: 0; width: 18px; height: 18px;
+  background: hsl(var(--accent));
+}
+.aba-flare-e {
+  left: -18px;
+  -webkit-mask: radial-gradient(circle at 0 0, transparent 18px, #000 18.5px);
+  mask: radial-gradient(circle at 0 0, transparent 18px, #000 18.5px);
+}
+.aba-flare-d {
+  right: -18px;
+  -webkit-mask: radial-gradient(circle at 100% 0, transparent 18px, #000 18.5px);
+  mask: radial-gradient(circle at 100% 0, transparent 18px, #000 18.5px);
+}
+.sem-barra::-webkit-scrollbar { display: none; }
+.sem-barra { scrollbar-width: none; }
