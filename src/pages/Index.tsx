@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import BarraFina from "@/components/BarraFina";
 import SecaoAdiada from "@/components/SecaoAdiada";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { VerticalProvider, useVertical } from "@/context/VerticalContext";
@@ -27,7 +28,7 @@ import Footer from "@/components/Footer";
 const Pagina = () => {
   const { ativa } = useVertical();
   return (
-    <div data-vertical={ativa} className="min-h-screen bg-background">
+    <div id="topo" data-vertical={ativa} className="min-h-screen bg-background">
         {/* Skip to main content for keyboard/screen reader users */}
         <a href="#about" className="skip-to-content">
           Pular para o conteúdo
@@ -37,6 +38,7 @@ const Pagina = () => {
             ecossistema, contato, PT/EN) agora vivem no topo do proprio hero.
             EM ABERTO: navegacao depois que a pessoa rola o hero, e onde ficam
             as logos de Prefeitura e Vale dos Ipes (candidato natural: o rodape). */}
+        <BarraFina />
         <main>
           <HeroVerticais />
           <IniciativasSection />

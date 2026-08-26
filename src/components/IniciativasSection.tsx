@@ -26,8 +26,16 @@ function Card({ ini, lang }: { ini: Iniciativa; lang: "pt" | "en" }) {
         className="absolute inset-x-0 top-0 h-1.5 origin-top transition-transform duration-300 group-hover:scale-y-[2.4]"
       />
 
-      <div className="flex h-10 items-center sm:h-12">
-        <img src={ini.logo} alt={ini.nome} className="max-h-10 w-auto max-w-[190px] sm:max-h-12 sm:max-w-[210px]" />
+      {/* Caixa de altura fixa com teto de largura. Logo em faixa (Launch, Lab)
+          bate no limite de largura; logo quase quadrada (Observatorio) usa a
+          altura inteira. As duas terminam com peso visual parecido — limitar
+          so pela altura fazia a quadrada aparecer com um terco da area. */}
+      <div className="flex h-[72px] items-center sm:h-[88px]">
+        <img
+          src={ini.logo}
+          alt={ini.nome}
+          className="max-h-full w-auto max-w-[200px] object-contain sm:max-w-[220px]"
+        />
       </div>
 
       <p className="mt-6 flex-1 text-[13.5px] font-light leading-[1.68]" style={{ color: t.apoio }}>
