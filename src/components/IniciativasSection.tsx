@@ -20,16 +20,18 @@ function Card({ ini, lang }: { ini: Iniciativa; lang: "pt" | "en" }) {
       style={{ background: t.fundo, color: t.texto }}
       className="group relative flex flex-col overflow-hidden rounded-3xl p-7 transition-transform duration-300 hover:-translate-y-1.5 sm:p-8"
     >
-      {/* Simbolo do programa como marca d'agua: o foguete do Launch, a estrela
-          do Lab, a espiral do Observatorio. Sai da borda de proposito, para dar
-          escala sem virar ilustracao centrada. */}
-      <img
-        src={ini.elemento}
-        alt=""
-        aria-hidden="true"
-        style={{ opacity: ini.elementoOpacidade }}
-        className="pointer-events-none absolute -right-10 -top-8 h-44 w-auto transition-transform duration-500 group-hover:scale-110 sm:-right-12 sm:h-52"
-      />
+      {/* Simbolo do programa como marca d'agua: a estrela do Lab, a espiral do
+          Observatorio. Sai da borda de proposito, para dar escala sem virar
+          ilustracao centrada. Opcional — o Launch esta sem simbolo. */}
+      {ini.elemento && (
+        <img
+          src={ini.elemento}
+          alt=""
+          aria-hidden="true"
+          style={{ opacity: ini.elementoOpacidade }}
+          className="pointer-events-none absolute -right-10 -top-8 h-44 w-auto transition-transform duration-500 group-hover:scale-110 sm:-right-12 sm:h-52"
+        />
+      )}
 
       {/* Faixa da cor do programa no topo, crescendo no hover. */}
       <span

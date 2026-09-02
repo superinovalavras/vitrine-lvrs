@@ -25,13 +25,13 @@ export interface Iniciativa {
    */
   tema: { fundo: string; texto: string; apoio: string; destaque: string };
   /** Simbolo proprio do programa, usado como marca d'agua no card. */
-  elemento: string;
+  elemento?: string;
   /**
    * Opacidade da marca d'agua. Precisa variar por card: sobre fundo escuro um
    * simbolo claro aparece com pouco, mas sobre o off-white do Lab o mesmo valor
    * sumiria.
    */
-  elementoOpacidade: number;
+  elementoOpacidade?: number;
 }
 
 export interface Vertical {
@@ -61,8 +61,6 @@ const iniciativasTech: Iniciativa[] = [
     // e a cor que aparece na propria logo — o amarelo Ignicao e cor de apoio e,
     // usado como destaque, competia com a marca.
     tema: { fundo: "#05070A", texto: "#F5F8FB", apoio: "#AEB8C4", destaque: "#4C8AFF" },
-    elemento: "/iniciativas/elemento-launch.png", // o "A" de LAUNCH virado foguete
-    elementoOpacidade: 0.09,
   },
   {
     id: "lavras-lab",
