@@ -209,3 +209,68 @@
 }
 .sem-barra::-webkit-scrollbar { display: none; }
 .sem-barra { scrollbar-width: none; }
+
+/* --- Projetos da aba -------------------------------------------------------
+   Entrada "escaneada": o card nasce recortado e uma linha de luz desce
+   revelando-o. Com o mouse, um holofote segue o cursor (--mx/--my). */
+.projeto-card { clip-path: inset(0 0 100% 0 round 1.5rem); }
+.projeto-card--visivel { animation: projeto-revela 900ms cubic-bezier(.2,.7,.2,1) both; }
+@keyframes projeto-revela {
+  from { clip-path: inset(0 0 100% 0 round 1.5rem); }
+  to   { clip-path: inset(0 0 0 0 round 1.5rem); }
+}
+.projeto-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 2px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+  box-shadow: 0 0 18px 2px hsl(var(--accent) / .55);
+  opacity: 0;
+}
+.projeto-card--visivel .projeto-scan { animation: projeto-scan 900ms cubic-bezier(.2,.7,.2,1) both; }
+@keyframes projeto-scan {
+  0%   { top: 0; opacity: 1; }
+  90%  { top: calc(100% - 2px); opacity: 1; }
+  100% { top: calc(100% - 2px); opacity: 0; }
+}
+.projeto-holofote {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), hsl(var(--accent) / .16), transparent 70%);
+  transition: opacity 300ms;
+}
+.projeto-card:hover .projeto-holofote { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .projeto-card, .projeto-card--visivel { clip-path: none; animation: none; }
+  .projeto-card--visivel .projeto-scan { animation: none; }
+}
+
+/* --- Milestones -------------------------------------------------------------
+   O ano grande troca como um contador mecanico: sobe e desfoca. */
+.marco-ano { animation: marco-ano 420ms cubic-bezier(.2,.8,.2,1) both; }
+@keyframes marco-ano {
+  from { transform: translateY(35%); opacity: 0; filter: blur(6px); }
+  to   { transform: none; opacity: 1; filter: none; }
+}
+@media (prefers-reduced-motion: reduce) { .marco-ano { animation: none; } }
+
+/* --- Pacto ------------------------------------------------------------------
+   O anel dos 12 projetos gira devagar; os numeros giram ao contrario para
+   ficarem de pe. Tudo para quando o mouse entra no diagrama. */
+.pacto-orbita, .pacto-orbita-num { animation: pacto-gira 90s linear infinite; }
+.pacto-orbita-num { animation-direction: reverse; }
+svg:hover .pacto-orbita, svg:hover .pacto-orbita-num { animation-play-state: paused; }
+@keyframes pacto-gira { to { transform: rotate(360deg); } }
+
+/* A frase do Cerrado: um brilho na cor da aba atravessa o texto. */
+.pacto-brilho {
+  background: linear-gradient(100deg, #fff 0%, #fff 40%, hsl(var(--accent)) 50%, #fff 60%, #fff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: pacto-brilho 7s ease-in-out infinite;
+}
+@keyframes pacto-brilho {
+  0%, 15%  { background-position: 100% 0; }
+  65%, 100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pacto-orbita, .pacto-orbita-num, .pacto-brilho { animation: none; }
+}

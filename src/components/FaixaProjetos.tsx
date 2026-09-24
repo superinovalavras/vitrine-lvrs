@@ -1,5 +1,6 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { URL_GESTAO } from "@/data/verticais";
+import { PROJETOS } from "@/data/projetos";
 
 /**
  * Resumo dos 12 Projetos Prioritarios.
@@ -9,25 +10,8 @@ import { URL_GESTAO } from "@/data/verticais";
  * projetos existem e manda para la. Nada de numero que muda sozinho: "12" e
  * estavel, "21 de 146 metas" nao e.
  *
- * Nomes conferidos em gestaolvrs.govup.io em 26/08/2026. O array antigo do
- * Lovable estava defasado (tinha "Hub de Inovacao IpeTech" no lugar de
- * "Hub de Inovacao e sua Gestao").
+ * Os nomes vem de src/data/projetos.ts, a mesma fonte dos cards das abas.
  */
-
-const PROJETOS = [
-  "Cluster Agro-Food-Tech",
-  "Hub de Inovação e sua Gestão",
-  "Blue Zone Lavras",
-  "Cinturão do Alimento/Verde",
-  "Festival do Futuro do Alimento",
-  "Circuito Territorial Vale dos Ipês",
-  "Usina de Compostagem",
-  "Estação Férrea",
-  "Governo Digital",
-  "Sandbox Regulatório",
-  "MBA em AgroFoodTech",
-  "YouX Lab",
-];
 
 export default function FaixaProjetos() {
   const { lang } = useLanguage();
@@ -63,12 +47,12 @@ export default function FaixaProjetos() {
           </h2>
 
           <ul className="mt-8 grid gap-x-8 gap-y-2.5 sm:mt-10 sm:grid-cols-2">
-            {PROJETOS.map((nome, i) => (
-              <li key={nome} className="flex items-baseline gap-3 text-[14.5px]">
+            {PROJETOS.map((p) => (
+              <li key={p.numero} className="flex items-baseline gap-3 text-[14.5px]">
                 <span className="w-6 shrink-0 text-[12px] font-semibold tabular-nums opacity-55">
-                  {String(i + 1).padStart(2, "0")}
+                  {String(p.numero).padStart(2, "0")}
                 </span>
-                <span className="opacity-90">{nome}</span>
+                <span className="opacity-90">{p.nome}</span>
               </li>
             ))}
           </ul>
@@ -79,7 +63,7 @@ export default function FaixaProjetos() {
             rel="noopener noreferrer"
             className="mt-10 inline-flex items-center gap-3 rounded-xl bg-background px-6 py-4 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5 sm:mt-12 sm:px-8 sm:text-[15px]"
           >
-            {lang === "pt" ? "Acompanhar o andamento de cada projeto" : "Track each project's progress"}
+            {lang === "pt" ? "Mais informações sobre os projetos" : "More about the projects"}
             <span aria-hidden="true">→</span>
           </a>
           <p className="mt-4 text-[13px] opacity-70">

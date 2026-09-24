@@ -1,34 +1,6 @@
 export type Language = "pt" | "en";
 
 export const translations = {
-  nav: {
-    about: { pt: "SOBRE", en: "ABOUT" },
-    context: { pt: "CONTEXTO", en: "CONTEXT" },
-    location: { pt: "LOCALIZAÇÃO", en: "LOCATION" },
-    ecosystem: { pt: "ECOSSISTEMA", en: "ECOSYSTEM" },
-    projects: { pt: "PROJETOS", en: "PROJECTS" },
-    whyInvest: { pt: "POR QUE INVESTIR", en: "WHY INVEST" },
-    lvrsProjects: { pt: "LVRS+", en: "LVRS+" },
-    vision2040: { pt: "LAVRAS 2040", en: "LAVRAS 2040" },
-    gallery: { pt: "GALERIA", en: "GALLERY" },
-    whyLavras: { pt: "POR QUE LAVRAS", en: "WHY LAVRAS" },
-    contact: { pt: "CONTATO", en: "CONTACT" },
-  },
-  hero: {
-    title1: { pt: "Lavras", en: "Lavras" },
-    title2: { pt: "a Capital Brasileira", en: "the Brazilian Capital" },
-    title3: { pt: "do Futuro do Alimento", en: "of the Future of Food" },
-    subtitle: {
-      pt: "Lavras se posiciona como uma plataforma estratégica para o futuro do alimento, combinando ciência, produção, indústria, logística, qualidade de vida e um ambiente institucional orientado ao investidor.",
-      en: "Lavras is positioning itself as a strategic platform for the future of food, combining science, production, industry, logistics, quality of life, and an investor-oriented institutional environment.",
-    },
-    cta: { pt: "Conheça Lavras", en: "Explore Lavras" },
-    stat1Label: { pt: "População", en: "Population" },
-    stat2Label: { pt: "Território", en: "Territory" },
-    stat3Label: { pt: "PIB", en: "GDP" },
-    stat4Label: { pt: "Classe média", en: "Middle class" },
-    vision: { pt: "Visão", en: "Vision" },
-  },
   about: {
     tag: { pt: "SOBRE LAVRAS", en: "ABOUT LAVRAS" },
     title1: { pt: "Mais que uma cidade.", en: "More than a city." },
@@ -45,12 +17,6 @@ export const translations = {
     lavrasPlus: {
       pt: "Lavras+ é o framework estratégico que guia o desenvolvimento de longo prazo da cidade. Alinha políticas públicas, prioridades de investimento e parcerias em torno de inovação, sustentabilidade, desenvolvimento de talentos e qualidade de vida.",
       en: "Lavras+ is the strategic framework guiding the city's long-term development. It aligns public policies, investment priorities, and partnerships around innovation, sustainability, talent development, and quality of life.",
-    },
-    stats: {
-      gdp: { pt: "PIB do Brasil — 5ª maior economia", en: "Brazil's GDP — 5th largest economy" },
-      commerce: { pt: "Comércio & Serviços no PIB", en: "Commerce & Services in GDP" },
-      industrial: { pt: "Novos distritos industriais planejados", en: "New industrial districts planned" },
-      ufla: { pt: "UFLA no ranking nacional", en: "UFLA ranking in Brazil" },
     },
   },
   globalContext: {
@@ -220,57 +186,6 @@ export const translations = {
         },
       },
     },
-  },
-  projects: {
-    title: { pt: "Projetos Estratégicos", en: "Strategic Projects" },
-    subtitle: {
-      pt: "Doze projetos prioritários guiam a transformação de Lavras na Capital Brasileira do Futuro do Alimento.",
-      en: "Twelve priority projects guide Lavras' transformation into the Brazilian Capital of the Future of Food.",
-    },
-    items: [
-      {
-        title: { pt: "Capital Brasileira do Futuro do Alimento", en: "Brazilian Capital of the Future of Food" },
-        description: {
-          pt: "Consolida o posicionamento de Lavras como cidade referência do Brasil para o futuro do alimento, integrando ciência, tecnologia, empreendedorismo e oferta de talentos.",
-          en: "Consolidates Lavras' positioning as Brazil's reference city for the future of food, integrating science, technology, entrepreneurship and talent supply.",
-        },
-      },
-      {
-        title: { pt: "Cluster Agro-Food-Tech", en: "Agro-Food-Tech Cluster" },
-        description: {
-          pt: "Conecta ciência, indústria, inovação, sustentabilidade e investimento global em sistemas alimentares.",
-          en: "Connects science, industry, innovation, sustainability and global investment in food systems.",
-        },
-      },
-      {
-        title: { pt: "Hub de Inovação Ipêtech", en: "Ipêtech Innovation Hub" },
-        description: {
-          pt: "Onde pesquisa, empreendedorismo e cadeias alimentares de alto valor se encontram. Uma plataforma viva para incubação, aceleração e validação de startups AgroFoodTech.",
-          en: "Where research, entrepreneurship and high-value food chains meet. A living platform for incubation, acceleration and validation of AgroFoodTech startups.",
-        },
-      },
-      {
-        title: { pt: "Sandbox Regulatório do Futuro do Alimento", en: "Future of Food Regulatory Sandbox" },
-        description: {
-          pt: "Um ambiente regulatório controlado onde empresas podem testar novas tecnologias e modelos de negócio alimentares com segurança, reduzindo risco regulatório.",
-          en: "A controlled regulatory environment where companies can test new food technologies and business models safely, reducing regulatory risk.",
-        },
-      },
-      {
-        title: { pt: "Governo Digital", en: "Digital Government" },
-        description: {
-          pt: "Simplifica processos, reduz burocracia e melhora a experiência do investidor garantindo segurança jurídica e acelerando a inovação.",
-          en: "Simplifies processes, reduces bureaucracy and improves investor experience while ensuring legal certainty and accelerating innovation.",
-        },
-      },
-      {
-        title: { pt: "MBA AgroFoodTech", en: "AgroFoodTech MBA" },
-        description: {
-          pt: "Um programa de educação executiva formando líderes para a economia do futuro do alimento, integrando gastronomia para atrair empresas, talentos e soluções.",
-          en: "An executive education program forming leaders for the future of food economy, integrating gastronomy to attract companies, talent and solutions.",
-        },
-      },
-    ],
   },
   whyLavras: {
     tag: { pt: "POR QUE LAVRAS?", en: "WHY LAVRAS?" },

@@ -1,4 +1,5 @@
 import { useLanguage } from "@/i18n/LanguageContext";
+import { URL_GESTAO } from "@/data/verticais";
 import {
   Target, TrendingUp, Building2, Lightbulb,
   GraduationCap, Heart, Leaf, Wheat,
@@ -24,7 +25,7 @@ const strategicAxes = [
   {
     icon: Heart,
     title: { pt: "Qualidade de Vida", en: "Quality of Life" },
-    desc: { pt: "Compiladores do desenvolvimento humano", en: "Compilers of human development" },
+    desc: { pt: "Pilar do desenvolvimento humano", en: "Pillar of human development" },
   },
 ];
 
@@ -161,7 +162,7 @@ const Vision2040Section = () => {
                   </p>
                   <div>
                     <p className="text-[10px] font-body font-bold text-icon mb-2 uppercase tracking-wider">
-                      {lang === "pt" ? "Projetos Estratégicos:" : "Strategic Projects:"}
+                      {lang === "pt" ? "Ideias para 2040:" : "Ideas for 2040:"}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {mission.projects[lang].map((project, idx) => (
@@ -175,6 +176,26 @@ const Vision2040Section = () => {
               );
             })}
           </div>
+        </div>
+
+        {/* As "ideias para 2040" acima sao especulativas (assim estao no Webinar
+            RCD) e NAO sao os 12 projetos. Este convite separa as duas coisas e
+            leva quem quer ver o que ja anda para o painel. */}
+        <div className="mb-16 flex flex-col items-start justify-between gap-5 rounded-3xl border border-accent/30 bg-accent/5 p-6 sm:flex-row sm:items-center sm:p-8">
+          <p className="max-w-xl text-[15px] font-light leading-relaxed text-white/75">
+            {lang === "pt"
+              ? "As missões apontam para 2040. O caminho até lá já começou: são 12 projetos em execução hoje."
+              : "The missions point to 2040. The road there has already begun: 12 projects are underway today."}
+          </p>
+          <a
+            href={URL_GESTAO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center gap-3 rounded-xl bg-accent px-6 py-3.5 text-[14px] font-semibold text-accent-foreground transition-transform hover:-translate-y-0.5"
+          >
+            {lang === "pt" ? "Ver o que já está em andamento" : "See what is already underway"}
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
         {/* Macrochallenges */}

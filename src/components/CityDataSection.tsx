@@ -159,12 +159,30 @@ const fallbackData: Record<string, string> = {
   arborizacao: "82.5%", urbanizacao: "30.8%",
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+/**
+ * O Recharts entrega o payload como uma lista solta de series; so usamos cor,
+ * nome, valor e unidade. Tipado aqui em vez de `any` para que mudanca de campo
+ * apareca no tsc.
+ */
+interface SerieTooltip {
+  color?: string;
+  name?: string | number;
+  value?: string | number;
+  unit?: string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: SerieTooltip[];
+  label?: string | number;
+}
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-lg">
         <p className="text-xs font-body font-semibold text-foreground mb-1">{label}</p>
-        {payload.map((p: any, i: number) => (
+        {payload.map((p, i) => (
           <p key={i} className="text-xs font-body text-muted-foreground">
             <span className="inline-block w-2 h-2 rounded-full mr-2" style={{ background: p.color }} />
             {p.name}: <span className="font-semibold text-foreground">{typeof p.value === 'number' && p.value > 1000 ? p.value.toLocaleString('pt-BR') : p.value}{p.unit || ''}</span>
