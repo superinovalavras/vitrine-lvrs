@@ -256,11 +256,11 @@ export const translations = {
   footer: {
     vision: { pt: "Governo de Lavras — Visão 2040", en: "Governo de Lavras — Vision 2040" },
     links: {
-      pt: ["Linha do tempo", "Contexto", "Localização", "Ecossistema", "Invista em Lavras", "Iniciativas", "Contato"],
-      en: ["Timeline", "Context", "Location", "Ecosystem", "Invest in Lavras", "Initiatives", "Contact"],
+      pt: ["Linha do tempo", "Contexto", "Ecossistema", "Galeria", "Invista em Lavras", "Iniciativas", "Contato"],
+      en: ["Timeline", "Context", "Ecosystem", "Gallery", "Invest in Lavras", "Initiatives", "Contact"],
     },
     // As quatro primeiras sao secoes desta pagina (/pacto); as outras, paginas do site.
-    hrefs: ["#milestones", "#context", "#location", "#ecosystem", "/", "/iniciativas", "/#contato"],
+    hrefs: ["#milestones", "#context", "#ecosystem", "#gallery", "/", "/iniciativas", "/#contato"],
   },
 } as const;
 
