@@ -8,7 +8,6 @@ import ProjetosDaAba from "@/components/ProjetosDaAba";
 import MilestonesSection from "@/components/MilestonesSection";
 import PactoSection from "@/components/PactoSection";
 import HeroVerticais from "@/components/HeroVerticais";
-import AboutSection from "@/components/AboutSection";
 import GlobalContextSection from "@/components/GlobalContextSection";
 import LocationSection from "@/components/LocationSection";
 import EcosystemSection from "@/components/EcosystemSection";
@@ -25,6 +24,7 @@ import Footer from "@/components/Footer";
  * Sairam daqui, porque passaram a morar em outras paginas:
  * - os cards dos programas (IniciativasSection) -> /iniciativas
  * - Por que investir, Soft landing e Contato -> / (Invista)
+ * - Sobre Lavras e os numeros da cidade -> / (Invista), onde ja abriam a pagina
  *
  * Precisa ser um componente separado porque data-vertical le do contexto, e
  * quem consome tem que estar dentro do provider.
@@ -43,9 +43,9 @@ const Pagina = () => {
       <main id="conteudo">
         <HeroVerticais />
         <ProjetosDaAba />
-        {/* Ordem combinada em 24/09/2026: abre com dados de Lavras, passa pelo
-            contexto e pela historia, e so entao explica o Pacto e os 12. */}
-        <AboutSection />
+        {/* Ordem combinada em 24/09/2026 (contexto, historia, Pacto e os 12).
+            A abertura com "Sobre Lavras" e os numeros saiu em 05/10/2026: os
+            mesmos dados ja abrem a home e se repetiam em todas as abas. */}
         <GlobalContextSection />
         <LocationSection />
         <MilestonesSection />
