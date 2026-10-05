@@ -9,7 +9,7 @@ import { URL_GESTAO } from "@/data/verticais";
  * Os projetos do Pacto que pertencem a aba ativa. So resumo: o card leva a
  * pagina do projeto no painel de gestao, que e onde mora o andamento.
  *
- * Diferente dos cards de programa (IniciativasSection), estes vestem o LVRS+,
+ * Diferente dos cards de programa (pagina /iniciativas), estes vestem o LVRS+,
  * nao uma marca propria: projeto e compromisso do Pacto, programa e produto
  * com site proprio. Some na aba Pacto (la aparece a lista dos 12) e no SRI.
  *

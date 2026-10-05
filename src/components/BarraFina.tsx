@@ -16,6 +16,9 @@ import logoVale from "@/assets/logo-vale-ipes.svg";
  * que e o padrao que menos rouba tela no celular.
  *
  * Ordem das logos definida pelo Ramon: Prefeitura sempre primeiro.
+ *
+ * Desde 05/10/2026 fica logo abaixo da BarraEcossistema (top-11 = 44px), que
+ * e fixa em todas as paginas.
  */
 export default function BarraFina() {
   const { lang, toggleLang } = useLanguage();
@@ -48,8 +51,8 @@ export default function BarraFina() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-background/85 backdrop-blur-md transition-transform duration-300 ${
-        visivel ? "translate-y-0" : "-translate-y-full"
+      className={`fixed inset-x-0 top-11 z-40 border-b border-white/10 bg-background/85 backdrop-blur-md transition-transform duration-300 ${
+        visivel ? "translate-y-0" : "-translate-y-[calc(100%+2.75rem)]"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:gap-5 sm:px-6">

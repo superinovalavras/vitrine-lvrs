@@ -33,7 +33,7 @@ const Footer = () => {
             </h4>
             <div className="space-y-3">
               {links.slice(0, 4).map((label, i) => (
-                <a key={label} href={`#${tr.hrefs[i]}`} className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
+                <a key={label} href={tr.hrefs[i]} className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
                   {label}
                 </a>
               ))}
@@ -45,7 +45,7 @@ const Footer = () => {
             </h4>
             <div className="space-y-3">
               {links.slice(4).map((label, i) => (
-                <a key={label} href={`#${tr.hrefs[i + 4]}`} className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
+                <a key={label} href={tr.hrefs[i + 4]} className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
                   {label}
                 </a>
               ))}
@@ -56,11 +56,10 @@ const Footer = () => {
               {lang === "pt" ? "Contato" : "Contact"}
             </h4>
             <address className="space-y-3 not-italic">
-              <a href="tel:+5535988638608" className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
-                +55 35 98863-8608
-              </a>
-              <a href="mailto:rralvarenga@lavras.mg.gov.br" className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
-                rralvarenga@lavras.mg.gov.br
+              {/* Contato institucional decidido em 05/10/2026 (antes era o
+                  telefone e o e-mail pessoais do Secretario). */}
+              <a href="mailto:superinovalavras@gmail.com" className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
+                superinovalavras@gmail.com
               </a>
             </address>
           </div>

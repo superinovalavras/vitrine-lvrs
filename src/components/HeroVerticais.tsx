@@ -51,7 +51,7 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
 }
 
 export default function HeroVerticais() {
-  const { lang, toggleLang } = useLanguage();
+  const { lang } = useLanguage();
   const { ativa, setAtiva, vertical: v } = useVertical();
 
   const [antes, destaque, depois] = tituloComEnfase(v.titulo[lang], v.enfase[lang]);
@@ -98,24 +98,10 @@ export default function HeroVerticais() {
         }}
       />
 
-      <div className="relative z-10 flex flex-wrap items-center justify-end gap-x-5 gap-y-2 px-5 py-5 text-[12px] tracking-[0.08em] text-white/60 sm:gap-x-7 sm:px-10 sm:py-6 sm:text-[12.5px]">
-        <a href="#about" className="transition-colors hover:text-white">
-          {lang === "pt" ? "sobre" : "about"}
-        </a>
-        <a href="#ecosystem" className="transition-colors hover:text-white">
-          {lang === "pt" ? "ecossistema" : "ecosystem"}
-        </a>
-        <a href="#contact" className="transition-colors hover:text-white">
-          {lang === "pt" ? "contato" : "contact"}
-        </a>
-        <button
-          type="button"
-          onClick={toggleLang}
-          className="border-l border-white/20 pl-7 text-white/85 transition-colors hover:text-white"
-        >
-          {lang === "pt" ? "PT · EN" : "EN · PT"}
-        </button>
-      </div>
+      {/* Os atalhos que ficavam aqui (sobre, ecossistema, contato, PT/EN) foram
+          para a BarraEcossistema, fixa no topo de todas as paginas. Este
+          espaco so reserva a altura dela. */}
+      <div aria-hidden="true" className="h-14 shrink-0" />
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 pb-10 pt-4 text-center sm:px-6 sm:pb-14">
         <img

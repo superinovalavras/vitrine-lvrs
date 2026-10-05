@@ -47,7 +47,7 @@ export interface Vertical {
   iniciativas: Iniciativa[];
 }
 
-const iniciativasTech: Iniciativa[] = [
+export const iniciativasTech: Iniciativa[] = [
   {
     id: "launch",
     nome: "Launch LVRS+",
