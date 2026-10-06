@@ -87,7 +87,7 @@ const EcosystemSection = () => {
                 {t(content.details, lang)}
               </p>
               <a
-                href="#contact"
+                href="/#contato"
                 className="inline-block px-7 py-3.5 bg-accent text-accent-foreground text-sm font-bold font-body rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-accent/20 transition-all"
               >
                 {t(tr.cta, lang)}

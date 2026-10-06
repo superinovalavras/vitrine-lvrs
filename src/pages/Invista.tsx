@@ -520,8 +520,14 @@ function Contato({ porta }: { porta: Porta | null }) {
 
 /* --------------------------------------------------------------- pagina */
 
+/** /?setor=agro abre a home com a porta ja escolhida (vem das abas de /pacto). */
+function portaDaUrl(): Porta | null {
+  const s = new URLSearchParams(window.location.search).get("setor");
+  return PORTAS_ORDEM.find((p) => p === s) ?? null;
+}
+
 export default function Invista() {
-  const [porta, setPorta] = useState<Porta | null>(null);
+  const [porta, setPorta] = useState<Porta | null>(portaDaUrl);
 
   const escolher = (p: Porta) => {
     setPorta(p);
