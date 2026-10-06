@@ -67,11 +67,11 @@ const tr = {
 };
 
 const GallerySection = () => {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-20 lg:py-32 bg-card" aria-label={lang === "pt" ? "Galeria de imagens" : "Image gallery"}>
+    <section id="gallery" className="py-20 lg:py-32 bg-card" aria-label={L("Galeria de imagens", "Image gallery")}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 mb-14">
@@ -99,13 +99,13 @@ const GallerySection = () => {
             >
               <img
                 src={item.src}
-                alt={item.title[lang]}
+                alt={t(item.title, lang)}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-auto"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                 <span className="text-white text-sm font-body font-medium">
-                  {item.title[lang]}
+                  {t(item.title, lang)}
                 </span>
               </div>
             </div>
@@ -122,11 +122,11 @@ const GallerySection = () => {
           <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
             <img
               src={galleryItems[lightbox].src}
-              alt={galleryItems[lightbox].title[lang]}
+              alt={t(galleryItems[lightbox].title, lang)}
               className="w-full h-auto max-h-[85vh] object-contain rounded-2xl"
             />
             <p className="text-white text-sm font-body text-center mt-4">
-              {galleryItems[lightbox].title[lang]}
+              {t(galleryItems[lightbox].title, lang)}
             </p>
             <button
               onClick={() => setLightbox(null)}

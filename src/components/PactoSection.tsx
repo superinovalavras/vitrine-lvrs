@@ -1,3 +1,4 @@
+import type { Language } from "@/i18n/translations";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { translations, t } from "@/i18n/translations";
@@ -92,13 +93,14 @@ const SETORES = [
 
 const C = 250; // centro do diagrama (viewBox 500x500)
 
-function Diagrama({ camada, lang }: { camada: Camada | null; lang: "pt" | "en" }) {
+function Diagrama({ camada, lang }: { camada: Camada | null; lang: Language }) {
+  const { L } = useLanguage();
   const [dica, setDica] = useState<string | null>(null);
   const acesa = (c: Camada) => camada === null || camada === c;
 
   return (
     <div className="relative">
-      <svg viewBox="0 0 500 500" className="h-auto w-full" role="img" aria-label={lang === "pt" ? "Diagrama da governança do Pacto" : "Pact governance diagram"}>
+      <svg viewBox="0 0 500 500" className="h-auto w-full" role="img" aria-label={L("Diagrama da governança do Pacto", "Pact governance diagram")}>
         {/* setores: arcos tracejados nos cantos */}
         <g className="transition-opacity duration-500" opacity={acesa("setores") ? 1 : 0.2}>
           {[
@@ -111,7 +113,7 @@ function Diagrama({ camada, lang }: { camada: Camada | null; lang: "pt" | "en" }
           ))}
           {SETORES.map((s) => (
             <text key={s.pt} x={s.x} y={s.y} textAnchor={s.anchor} className="fill-white text-[13px] font-semibold uppercase tracking-[0.12em]">
-              {s[lang]}
+              {t(s, lang)}
             </text>
           ))}
         </g>
@@ -181,7 +183,7 @@ function Diagrama({ camada, lang }: { camada: Camada | null; lang: "pt" | "en" }
 }
 
 export default function PactoSection() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [capitulo, setCapitulo] = useState(0);
   const [camada, setCamada] = useState<Camada | null>(null);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
@@ -201,23 +203,21 @@ export default function PactoSection() {
   }, []);
 
   return (
-    <section id="pacto" className="relative overflow-hidden bg-background py-20 sm:py-28" aria-label={lang === "pt" ? "O que é o Pacto" : "What the Pact is"}>
+    <section id="pacto" className="relative overflow-hidden bg-background py-20 sm:py-28" aria-label={L("O que é o Pacto", "What the Pact is")}>
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         {/* Abertura */}
         <div className="grid gap-8 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-accent">
-              {lang === "pt" ? "O Pacto" : "The Pact"}
+              {L("O Pacto", "The Pact")}
             </p>
             <h2 className="mt-4 text-[clamp(26px,5.5vw,46px)] font-medium leading-[1.08] tracking-[-0.02em]">
-              {lang === "pt" ? "Um acordo para tirar o futuro do papel." : "An agreement to get the future off the drawing board."}
+              {L("Um acordo para tirar o futuro do papel.", "An agreement to get the future off the drawing board.")}
             </h2>
           </div>
           <div className="space-y-5 text-[15px] font-light leading-relaxed text-white/70 md:pt-10">
             <p>
-              {lang === "pt"
-                ? "O Pacto Lavras pela Inovação — LVRS+ — reúne a Prefeitura, as universidades (UFLA, Unilavras, Fagammon e Fadminas), as empresas e a sociedade em torno de 12 projetos que transformam a cidade."
-                : "The Lavras Innovation Pact — LVRS+ — brings together City Hall, the universities (UFLA, Unilavras, Fagammon and Fadminas), companies and society around 12 projects that transform the city."}
+              {L("O Pacto Lavras pela Inovação — LVRS+ — reúne a Prefeitura, as universidades (UFLA, Unilavras, Fagammon e Fadminas), as empresas e a sociedade em torno de 12 projetos que transformam a cidade.", "The Lavras Innovation Pact — LVRS+ — brings together City Hall, the universities (UFLA, Unilavras, Fagammon and Fadminas), companies and society around 12 projects that transform the city.")}
             </p>
             <p>{t(translations.about.lavrasPlus, lang)}</p>
           </div>
@@ -225,9 +225,9 @@ export default function PactoSection() {
 
         {/* Manifesto */}
         <div className="mt-20 grid gap-10 md:mt-28 md:grid-cols-[220px_1fr] md:gap-16">
-          <nav className="md:sticky md:top-28 md:self-start" aria-label={lang === "pt" ? "Capítulos do manifesto" : "Manifesto chapters"}>
+          <nav className="md:sticky md:top-28 md:self-start" aria-label={L("Capítulos do manifesto", "Manifesto chapters")}>
             <p className="mb-5 text-[11.5px] font-semibold uppercase tracking-[0.2em] text-white/45">
-              {lang === "pt" ? "Manifesto" : "Manifesto"}
+              {L("Manifesto", "Manifesto")}
             </p>
             <ol className="hidden space-y-3 md:block">
               {CAPITULOS.map((c, i) => (
@@ -238,7 +238,7 @@ export default function PactoSection() {
                     className={`flex items-center gap-3 text-left text-[13.5px] transition-colors ${i === capitulo ? "text-white" : "text-white/40 hover:text-white/70"}`}
                   >
                     <span className={`h-px transition-all duration-500 ${i === capitulo ? "w-8 bg-accent" : "w-4 bg-white/30"}`} />
-                    {c.titulo[lang]}
+                    {t(c.titulo, lang)}
                   </button>
                 </li>
               ))}
@@ -254,9 +254,9 @@ export default function PactoSection() {
                 className={`transition-opacity duration-700 ${i === capitulo ? "opacity-100" : "opacity-30"}`}
               >
                 <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-accent">
-                  {String(i + 1).padStart(2, "0")} · {c.titulo[lang]}
+                  {String(i + 1).padStart(2, "0")} · {t(c.titulo, lang)}
                 </p>
-                <p className="mt-4 text-[clamp(18px,2.6vw,26px)] font-light leading-[1.5] tracking-[-0.01em]">{c.texto[lang]}</p>
+                <p className="mt-4 text-[clamp(18px,2.6vw,26px)] font-light leading-[1.5] tracking-[-0.01em]">{t(c.texto, lang)}</p>
               </div>
             ))}
           </div>
@@ -266,10 +266,10 @@ export default function PactoSection() {
         <div className="mt-24 grid items-center gap-10 md:mt-32 md:grid-cols-[1fr_1.1fr] md:gap-16">
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-accent">
-              {lang === "pt" ? "Como tudo funciona" : "How it all works"}
+              {L("Como tudo funciona", "How it all works")}
             </p>
             <h3 className="mt-4 text-[clamp(22px,4vw,34px)] font-medium leading-tight tracking-[-0.02em]">
-              {lang === "pt" ? "Uma governança, doze projetos, a cidade inteira." : "One governance, twelve projects, the whole city."}
+              {L("Uma governança, doze projetos, a cidade inteira.", "One governance, twelve projects, the whole city.")}
             </h3>
             <ul className="mt-8 space-y-2" onMouseLeave={() => setCamada(null)}>
               {CAMADAS.map((c) => (
@@ -284,8 +284,8 @@ export default function PactoSection() {
                       camada === c.id ? "border-accent/60 bg-accent/10" : "border-white/10 hover:border-white/25"
                     }`}
                   >
-                    <span className="block text-[14.5px] font-semibold">{c.titulo[lang]}</span>
-                    <span className="mt-1 block text-[13.5px] font-light leading-relaxed text-white/65">{c.texto[lang]}</span>
+                    <span className="block text-[14.5px] font-semibold">{t(c.titulo, lang)}</span>
+                    <span className="mt-1 block text-[13.5px] font-light leading-relaxed text-white/65">{t(c.texto, lang)}</span>
                   </button>
                 </li>
               ))}
@@ -299,10 +299,10 @@ export default function PactoSection() {
         {/* Fecho */}
         <div className="mt-24 text-center md:mt-32">
           <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-white/50">
-            {lang === "pt" ? "Lavras 2040 · Capital Brasileira do Futuro do Alimento" : "Lavras 2040 · Brazilian Capital of the Future of Food"}
+            {L("Lavras 2040 · Capital Brasileira do Futuro do Alimento", "Lavras 2040 · Brazilian Capital of the Future of Food")}
           </p>
           <p className="pacto-brilho mx-auto mt-6 max-w-4xl text-[clamp(26px,5.5vw,52px)] font-semibold leading-[1.1] tracking-[-0.03em]">
-            {lang === "pt" ? "Lavras já ensinou o mundo a cultivar o Cerrado. Agora vai ensinar a alimentar o futuro." : "Lavras has already taught the world to farm the Cerrado. Now it will teach it to feed the future."}
+            {L("Lavras já ensinou o mundo a cultivar o Cerrado. Agora vai ensinar a alimentar o futuro.", "Lavras has already taught the world to farm the Cerrado. Now it will teach it to feed the future.")}
           </p>
         </div>
       </div>

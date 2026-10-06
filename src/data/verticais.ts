@@ -113,7 +113,7 @@ export const VERTICAIS: Vertical[] = [
     rotulo: "agro",
     cor: "#009CA3",
     logo: "/marca/lvrs-agro-tela.png",
-    fundo: null, // falta a foto
+    fundo: "/fundos/fundo-agro.jpg",
     titulo: { pt: "Do Cerrado ao celeiro do mundo.", en: "From the Cerrado to the world's granary." },
     enfase: { pt: "celeiro", en: "granary" },
     descricao: {

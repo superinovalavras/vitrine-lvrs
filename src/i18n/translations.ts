@@ -1,19 +1,24 @@
-export type Language = "pt" | "en";
+import es from "./dicionario/es.json";
+import fr from "./dicionario/fr.json";
+import de from "./dicionario/de.json";
+import zh from "./dicionario/zh.json";
+
+/**
+ * Idiomas do site (decisao de 05/10/2026): abre em portugues e troca para
+ * ingles, espanhol, frances, alemao e mandarim.
+ *
+ * O codigo escreve so PT e EN ({ pt, en }). Os outros quatro moram em
+ * dicionario/<idioma>.json, indexados pelo texto em portugues: assim nenhum
+ * componente precisa conhecer seis idiomas. Texto sem traducao no dicionario
+ * cai no ingles e, em desenvolvimento, e anotado em window.__faltando.
+ */
+export type Language = "pt" | "en" | "es" | "fr" | "de" | "zh";
+type Extra = Exclude<Language, "pt" | "en">;
+
+const DICIONARIO: Record<Extra, Record<string, string>> = { es, fr, de, zh };
 
 export const translations = {
   about: {
-    tag: { pt: "SOBRE LAVRAS", en: "ABOUT LAVRAS" },
-    title1: { pt: "Mais que uma cidade.", en: "More than a city." },
-    title2: { pt: "Uma plataforma para o", en: "A platform for the" },
-    title3: { pt: "futuro do alimento.", en: "future of food." },
-    description: {
-      pt: "A estratégia de Lavras vai além do agronegócio tradicional. Abraça toda a cadeia de valor alimentar — da pesquisa e inovação ao processamento, branding, logística e acesso ao mercado — posicionando o alimento como motor de diversificação econômica, atração de talentos e desenvolvimento sustentável.",
-      en: "Lavras' strategy goes beyond traditional agribusiness. It embraces the entire food value chain — from research and innovation to processing, branding, logistics, and market access — positioning food as a driver of economic diversification, talent attraction, and sustainable development.",
-    },
-    description2: {
-      pt: "Esta visão é operacionalizada através do Lavras+, um modelo de governança estruturado que conecta governo, academia, empresas e sociedade em torno de projetos estratégicos e entregas concretas.",
-      en: "This vision is operationalized through Lavras+, a structured governance model that connects government, academia, companies, and society around strategic projects and concrete deliveries.",
-    },
     lavrasPlus: {
       pt: "Lavras+ é o framework estratégico que guia o desenvolvimento de longo prazo da cidade. Alinha políticas públicas, prioridades de investimento e parcerias em torno de inovação, sustentabilidade, desenvolvimento de talentos e qualidade de vida.",
       en: "Lavras+ is the strategic framework guiding the city's long-term development. It aligns public policies, investment priorities, and partnerships around innovation, sustainability, talent development, and quality of life.",
@@ -65,43 +70,6 @@ export const translations = {
     sriDescription: {
       pt: "O que distingue o Sul de Minas Gerais das regiões de produção tradicionais é sua capacidade de capturar valor além das commodities. A região foca cada vez mais em rastreabilidade, sustentabilidade, certificação de qualidade e origem, produtos de marca e baseados em tecnologia.",
       en: "What distinguishes Southern Minas Gerais from traditional production regions is its ability to capture value beyond commodities. The region increasingly focuses on traceability, sustainability, quality and origin certification, branded, technology-driven products.",
-    },
-  },
-  location: {
-    title1: { pt: "Localização.", en: "Location." },
-    title2: { pt: "Posição estratégica", en: "Strategic position" },
-    title3: { pt: "no Sudeste do Brasil", en: "in Southeast Brazil" },
-    access: {
-      pt: "Lavras está posicionada no principal eixo logístico do Sudeste do Brasil, com acesso direto a:",
-      en: "Lavras is positioned along the main logistics axis of Southeast Brazil, with direct access to:",
-    },
-    accessItems: {
-      pt: ["47% da população brasileira", "54% do consumo nacional", "60% da produção industrial do Brasil"],
-      en: ["47% of Brazil's population", "54% of national consumption", "60% of Brazil's industrial production"],
-    },
-    roadTitle: { pt: "Rede rodoviária:", en: "Road network:" },
-    roadItems: {
-      pt: ["BR-381 (Fernão Dias): principal corredor entre BH e SP", "BR-265: integração regional", "Custos logísticos até 18% menores (CNT)"],
-      en: ["BR-381 (Fernão Dias): main corridor between BH and SP", "BR-265: regional integration", "Logistics costs up to 18% lower (CNT)"],
-    },
-    railwayTitle: { pt: "Ferrovia:", en: "Railway:" },
-    railwayDesc: {
-      pt: "Entroncamento da rede MRS Logística — potencial para operações intermodais, redução de custos e menores emissões.",
-      en: "Junction of MRS Logística network — potential for intermodal operations, cost reduction, and lower emissions.",
-    },
-    airportTitle: { pt: "Aeroportos:", en: "Airports:" },
-    airports: {
-      pt: ["Aeroporto de Lavras (SBSL): aviação executiva", "Varginha (SBVG): 90 km", "Confins (CNF): 270 km", "Viracopos (VCP): 380 km", "Guarulhos (GRU): 400 km"],
-      en: ["Lavras Airport (SBSL): executive aviation", "Varginha (SBVG): 90 km", "Confins (CNF): 270 km", "Viracopos (VCP): 380 km", "Guarulhos (GRU): 400 km"],
-    },
-    infraTitle: { pt: "Infraestrutura Urbana:", en: "Urban Infrastructure:" },
-    infraItems: {
-      pt: ["Abastecimento de água: 99,98%", "Coleta de esgoto: 96,19%", "Tratamento de esgoto: 74,56%", "Energia: CEMIG", "Telecom: Fibra óptica + 4G/5G"],
-      en: ["Water supply: 99.98%", "Sewage collection: 96.19%", "Sewage treatment: 74.56%", "Energy: CEMIG", "Telecom: Fiber optic + 4G/5G"],
-    },
-    mapLabels: {
-      cityCenter: { pt: "Centro", en: "City Center" },
-      industrialDistrict: { pt: "Distrito Industrial", en: "Industrial District" },
     },
   },
   ecosystem: {
@@ -187,72 +155,6 @@ export const translations = {
       },
     },
   },
-  whyLavras: {
-    tag: { pt: "POR QUE LAVRAS?", en: "WHY LAVRAS?" },
-    title: { pt: "Soft Landing & Suporte ao Investidor", en: "Soft Landing & Investor Support" },
-    description: {
-      pt: "Lavras se posiciona como um dos territórios mais preparados do Brasil para empresas comprometidas com implementação de longo prazo. A cidade adota uma abordagem de soft landing, oferecendo suporte estruturado do setor público desde o diálogo inicial até toda a jornada de investimento.",
-      en: "Lavras positions itself as one of Brazil's most prepared territories for companies committed to long-term implementation. The city adopts a soft landing approach, offering structured public-sector support from the initial dialogue through the investment journey.",
-    },
-    modelItems: {
-      pt: ["Ponto único de entrada para investidores", "Fricção reduzida nas fases de instalação e expansão", "Resolução mais rápida de questões administrativas", "Respostas coordenadas entre departamentos municipais", "Canais de comunicação claros para simplificar decisões"],
-      en: ["Single entry point for investors", "Reduced friction during setup and expansion", "Faster resolution of administrative matters", "Coordinated responses across departments", "Clear communication channels for decision-making"],
-    },
-    phases: {
-      pre: {
-        title: { pt: "Fase Pré-Investimento", en: "Pre-investment Phase" },
-        items: {
-          pt: ["Apresentação do território e perfil econômico", "Identificação de locais e áreas industriais", "Orientação regulatória e tributária preliminar", "Conexão com universidades e parceiros locais"],
-          en: ["Presentation of territory and economic profile", "Identification of suitable locations and industrial areas", "Preliminary regulatory and tax guidance", "Connection with universities and local partners"],
-        },
-      },
-      impl: {
-        title: { pt: "Fase de Implementação", en: "Implementation Phase" },
-        items: {
-          pt: ["Suporte em processos de licenciamento", "Coordenação com equipes de urbanismo e infraestrutura", "Facilitação de acesso a programas de incentivo estaduais", "Assistência em recrutamento e parcerias de treinamento"],
-          en: ["Support in licensing and permitting processes", "Coordination with urban planning and infrastructure teams", "Facilitation of access to state-level incentive programs", "Assistance in workforce recruitment and training partnerships"],
-        },
-      },
-      ops: {
-        title: { pt: "Fase Operacional", en: "Operational Phase" },
-        items: {
-          pt: ["Relacionamento institucional contínuo", "Suporte para expansão e diversificação", "Conexão a programas de inovação e pesquisa aplicada", "Integração no ecossistema local e regional"],
-          en: ["Ongoing institutional relationship", "Support for expansion and diversification", "Connection to innovation programs and applied research", "Integration into the local and regional ecosystem"],
-        },
-      },
-    },
-    talentTitle: { pt: "Acesso a Talentos", en: "Talent Access" },
-    talentItems: {
-      pt: ["Acesso a graduados e pesquisadores da UFLA", "Parcerias para programas de treinamento customizado", "Colaboração em projetos de pesquisa aplicada", "Suporte para atrair profissionais e suas famílias"],
-      en: ["Access to graduates and researchers from UFLA", "Partnerships for customized training programs", "Collaboration in applied research projects", "Support for attracting professionals and their families"],
-    },
-    invitationTitle: { pt: "Um Convite Aberto", en: "An Open Invitation" },
-    invitationItems: {
-      pt: ["Empresas internacionais", "Investidores estratégicos", "Empresas orientadas à inovação", "Projetos industriais e tecnológicos de longo prazo"],
-      en: ["International companies", "Strategic investors", "Innovation-driven enterprises", "Long-term industrial and technological projects"],
-    },
-    partnershipTitle: { pt: "Mentalidade de Parceria de Longo Prazo", en: "A Long-Term Partnership Mindset" },
-    partnershipDesc: {
-      pt: "Lavras não vê investimento como uma transação única. Busca relacionamentos duradouros, objetivos de desenvolvimento compartilhados e criação de valor mútuo. Para empresas dispostas a se engajar nesse espírito, Lavras oferece um território que combina conhecimento, infraestrutura, acesso institucional e qualidade de vida.",
-      en: "Lavras does not view investment as a one-time transaction. It seeks enduring relationships, shared development objectives, and mutual value creation. For companies willing to engage in this spirit, Lavras offers a territory that combines knowledge, infrastructure, institutional access and quality of life.",
-    },
-  },
-  contact: {
-    tag: { pt: "VAMOS CONVERSAR", en: "LET'S TALK" },
-    title1: { pt: "Lavras está pronta.", en: "Lavras is ready." },
-    title2: { pt: "A plataforma está em pé.", en: "The platform is in place." },
-    title3: { pt: "O próximo passo é", en: "The next step is" },
-    title4: { pt: "uma conversa.", en: "a conversation." },
-    description: {
-      pt: "Convidamos empresas e investidores interessados a iniciar o diálogo e explorar como Lavras pode apoiar sua próxima fase de crescimento no Brasil.",
-      en: "We invite interested companies and investors to initiate dialogue and explore how Lavras can support their next phase of growth in Brazil.",
-    },
-    cta: { pt: "Iniciar conversa", en: "Start a conversation" },
-    role: {
-      pt: "Secretário de Desenvolvimento Econômico, Urbanismo e Inovação",
-      en: "Secretary of Economic Development, Urbanism, and Innovation",
-    },
-  },
   footer: {
     vision: { pt: "Governo de Lavras — Visão 2040", en: "Governo de Lavras — Vision 2040" },
     links: {
@@ -265,5 +167,16 @@ export const translations = {
 } as const;
 
 export function t(obj: { pt: string; en: string }, lang: Language): string {
-  return obj[lang];
+  if (lang === "pt" || lang === "en") return obj[lang];
+  const v = DICIONARIO[lang][obj.pt];
+  if (v === undefined && import.meta.env.DEV) {
+    const w = window as unknown as { __faltando?: Set<string> };
+    (w.__faltando ??= new Set()).add(obj.pt);
+  }
+  return v ?? obj.en;
+}
+
+/** O mesmo que t(), para listas paralelas ({ pt: [...], en: [...] }). */
+export function tLista(obj: { pt: readonly string[]; en: readonly string[] }, lang: Language): string[] {
+  return obj.pt.map((p, i) => t({ pt: p, en: obj.en[i] }, lang));
 }

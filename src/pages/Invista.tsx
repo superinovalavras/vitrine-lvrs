@@ -4,13 +4,15 @@ import BarraEcossistema from "@/components/BarraEcossistema";
 import RodapeSimples from "@/components/RodapeSimples";
 import { Reveal, useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/i18n/LanguageContext";
-import type { Language } from "@/i18n/translations";
+import { comEnfase } from "@/i18n/enfase";
+import { t, type Language } from "@/i18n/translations";
+import { localeDe } from "@/i18n/idiomas";
 import {
   EMAIL_CONTATO, FUNDO_HERO, HERO, INCENTIVOS, NUMEROS, ONDE, PASSOS, PORTAS, PORTAS_ORDEM, type Porta, type Texto,
 } from "@/data/invista";
 
-const tx = (t: Texto, lang: Language) => (typeof t === "string" ? t : t[lang]);
-const chave = (t: Texto) => (typeof t === "string" ? t : t.pt);
+const tx = (v: Texto, lang: Language) => (typeof v === "string" ? v : t(v, lang));
+const chave = (v: Texto) => (typeof v === "string" ? v : v.pt);
 
 /**
  * Home de lvrs.com.br: a introducao a Lavras para empresas que se identificam
@@ -29,22 +31,11 @@ const chave = (t: Texto) => (typeof t === "string" ? t : t.pt);
 
 const semMovimento = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function comEnfase(texto: string, enfase: string) {
-  const i = texto.indexOf(enfase);
-  if (i === -1) return <>{texto}</>;
-  return (
-    <>
-      {texto.slice(0, i)}
-      <em className="s">{enfase}</em>
-      {texto.slice(i + enfase.length)}
-    </>
-  );
-}
 
 /* ---------------------------------------------------------------- hero */
 
 function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) => void }) {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [hover, setHover] = useState<Porta | null>(null);
   // Antes de escolher, passar o mouse numa porta mostra a foto dela.
   const fundo = porta ?? hover ?? "pacto";
@@ -61,9 +52,9 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
         <circle cx="380" cy="380" r="230" /><circle cx="380" cy="380" r="160" />
       </svg>
       <div className="lv-wrap">
-        <h1>{comEnfase(HERO.titulo[lang], HERO.enfase[lang])}</h1>
-        <p className="lv-lead">{HERO.lead[lang]}</p>
-        <div className="inv-pergunta">{HERO.pergunta[lang]}</div>
+        <h1>{comEnfase(t(HERO.titulo, lang), t(HERO.enfase, lang))}</h1>
+        <p className="lv-lead">{t(HERO.lead, lang)}</p>
+        <div className="inv-pergunta">{t(HERO.pergunta, lang)}</div>
         <div className="inv-portas">
           {PORTAS_ORDEM.map((id) => {
             const p = PORTAS[id];
@@ -80,8 +71,8 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
                 onMouseLeave={() => setHover(null)}
               >
                 <img src={p.logo} alt="" />
-                <b>{p.rotulo[lang]}</b>
-                <span>{p.resumo[lang]}</span>
+                <b>{t(p.rotulo, lang)}</b>
+                <span>{t(p.resumo, lang)}</span>
               </button>
             );
           })}
@@ -93,16 +84,28 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
 
 /* ------------------------------------------------------------- numeros */
 
+/**
+ * Cada idioma escreve milhar e bilhao do seu jeito. O mandarim conta em
+ * dezenas de milhar (万) e centenas de milhoes (亿), por isso a escala muda.
+ */
+const MIL: Record<Language, (n: string) => string> = {
+  pt: (n) => `${n} mil`, en: (n) => `${n}k`, es: (n) => `${n} mil`, fr: (n) => `${n} k`, de: (n) => `${n} Tsd.`, zh: (n) => `${n}万`,
+};
+const BI: Record<Language, (n: string) => string> = {
+  pt: (n) => `R$ ${n} bi`, en: (n) => `R$ ${n} bn`, es: (n) => `R$ ${n} mil M`, fr: (n) => `${n} Md R$`, de: (n) => `${n} Mrd. R$`, zh: (n) => `R$ ${n}亿`,
+};
+
 function formata(v: number, f: string, lang: Language) {
-  const loc = lang === "pt" ? "pt-BR" : "en-US";
-  if (f === "mil") return lang === "pt" ? `${Math.round(v / 1000)} mil` : `${Math.round(v / 1000)}k`;
-  if (f === "bi") return `R$ ${v.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${lang === "pt" ? "bi" : "bn"}`;
+  const loc = localeDe(lang);
+  const num = (x: number, casas = 0) => x.toLocaleString(loc, { minimumFractionDigits: casas, maximumFractionDigits: casas });
+  if (f === "mil") return MIL[lang](lang === "zh" ? num(v / 10000, 1) : num(v / 1000));
+  if (f === "bi") return BI[lang](lang === "zh" ? num(v * 10, 1) : num(v, 2));
   if (f === "idh") return v.toLocaleString(loc, { minimumFractionDigits: 3 });
   return Math.round(v).toLocaleString(loc);
 }
 
 function Contador({ valor, formato }: { valor: number; formato: string }) {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const { ref, isVisible } = useScrollReveal(0.4);
   const [k, setK] = useState(0);
   useEffect(() => {
@@ -128,14 +131,14 @@ function Contador({ valor, formato }: { valor: number; formato: string }) {
 }
 
 function Numeros() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   return (
-    <section className="inv-numeros" aria-label={lang === "pt" ? "Lavras em números" : "Lavras in numbers"}>
+    <section className="inv-numeros" aria-label={L("Lavras em números", "Lavras in numbers")}>
       <div className="lv-wrap inv-num-grid">
         {NUMEROS.map((n) => (
           <div key={n.legenda.pt} className="inv-num">
             <Contador valor={n.valor} formato={n.formato} />
-            <span>{n.legenda[lang]}</span>
+            <span>{t(n.legenda, lang)}</span>
             <small>{n.fonte}</small>
           </div>
         ))}
@@ -147,12 +150,12 @@ function Numeros() {
 /* --------------------------------------------------------------- setor */
 
 function Mapa() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [on, setOn] = useState(false);
   // As rotas se desenham assim que a porta Sul de Minas aparece.
   useEffect(() => { const id = window.setTimeout(() => setOn(true), 60); return () => window.clearTimeout(id); }, []);
   return (
-    <div className={`inv-radar${on ? " on" : ""}`} aria-label={lang === "pt" ? "Distâncias a partir de Lavras" : "Distances from Lavras"}>
+    <div className={`inv-radar${on ? " on" : ""}`} aria-label={L("Distâncias a partir de Lavras", "Distances from Lavras")}>
       <svg viewBox="0 0 600 520">
         <g className="rotas">
           <path className="rota" d="M300 260 L470 110" /><path className="rota" d="M300 260 L210 470" />
@@ -165,7 +168,7 @@ function Mapa() {
         <circle className="ponto" cx="470" cy="110" r="6" /><text className="cid" x="482" y="104">Belo Horizonte</text><text className="km" x="482" y="122">230 km</text>
         <circle className="ponto" cx="210" cy="470" r="6" /><text className="cid" x="222" y="474">São Paulo</text><text className="km" x="222" y="492">370 km</text>
         <circle className="ponto" cx="540" cy="400" r="6" /><text className="cid" x="460" y="430">Rio de Janeiro</text><text className="km" x="460" y="448">450 km</text>
-        <circle className="ponto" cx="230" cy="330" r="6" /><text className="cid" x="100" y="334">Varginha</text><text className="km" x="100" y="352">90 km · {lang === "pt" ? "aeroporto" : "airport"}</text>
+        <circle className="ponto" cx="230" cy="330" r="6" /><text className="cid" x="100" y="334">Varginha</text><text className="km" x="100" y="352">90 km · {L("aeroporto", "airport")}</text>
         <circle className="ponto" cx="120" cy="150" r="6" /><text className="cid" x="40" y="132">Campinas</text><text className="km" x="40" y="114">Viracopos 380 km</text>
       </svg>
       {/* No celular o SVG fica estreito demais para ler os nomes: as distancias
@@ -174,7 +177,7 @@ function Mapa() {
         <li><b>230 km</b> Belo Horizonte</li>
         <li><b>370 km</b> São Paulo</li>
         <li><b>450 km</b> Rio de Janeiro</li>
-        <li><b>90 km</b> Varginha · {lang === "pt" ? "aeroporto" : "airport"}</li>
+        <li><b>90 km</b> Varginha · {L("aeroporto", "airport")}</li>
         <li><b>380 km</b> Viracopos</li>
       </ul>
     </div>
@@ -182,41 +185,41 @@ function Mapa() {
 }
 
 function ConteudoSetor({ id }: { id: Porta }) {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const d = PORTAS[id];
   return (
     <div className="inv-setor">
       <div>
         <img className="inv-setor-logo" src={d.logo} alt="" />
-        <h3>{comEnfase(d.titulo[lang], d.enfase[lang])}</h3>
-        <p className="lv-lead">{d.texto[lang]}</p>
+        <h3>{comEnfase(t(d.titulo, lang), t(d.enfase, lang))}</h3>
+        <p className="lv-lead">{t(d.texto, lang)}</p>
         <div className="inv-mini">
           {d.mini.map((m) => (
-            <div key={chave(m.valor)}><b>{tx(m.valor, lang)}</b><span>{m.legenda[lang]}</span></div>
+            <div key={chave(m.valor)}><b>{tx(m.valor, lang)}</b><span>{t(m.legenda, lang)}</span></div>
           ))}
         </div>
         <div className="inv-bloco">
-          <h4>{d.empresasTitulo?.[lang] ?? (lang === "pt" ? "Quem já está aqui" : "Who is already here")}</h4>
+          <h4>{d.empresasTitulo ? t(d.empresasTitulo, lang) : L("Quem já está aqui", "Who is already here")}</h4>
           <div className="inv-pills">{d.empresas.map((e) => <span key={e}>{e}</span>)}</div>
         </div>
         <div className="inv-bloco">
-          <h4>{lang === "pt" ? "Talento e pesquisa" : "Talent and research"}</h4>
+          <h4>{L("Talento e pesquisa", "Talent and research")}</h4>
           <div className="inv-pills">{d.talento.map((e) => <span key={chave(e)}>{tx(e, lang)}</span>)}</div>
         </div>
       </div>
       <div>
-        {d.mapa ? <Mapa /> : <div className="inv-foto"><img src={d.foto} alt={d.legendaFoto[lang]} loading="lazy" /></div>}
+        {d.mapa ? <Mapa /> : <div className="inv-foto"><img src={d.foto} alt={t(d.legendaFoto, lang)} loading="lazy" /></div>}
         {d.depoimento && (
           <blockquote className="inv-depo inv-bloco">
-            “{d.depoimento.texto[lang]}”<cite>{d.depoimento.autor[lang]}</cite>
+            “{t(d.depoimento.texto, lang)}”<cite>{t(d.depoimento.autor, lang)}</cite>
           </blockquote>
         )}
         <div className="inv-bloco">
-          <h4>{d.listaTitulo[lang]}</h4>
-          <ul className="inv-lista">{d.lista.map((l) => <li key={l.pt}>{l[lang]}</li>)}</ul>
+          <h4>{t(d.listaTitulo, lang)}</h4>
+          <ul className="inv-lista">{d.lista.map((l) => <li key={l.pt}>{t(l, lang)}</li>)}</ul>
         </div>
         <a className="lv-btn" href="#contato">
-          {lang === "pt" ? "Falar sobre" : "Talk about"} {d.rotulo[lang]} →
+          {L("Falar sobre", "Talk about")} {t(d.rotulo, lang)} →
         </a>
       </div>
     </div>
@@ -224,7 +227,7 @@ function ConteudoSetor({ id }: { id: Porta }) {
 }
 
 function Setor({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) => void }) {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   // Antes de a pessoa escolher, o quadro mostra o Agro (primeira porta).
   const ativa = porta ?? "agro";
   const [mostrada, setMostrada] = useState<Porta>(ativa);
@@ -244,13 +247,13 @@ function Setor({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) 
       <div className="lv-wrap">
         <div className="inv-setor-top">
           <div>
-            <span className="lv-tag">{lang === "pt" ? "A vocação de Lavras para o seu negócio" : "Lavras' vocation for your business"}</span>
-            <h2 className="lv-h2" style={{ marginBottom: 0 }}>{lang === "pt" ? "Escolha o seu setor." : "Choose your sector."}</h2>
+            <span className="lv-tag">{L("A vocação de Lavras para o seu negócio", "Lavras' vocation for your business")}</span>
+            <h2 className="lv-h2" style={{ marginBottom: 0 }}>{L("Escolha o seu setor.", "Choose your sector.")}</h2>
           </div>
-          <div className="inv-chips" role="group" aria-label={lang === "pt" ? "Setor" : "Sector"}>
+          <div className="inv-chips" role="group" aria-label={L("Setor", "Sector")}>
             {PORTAS_ORDEM.map((id) => (
               <button key={id} type="button" aria-pressed={ativa === id} onClick={() => escolher(id)}>
-                {PORTAS[id].rotulo[lang].toUpperCase()}
+                {t(PORTAS[id].rotulo, lang).toUpperCase()}
               </button>
             ))}
           </div>
@@ -267,20 +270,18 @@ function Setor({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) 
 /* ------------------------------------------------------ onde se instalar */
 
 function OndeSeInstalar() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [aberta, setAberta] = useState(0);
   return (
     <section className="lv-sec">
       <div className="lv-wrap">
         <Reveal>
-          <span className="lv-tag">{lang === "pt" ? "Onde se instalar" : "Where to set up"}</span>
+          <span className="lv-tag">{L("Onde se instalar", "Where to set up")}</span>
           <h2 className="lv-h2">
-            {lang === "pt" ? <>Lugar para <em className="s">crescer</em> dentro da cidade.</> : <>Room to <em className="s">grow</em> within the city.</>}
+            {comEnfase(L("Lugar para crescer dentro da cidade.", "Room to grow within the city."), L("crescer", "grow"))}
           </h2>
           <p className="lv-lead">
-            {lang === "pt"
-              ? "Áreas industriais, parque tecnológico e a infraestrutura de uma cidade média bem servida."
-              : "Industrial areas, a technology park and the infrastructure of a well-served mid-sized city."}
+            {L("Áreas industriais, parque tecnológico e a infraestrutura de uma cidade média bem servida.", "Industrial areas, a technology park and the infrastructure of a well-served mid-sized city.")}
           </p>
         </Reveal>
         <div className="inv-onde">
@@ -297,8 +298,8 @@ function OndeSeInstalar() {
             >
               <div>
                 <span className="n">0{i + 1}</span>
-                <h3>{o.titulo[lang]}</h3>
-                <p>{o.texto[lang]}</p>
+                <h3>{t(o.titulo, lang)}</h3>
+                <p>{t(o.texto, lang)}</p>
               </div>
             </button>
           ))}
@@ -318,27 +319,25 @@ function inclina(e: MouseEvent<HTMLDivElement>) {
 }
 
 function Incentivos() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   return (
     <section className="lv-sec escura">
       <div className="lv-wrap">
         <Reveal>
-          <span className="lv-tag">{lang === "pt" ? "Incentivos" : "Incentives"}</span>
+          <span className="lv-tag">{L("Incentivos", "Incentives")}</span>
           <h2 className="lv-h2">
-            {lang === "pt" ? <>Um governo que <em className="s">facilita</em>, não só regula.</> : <>A government that <em className="s">facilitates</em>, not just regulates.</>}
+            {comEnfase(L("Um governo que facilita, não só regula.", "A government that facilitates, not just regulates."), L("facilita", "facilitates"))}
           </h2>
           <p className="lv-lead">
-            {lang === "pt"
-              ? "Lei Municipal de Desenvolvimento Econômico (2023) e marco legal do ecossistema de inovação (2025), somados aos programas do Estado de Minas Gerais."
-              : "The Municipal Economic Development Law (2023) and the innovation ecosystem legal framework (2025), plus the State of Minas Gerais programs."}
+            {L("Lei Municipal de Desenvolvimento Econômico (2023) e marco legal do ecossistema de inovação (2025), somados aos programas do Estado de Minas Gerais.", "The Municipal Economic Development Law (2023) and the innovation ecosystem legal framework (2025), plus the State of Minas Gerais programs.")}
           </p>
         </Reveal>
         <div className="inv-inc-grid">
           {INCENTIVOS.map((c) => (
             <div key={c.titulo.pt} className="inv-inc" onMouseMove={inclina} onMouseLeave={(e) => (e.currentTarget.style.transform = "")}>
-              <span className="n">{c.nivel[lang]}</span>
-              <h3>{c.titulo[lang]}</h3>
-              <p>{c.texto[lang]}</p>
+              <span className="n">{t(c.nivel, lang)}</span>
+              <h3>{t(c.titulo, lang)}</h3>
+              <p>{t(c.texto, lang)}</p>
             </div>
           ))}
         </div>
@@ -350,7 +349,7 @@ function Incentivos() {
 /* --------------------------------------------------------- soft landing */
 
 function Passos() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const lista = useRef<HTMLDivElement>(null);
   const [progresso, setProgresso] = useState(0);
   const [acesos, setAcesos] = useState(0);
@@ -374,12 +373,10 @@ function Passos() {
         <Reveal>
           <span className="lv-tag">Soft landing</span>
           <h2 className="lv-h2">
-            {lang === "pt" ? <>Do primeiro contato à <em className="s">operação</em>.</> : <>From first contact to <em className="s">operation</em>.</>}
+            {comEnfase(L("Do primeiro contato à operação.", "From first contact to operation."), L("operação", "operation"))}
           </h2>
           <p className="lv-lead">
-            {lang === "pt"
-              ? "A Prefeitura acompanha a empresa em toda a jornada, com um ponto único de entrada e respostas coordenadas entre as secretarias."
-              : "City Hall supports the company throughout the journey, with a single point of entry and coordinated answers across departments."}
+            {L("A Prefeitura acompanha a empresa em toda a jornada, com um ponto único de entrada e respostas coordenadas entre as secretarias.", "City Hall supports the company throughout the journey, with a single point of entry and coordinated answers across departments.")}
           </p>
         </Reveal>
         <div className="inv-passos" ref={lista}>
@@ -387,8 +384,8 @@ function Passos() {
           <div className="cheio" style={{ transform: `scaleY(${progresso})` }} />
           {PASSOS.map((p, i) => (
             <div key={p.titulo.pt} className={`inv-passo${i < acesos ? " on" : ""}`} data-n={i + 1}>
-              <h3>{p.titulo[lang]}</h3>
-              <p>{p.texto[lang]}</p>
+              <h3>{t(p.titulo, lang)}</h3>
+              <p>{t(p.texto, lang)}</p>
             </div>
           ))}
         </div>
@@ -400,21 +397,19 @@ function Passos() {
 /* --------------------------------------------------- chamada iniciativas */
 
 function ChamadaIniciativas() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   return (
     <section className="lv-sec escura">
       <div className="lv-wrap">
         <Reveal>
           <Link className="inv-faixa" to="/iniciativas">
             <div>
-              <span className="lv-tag">{lang === "pt" ? "Ecossistema LVRS+" : "LVRS+ ecosystem"}</span>
+              <span className="lv-tag">{L("Ecossistema LVRS+", "LVRS+ ecosystem")}</span>
               <h2 className="lv-h2">
-                {lang === "pt" ? <>Conheça nossas <em className="s">iniciativas</em>.</> : <>Meet our <em className="s">initiatives</em>.</>}
+                {comEnfase(L("Conheça nossas iniciativas.", "Meet our initiatives."), L("iniciativas", "initiatives"))}
               </h2>
               <p className="lv-lead">
-                {lang === "pt"
-                  ? "Formação, dados, transparência e reconhecimento: o que a cidade já faz pela inovação."
-                  : "Training, data, transparency and recognition: what the city already does for innovation."}
+                {L("Formação, dados, transparência e reconhecimento: o que a cidade já faz pela inovação.", "Training, data, transparency and recognition: what the city already does for innovation.")}
               </p>
             </div>
             <div className="inv-faixa-logos" aria-hidden="true">
@@ -422,7 +417,7 @@ function ChamadaIniciativas() {
               <span style={{ background: "#05070A" }}><img src="/iniciativas/launch.png" alt="" /></span>
               <span style={{ background: "#0A2540" }}><img src="/iniciativas/observatorio.png" alt="" style={{ maxHeight: 70 }} /></span>
             </div>
-            <span className="lv-btn">{lang === "pt" ? "Ver iniciativas →" : "See initiatives →"}</span>
+            <span className="lv-btn">{L("Ver iniciativas →", "See initiatives →")}</span>
           </Link>
         </Reveal>
       </div>
@@ -433,7 +428,7 @@ function ChamadaIniciativas() {
 /* --------------------------------------------------------------- contato */
 
 function Contato({ porta }: { porta: Porta | null }) {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [setor, setSetor] = useState<string>(porta ?? "agro");
   useEffect(() => { if (porta) setSetor(porta); }, [porta]);
 
@@ -443,74 +438,75 @@ function Contato({ porta }: { porta: Porta | null }) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const linhas = [
-      `${lang === "pt" ? "Nome" : "Name"}: ${f.get("nome")}`,
-      `${lang === "pt" ? "Empresa" : "Company"}: ${f.get("empresa")}`,
+      `${L("Nome", "Name")}: ${f.get("nome")}`,
+      `${L("Empresa", "Company")}: ${f.get("empresa")}`,
       `E-mail: ${f.get("email")}`,
-      `${lang === "pt" ? "País" : "Country"}: ${f.get("pais") || "-"}`,
-      `${lang === "pt" ? "Setor" : "Sector"}: ${f.get("setor")}`,
-      `${lang === "pt" ? "Fase" : "Stage"}: ${f.get("fase")}`,
+      `${L("País", "Country")}: ${f.get("pais") || "-"}`,
+      `${L("Setor", "Sector")}: ${f.get("setor")}`,
+      `${L("Fase", "Stage")}: ${f.get("fase")}`,
       "",
       String(f.get("mensagem") || ""),
     ];
-    const assunto = `${lang === "pt" ? "Investimento em Lavras" : "Investing in Lavras"} — ${f.get("empresa")}`;
+    const assunto = `${L("Investimento em Lavras", "Investing in Lavras")} — ${f.get("empresa")}`;
     window.location.href = `mailto:${EMAIL_CONTATO}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(linhas.join("\n"))}`;
   };
 
-  const fases = lang === "pt"
-    ? ["Explorando territórios", "Comparando cidades", "Pronto para visitar", "Expansão de operação existente"]
-    : ["Exploring locations", "Comparing cities", "Ready to visit", "Expanding an existing operation"];
+  const fases = [
+    L("Explorando territórios", "Exploring locations"),
+    L("Comparando cidades", "Comparing cities"),
+    L("Pronto para visitar", "Ready to visit"),
+    L("Expansão de operação existente", "Expanding an existing operation"),
+  ];
 
   return (
     <section className="lv-sec escura" id="contato" style={{ borderTop: "1px solid var(--borda)", scrollMarginTop: 44 }}>
       <div className="lv-wrap inv-ct-grid">
         <Reveal>
-          <span className="lv-tag">{lang === "pt" ? "Vamos conversar" : "Let's talk"}</span>
+          <span className="lv-tag">{L("Vamos conversar", "Let's talk")}</span>
           <h2 className="lv-h2">
-            {lang === "pt" ? <>Lavras está pronta. O próximo passo é <em className="s">uma conversa</em>.</> : <>Lavras is ready. The next step is <em className="s">a conversation</em>.</>}
+            {comEnfase(L("Lavras está pronta. O próximo passo é uma conversa.", "Lavras is ready. The next step is a conversation."), L("uma conversa", "a conversation"))}
           </h2>
           <p className="lv-lead" style={{ marginBottom: 28 }}>
-            {lang === "pt"
-              ? "Superintendência de Inovação · Secretaria de Desenvolvimento Econômico, Urbanismo e Inovação de Lavras."
-              : "Innovation Office · Lavras Department of Economic Development, Urban Planning and Innovation."}
+            {L("Superintendência de Inovação · Secretaria de Desenvolvimento Econômico, Urbanismo e Inovação de Lavras.", "Innovation Office · Lavras Department of Economic Development, Urban Planning and Innovation.")}
           </p>
           <div className="inv-opcoes">
             <a className="inv-op" href={`mailto:${EMAIL_CONTATO}`}>
               <span className="i" aria-hidden="true">@</span>
               <span><b>E-mail</b><span>{EMAIL_CONTATO}</span></span>
             </a>
-            <a className="inv-op" href={`mailto:${EMAIL_CONTATO}?subject=${encodeURIComponent(lang === "pt" ? "Quero agendar uma visita a Lavras" : "I'd like to schedule a visit to Lavras")}`}>
+            <a className="inv-op" href={`mailto:${EMAIL_CONTATO}?subject=${encodeURIComponent(L("Quero agendar uma visita a Lavras", "I'd like to schedule a visit to Lavras"))}`}>
               <span className="i" aria-hidden="true">◷</span>
               <span>
-                <b>{lang === "pt" ? "Agendar uma visita" : "Schedule a visit"}</b>
-                <span>{lang === "pt" ? "Conheça as áreas industriais, a UFLA e as empresas instaladas" : "See the industrial areas, UFLA and the companies already here"}</span>
+                <b>{L("Agendar uma visita", "Schedule a visit")}</b>
+                <span>{L("Conheça as áreas industriais, a UFLA e as empresas instaladas", "See the industrial areas, UFLA and the companies already here")}</span>
               </span>
             </a>
           </div>
         </Reveal>
         <Reveal delay={120}>
           <form className="inv-form" onSubmit={enviar}>
-            <b style={{ fontSize: "1.1rem" }}>{lang === "pt" ? "Conte sobre o seu projeto" : "Tell us about your project"}</b>
+            <b style={{ fontSize: "1.1rem" }}>{L("Conte sobre o seu projeto", "Tell us about your project")}</b>
             <div className="inv-dupla">
-              <label>{lang === "pt" ? "Nome" : "Name"}<input name="nome" required autoComplete="name" /></label>
-              <label>{lang === "pt" ? "Empresa" : "Company"}<input name="empresa" required autoComplete="organization" /></label>
+              <label>{L("Nome", "Name")}<input name="nome" required autoComplete="name" /></label>
+              <label>{L("Empresa", "Company")}<input name="empresa" required autoComplete="organization" /></label>
             </div>
             <div className="inv-dupla">
               <label>E-mail<input name="email" type="email" required autoComplete="email" /></label>
-              <label>{lang === "pt" ? "País" : "Country"}<input name="pais" autoComplete="country-name" /></label>
+              <label>{L("País", "Country")}<input name="pais" autoComplete="country-name" /></label>
             </div>
-            <label>{lang === "pt" ? "Setor" : "Sector"}
+            <label>{L("Setor", "Sector")}
               <select name="setor" value={setor} onChange={(e) => setSetor(e.target.value)}>
-                {PORTAS_ORDEM.map((id) => <option key={id} value={id}>{PORTAS[id].rotulo[lang]}</option>)}
-                <option value="outro">{lang === "pt" ? "Outro" : "Other"}</option>
+                {PORTAS_ORDEM.map((id) => <option key={id} value={id}>{t(PORTAS[id].rotulo, lang)}</option>)}
+                <option value="outro">{L("Outro", "Other")}</option>
               </select>
             </label>
-            <label>{lang === "pt" ? "Fase do investimento" : "Investment stage"}
+            <label>{L("Fase do investimento", "Investment stage")}
               <select name="fase">{fases.map((f) => <option key={f}>{f}</option>)}</select>
             </label>
-            <label>{lang === "pt" ? "Mensagem" : "Message"}<textarea name="mensagem" rows={3} /></label>
-            <button className="lv-btn" type="submit">{lang === "pt" ? "Enviar" : "Send"}</button>
+            <label>{L("Mensagem", "Message")}<textarea name="mensagem" rows={3} /></label>
+            <button className="lv-btn" type="submit">{L("Enviar", "Send")}</button>
             <span className="obs">
-              {lang === "pt" ? "Abre o seu programa de e-mail com a mensagem pronta." : "Opens your e-mail app with the message ready."}
+              {L("Abre o seu programa de e-mail com a mensagem pronta.", "Opens your e-mail app with the message ready.")}
             </span>
           </form>
         </Reveal>

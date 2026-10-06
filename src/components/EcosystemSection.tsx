@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { translations, t } from "@/i18n/translations";
+import { translations, t, tLista } from "@/i18n/translations";
 import { Reveal } from "@/hooks/useScrollReveal";
 import { GraduationCap, Building2, Lightbulb, Landmark, HeartPulse } from "lucide-react";
 
@@ -16,7 +16,7 @@ const tabIcons = {
 
 const EcosystemSection = () => {
   const [activeTab, setActiveTab] = useState<string>("education");
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const tr = translations.ecosystem;
   const content = tr.content[activeTab as keyof typeof tr.content];
 
@@ -31,7 +31,7 @@ const EcosystemSection = () => {
         <Reveal>
           <div className="text-center max-w-3xl mx-auto mb-16">
             <p className="text-xs font-body font-semibold tracking-[0.2em] text-primary uppercase mb-5">
-              {lang === "pt" ? "ECOSSISTEMA" : "ECOSYSTEM"}
+              {L("ECOSSISTEMA", "ECOSYSTEM")}
             </p>
             <h2 className="font-display text-3xl lg:text-[48px] leading-[1.08] text-secondary-foreground">
               {t(tr.title, lang)}
@@ -97,7 +97,7 @@ const EcosystemSection = () => {
 
           <Reveal delay={150}>
             <div className="space-y-2">
-              {content.items[lang].map((item, i) => (
+              {tLista(content.items, lang).map((item, i) => (
                 <div
                   key={i}
                   className="flex items-center gap-4 py-4 px-5 rounded-2xl bg-secondary-foreground/3 border border-transparent hover:border-primary/15 hover:bg-primary/5 transition-all duration-300 group"

@@ -35,7 +35,7 @@ export const HERO = {
 
 export const FUNDO_HERO: Record<Porta | "pacto", string> = {
   pacto: "/fundos/fundo-pacto.jpg",
-  agro: agroSprayer,
+  agro: "/fundos/fundo-agro.jpg",
   food: "/fundos/fundo-food.jpg",
   tech: "/fundos/fundo-tech.jpg",
   sri: "/fundos/fundo-sri.jpg",

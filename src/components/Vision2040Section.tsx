@@ -1,3 +1,4 @@
+import { t, tLista } from "@/i18n/translations";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { URL_GESTAO } from "@/data/verticais";
 import {
@@ -90,7 +91,7 @@ const macrochallenges = [
 ];
 
 const Vision2040Section = () => {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
 
   return (
     <section id="vision-2040" className="py-20 lg:py-32 bg-background">
@@ -101,7 +102,7 @@ const Vision2040Section = () => {
             LAVRAS 2040
           </p>
           <h2 className="font-display text-3xl lg:text-[48px] leading-[1.08] text-foreground">
-            {lang === "pt" ? "Lavras Capital Brasileira do Futuro do Alimento" : "Lavras Brazilian Capital of the Future of Food"}
+            {L("Lavras Capital Brasileira do Futuro do Alimento", "Lavras Brazilian Capital of the Future of Food")}
           </h2>
         </div>
 
@@ -109,16 +110,14 @@ const Vision2040Section = () => {
         <div className="bg-secondary rounded-3xl p-6 sm:p-8 md:p-12 mb-16 text-center">
           <Target className="w-14 h-14 text-icon mx-auto mb-6" />
           <p className="text-secondary-foreground/70 max-w-2xl mx-auto text-sm md:text-base font-body italic leading-relaxed">
-            {lang === "pt"
-              ? '"O futuro de Lavras depende da capacidade de alinhar planejamento urbano, inovação tecnológica e políticas sociais em uma estratégia integrada de crescimento sustentável e inteligente."'
-              : '"The future of Lavras depends on the ability to align urban planning, technological innovation, and social policies in an integrated strategy for sustainable and intelligent growth."'}
+            {L('"O futuro de Lavras depende da capacidade de alinhar planejamento urbano, inovação tecnológica e políticas sociais em uma estratégia integrada de crescimento sustentável e inteligente."', '"The future of Lavras depends on the ability to align urban planning, technological innovation, and social policies in an integrated strategy for sustainable and intelligent growth."')}
           </p>
         </div>
 
         {/* Strategic Axes */}
         <div className="mb-16">
           <h3 className="font-display text-xl text-foreground text-center mb-8">
-            {lang === "pt" ? "Eixos Estratégicos" : "Strategic Axes"}
+            {L("Eixos Estratégicos", "Strategic Axes")}
           </h3>
           {/* Abaixo de 420px, duas colunas deixavam o texto com uma palavra por linha. */}
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -129,8 +128,8 @@ const Vision2040Section = () => {
                   <div className="w-12 h-12 rounded-full bg-icon/10 flex items-center justify-center mx-auto mb-4">
                     <Icon className="w-6 h-6 text-icon" />
                   </div>
-                  <h4 className="font-display text-sm text-foreground mb-1">{axis.title[lang]}</h4>
-                  <p className="text-xs text-muted-foreground font-body">{axis.desc[lang]}</p>
+                  <h4 className="font-display text-sm text-foreground mb-1">{t(axis.title, lang)}</h4>
+                  <p className="text-xs text-muted-foreground font-body">{t(axis.desc, lang)}</p>
                 </div>
               );
             })}
@@ -140,7 +139,7 @@ const Vision2040Section = () => {
         {/* Missions */}
         <div className="mb-16">
           <h3 className="font-display text-xl text-foreground text-center mb-8">
-            {lang === "pt" ? "Missões" : "Missions"}
+            {L("Missões", "Missions")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {missions.map((mission, i) => {
@@ -151,17 +150,17 @@ const Vision2040Section = () => {
                     <div className="w-12 h-12 rounded-2xl bg-icon flex items-center justify-center shrink-0">
                       <Icon className="w-6 h-6 text-primary-foreground" />
                     </div>
-                    <h4 className="font-display text-lg text-foreground pt-2">{mission.title[lang]}</h4>
+                    <h4 className="font-display text-lg text-foreground pt-2">{t(mission.title, lang)}</h4>
                   </div>
                   <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">
-                    {mission.desc[lang]}
+                    {t(mission.desc, lang)}
                   </p>
                   <div>
                     <p className="text-[11px] font-body font-bold text-icon mb-2 uppercase tracking-wider">
-                      {lang === "pt" ? "Ideias para 2040:" : "Ideas for 2040:"}
+                      {L("Ideias para 2040:", "Ideas for 2040:")}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {mission.projects[lang].map((project, idx) => (
+                      {tLista(mission.projects, lang).map((project, idx) => (
                         <span key={idx} className="text-[12px] font-body font-semibold bg-secondary text-secondary-foreground/80 px-3 py-1.5 rounded-full">
                           {project}
                         </span>
@@ -179,9 +178,7 @@ const Vision2040Section = () => {
             leva quem quer ver o que ja anda para o painel. */}
         <div className="mb-16 flex flex-col items-start justify-between gap-5 rounded-3xl border border-accent/30 bg-accent/5 p-6 sm:flex-row sm:items-center sm:p-8">
           <p className="max-w-xl text-[15px] font-light leading-relaxed text-white/75">
-            {lang === "pt"
-              ? "As missões apontam para 2040. O caminho até lá já começou: são 12 projetos em execução hoje."
-              : "The missions point to 2040. The road there has already begun: 12 projects are underway today."}
+            {L("As missões apontam para 2040. O caminho até lá já começou: são 12 projetos em execução hoje.", "The missions point to 2040. The road there has already begun: 12 projects are underway today.")}
           </p>
           <a
             href={URL_GESTAO}
@@ -189,7 +186,7 @@ const Vision2040Section = () => {
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-3 rounded-xl bg-accent px-6 py-3.5 text-[14px] font-semibold text-accent-foreground transition-transform hover:-translate-y-0.5"
           >
-            {lang === "pt" ? "Ver o andamento" : "See the progress"}
+            {L("Ver o andamento", "See the progress")}
             <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -197,7 +194,7 @@ const Vision2040Section = () => {
         {/* Macrochallenges */}
         <div>
           <h3 className="font-display text-xl text-foreground text-center mb-8">
-            {lang === "pt" ? "Macrodesafios" : "Macro Challenges"}
+            {L("Macrodesafios", "Macro Challenges")}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {macrochallenges.map((ch, i) => {
@@ -208,8 +205,8 @@ const Vision2040Section = () => {
                     <Icon className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-display text-sm text-foreground mb-1">{ch.title[lang]}</h4>
-                    <p className="text-xs text-muted-foreground font-body">{ch.desc[lang]}</p>
+                    <h4 className="font-display text-sm text-foreground mb-1">{t(ch.title, lang)}</h4>
+                    <p className="text-xs text-muted-foreground font-body">{t(ch.desc, lang)}</p>
                   </div>
                 </div>
               );

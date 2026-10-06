@@ -92,6 +92,15 @@
     /* Evita a palavra sozinha na ultima linha (pedido de 05/10/2026, revisao
        de celular). E herdado, entao vale para paragrafos, listas e botoes. */
     text-wrap: pretty;
+    /* Palavra longa demais para a largura (alemao: "Innovationsakademie")
+       quebra em vez de vazar da tela. */
+    overflow-wrap: break-word;
+  }
+
+  /* Alemao e frances tem palavras compostas longas: hifenizacao do navegador,
+     guiada pelo lang do <html> (LanguageContext). */
+  html:lang(de-DE) body, html:lang(fr-FR) body {
+    hyphens: auto;
   }
 
   /* Os titulos pediam 'Inter', que nunca foi carregada: caiam numa Arial

@@ -1,13 +1,13 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { translations, t } from "@/i18n/translations";
+import { translations, t, tLista } from "@/i18n/translations";
 import logoGoverno from "@/assets/logo-governo-lavras.svg";
 import logoLvrs from "@/assets/logo-lvrs.svg";
 import logoValeIpes from "@/assets/logo-vale-ipes.svg";
 
 const Footer = () => {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const tr = translations.footer;
-  const links = tr.links[lang];
+  const links = tLista(tr.links, lang);
 
   return (
     <footer className="bg-secondary text-secondary-foreground py-20" role="contentinfo">
@@ -27,9 +27,9 @@ const Footer = () => {
           </div>
 
           {/* Nav columns */}
-          <nav aria-label={lang === "pt" ? "Links do rodapé" : "Footer links"}>
+          <nav aria-label={L("Links do rodapé", "Footer links")}>
             <h4 className="text-xs font-body font-bold text-secondary-foreground/60 uppercase tracking-wider mb-5">
-              {lang === "pt" ? "Navegação" : "Navigation"}
+              {L("Navegação", "Navigation")}
             </h4>
             <div className="space-y-3">
               {links.slice(0, 4).map((label, i) => (
@@ -39,9 +39,9 @@ const Footer = () => {
               ))}
             </div>
           </nav>
-          <nav aria-label={lang === "pt" ? "Mais links" : "More links"}>
+          <nav aria-label={L("Mais links", "More links")}>
             <h4 className="text-xs font-body font-bold text-secondary-foreground/60 uppercase tracking-wider mb-5">
-              {lang === "pt" ? "Mais" : "More"}
+              {L("Mais", "More")}
             </h4>
             <div className="space-y-3">
               {links.slice(4).map((label, i) => (
@@ -53,7 +53,7 @@ const Footer = () => {
           </nav>
           <div>
             <h4 className="text-xs font-body font-bold text-secondary-foreground/60 uppercase tracking-wider mb-5">
-              {lang === "pt" ? "Contato" : "Contact"}
+              {L("Contato", "Contact")}
             </h4>
             <address className="space-y-3 not-italic">
               {/* Contato institucional decidido em 05/10/2026 (antes era o
@@ -68,9 +68,9 @@ const Footer = () => {
         {/* Partner logos */}
         <div className="border-t border-secondary-foreground/10 pt-10 pb-8">
           <p className="text-[10px] font-body font-semibold text-secondary-foreground/40 uppercase tracking-[0.15em] mb-6 text-center">
-            {lang === "pt" ? "Realização e Apoio" : "Organized & Supported by"}
+            {L("Realização e Apoio", "Organized & Supported by")}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-10 lg:gap-14" role="group" aria-label={lang === "pt" ? "Logos dos parceiros" : "Partner logos"}>
+          <div className="flex flex-wrap items-center justify-center gap-10 lg:gap-14" role="group" aria-label={L("Logos dos parceiros", "Partner logos")}>
             <img src={logoGoverno} alt="Governo de Lavras" className="h-14 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity" />
             <img src={logoLvrs} alt="LVRS+ Pacto Lavras pela Inovação" className="h-10 lg:h-12 object-contain opacity-80 hover:opacity-100 transition-opacity" />
             <img src={logoValeIpes} alt="Vale dos Ipês" className="h-10 lg:h-12 object-contain opacity-80 hover:opacity-100 transition-opacity" />
@@ -82,7 +82,7 @@ const Footer = () => {
             © 2026 LVRS+ — Governo de Lavras
           </p>
           <p className="text-[11px] font-body text-secondary-foreground/30">
-            {lang === "pt" ? "Fevereiro, 2026" : "February, 2026"}
+            {L("Fevereiro, 2026", "February, 2026")}
           </p>
         </div>
       </div>

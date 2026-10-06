@@ -1,3 +1,4 @@
+import { t } from "@/i18n/translations";
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -24,7 +25,7 @@ const eraDoAno = (ano: string) => {
 };
 
 export default function MilestonesSection() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const trilha = useRef<HTMLDivElement>(null);
   const itens = useRef<(HTMLLIElement | null)[]>([]);
   const [ativo, setAtivo] = useState(0);
@@ -106,12 +107,10 @@ export default function MilestonesSection() {
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-accent">Milestones</p>
             <h2 className="mt-4 max-w-xl text-[clamp(26px,5.5vw,44px)] font-medium leading-[1.1] tracking-[-0.02em]">
-              {lang === "pt" ? "Histórico que inspira, futuro que desafia." : "A history that inspires, a future that challenges."}
+              {L("Histórico que inspira, futuro que desafia.", "A history that inspires, a future that challenges.")}
             </h2>
             <p className="mt-4 max-w-lg text-[14.5px] font-light leading-relaxed text-white/65">
-              {lang === "pt"
-                ? "Da Escola Agrícola ao Pacto pela Inovação: 150 anos de marcos que fizeram de Lavras um ecossistema."
-                : "From the Agricultural School to the Innovation Pact: 150 years of milestones that made Lavras an ecosystem."}
+              {L("Da Escola Agrícola ao Pacto pela Inovação: 150 anos de marcos que fizeram de Lavras um ecossistema.", "From the Agricultural School to the Innovation Pact: 150 years of milestones that made Lavras an ecosystem.")}
             </p>
           </div>
 
@@ -124,7 +123,7 @@ export default function MilestonesSection() {
               {marco.ano}
             </span>
             <span className="mt-2 block text-[12px] font-medium uppercase tracking-[0.2em] text-white/50">
-              {ERAS.find((e) => e.id === eraAtiva)?.rotulo[lang]}
+              {(() => { const era = ERAS.find((e) => e.id === eraAtiva); return era ? t(era.rotulo, lang) : null; })()}
             </span>
           </div>
         </div>
@@ -144,7 +143,7 @@ export default function MilestonesSection() {
                 }`}
               >
                 <span className="mr-2 tabular-nums opacity-70">{era.de}</span>
-                {era.rotulo[lang]}
+                {t(era.rotulo, lang)}
               </button>
             );
           })}
@@ -152,7 +151,7 @@ export default function MilestonesSection() {
 
         {/* Filtro por frente */}
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px]">
-          <span className="uppercase tracking-[0.16em] text-white/45">{lang === "pt" ? "Acender" : "Highlight"}</span>
+          <span className="uppercase tracking-[0.16em] text-white/45">{L("Acender", "Highlight")}</span>
           {FRENTES.map((f) => (
             <button
               key={f}
@@ -204,7 +203,7 @@ export default function MilestonesSection() {
                     onClick={() => irPara(i)}
                     className="flex h-[112px] items-center justify-center overflow-hidden rounded-2xl bg-white p-3 transition-shadow duration-300"
                     style={{ boxShadow: centro ? `0 0 0 2px ${COR[mm.aba]}, 0 12px 40px -12px ${COR[mm.aba]}` : undefined }}
-                    aria-label={`${mm.ano}: ${mm.texto[lang]}`}
+                    aria-label={`${mm.ano}: ${t(mm.texto, lang)}`}
                   >
                     {mm.img ? (
                       <img src={mm.img} alt="" loading="lazy" draggable={false} className="max-h-full max-w-full object-contain" />
@@ -223,7 +222,7 @@ export default function MilestonesSection() {
                   </span>
 
                   <p className={`text-[13.5px] leading-[1.55] ${mm.destaque ? "font-medium text-white" : "font-light text-white/70"}`}>
-                    {mm.texto[lang]}
+                    {t(mm.texto, lang)}
                   </p>
                 </li>
               );
@@ -237,7 +236,7 @@ export default function MilestonesSection() {
             type="button"
             onClick={() => passo(-1)}
             className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-background/80 backdrop-blur transition-colors hover:border-accent hover:text-accent"
-            aria-label={lang === "pt" ? "Voltar no tempo" : "Back in time"}
+            aria-label={L("Voltar no tempo", "Back in time")}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -245,7 +244,7 @@ export default function MilestonesSection() {
             type="button"
             onClick={() => passo(1)}
             className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-background/80 backdrop-blur transition-colors hover:border-accent hover:text-accent"
-            aria-label={lang === "pt" ? "Avançar no tempo" : "Forward in time"}
+            aria-label={L("Avançar no tempo", "Forward in time")}
           >
             <ChevronRight className="h-5 w-5" />
           </button>

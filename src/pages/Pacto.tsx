@@ -1,3 +1,4 @@
+import { t } from "@/i18n/translations";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import BarraEcossistema from "@/components/BarraEcossistema";
@@ -28,9 +29,8 @@ const CHAMADA_INVISTA: Partial<Record<VerticalId, { pt: string; en: string }>> =
 
 /** Fim das abas Agro, Food, Tech e SRI: volta ao Pacto completo ou vai a porta do setor na home. */
 function AtalhosDaAba() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const { vertical, setAtiva } = useVertical();
-  const pt = lang === "pt";
   const irAoPacto = () => {
     setAtiva("pacto");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -43,24 +43,24 @@ function AtalhosDaAba() {
           onClick={irAoPacto}
           className="group rounded-3xl border border-white/10 bg-card p-7 text-left transition-colors hover:border-accent/50 sm:p-8"
         >
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">{pt ? "O Pacto" : "The Pact"}</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">{L("O Pacto", "The Pact")}</span>
           <h3 className="mt-3 text-[20px] font-semibold leading-snug">
-            {pt ? "A estratégia completa, a história e os 12 projetos" : "The full strategy, the history and the 12 projects"}
+            {L("A estratégia completa, a história e os 12 projetos", "The full strategy, the history and the 12 projects")}
           </h3>
           <span className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-accent transition-[gap] group-hover:gap-3.5">
-            {pt ? "Ver o Pacto" : "See the Pact"} <span aria-hidden="true">→</span>
+            {L("Ver o Pacto", "See the Pact")} <span aria-hidden="true">→</span>
           </span>
         </button>
         <Link
           to={`/?setor=${vertical.id}#setor`}
           className="group rounded-3xl border border-white/10 bg-card p-7 transition-colors hover:border-accent/50 sm:p-8"
         >
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">{pt ? "Invista" : "Invest"}</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">{L("Invista", "Invest")}</span>
           <h3 className="mt-3 text-[20px] font-semibold leading-snug">
-            {CHAMADA_INVISTA[vertical.id]?.[lang]}
+            {CHAMADA_INVISTA[vertical.id] ? t(CHAMADA_INVISTA[vertical.id]!, lang) : null}
           </h3>
           <span className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-accent transition-[gap] group-hover:gap-3.5">
-            {pt ? "Falar com a Prefeitura" : "Talk to City Hall"} <span aria-hidden="true">→</span>
+            {L("Falar com a Prefeitura", "Talk to City Hall")} <span aria-hidden="true">→</span>
           </span>
         </Link>
       </div>

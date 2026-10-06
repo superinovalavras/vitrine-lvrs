@@ -14,7 +14,7 @@ import { PROJETOS } from "@/data/projetos";
  */
 
 export default function FaixaProjetos() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
 
   return (
     <section id="projetos" className="relative overflow-hidden bg-accent text-accent-foreground">
@@ -35,15 +35,13 @@ export default function FaixaProjetos() {
         <div className="shrink-0">
           <div className="text-[clamp(64px,17vw,150px)] font-semibold leading-[0.82] tracking-[-0.04em]">12</div>
           <div className="mt-2 text-[13px] font-medium uppercase tracking-[0.22em] opacity-75">
-            {lang === "pt" ? "projetos prioritários" : "priority projects"}
+            {L("projetos prioritários", "priority projects")}
           </div>
         </div>
 
         <div>
           <h2 className="max-w-xl text-[clamp(21px,5vw,34px)] font-medium leading-[1.25] tracking-[-0.02em]">
-            {lang === "pt"
-              ? "Governo, universidades e empresas tocando os mesmos doze projetos."
-              : "Government, universities, and companies driving the same twelve projects."}
+            {L("Governo, universidades e empresas tocando os mesmos doze projetos.", "Government, universities, and companies driving the same twelve projects.")}
           </h2>
 
           <ul className="mt-8 grid gap-x-8 gap-y-2.5 sm:mt-10 sm:grid-cols-2">
@@ -63,13 +61,11 @@ export default function FaixaProjetos() {
             rel="noopener noreferrer"
             className="mt-10 inline-flex items-center gap-3 rounded-xl bg-background px-6 py-4 text-[14px] font-semibold text-foreground transition-transform hover:-translate-y-0.5 sm:mt-12 sm:px-8 sm:text-[15px]"
           >
-            {lang === "pt" ? "Mais informações sobre os projetos" : "More about the projects"}
+            {L("Mais informações sobre os projetos", "More about the projects")}
             <span aria-hidden="true">→</span>
           </a>
           <p className="mt-4 text-[13px] opacity-70">
-            {lang === "pt"
-              ? "Responsáveis, metas e percentual de execução, atualizados no painel de gestão."
-              : "Owners, targets, and completion rates, kept up to date on the management dashboard."}
+            {L("Responsáveis, metas e percentual de execução, atualizados no painel de gestão.", "Owners, targets, and completion rates, kept up to date on the management dashboard.")}
           </p>
         </div>
       </div>

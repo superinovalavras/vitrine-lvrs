@@ -1,10 +1,10 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { translations, t } from "@/i18n/translations";
+import { translations, t, tLista } from "@/i18n/translations";
 import sriImage from "@/assets/agro-sprayer.jpg";
 import { Reveal } from "@/hooks/useScrollReveal";
 
 const GlobalContextSection = () => {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const tr = translations.globalContext;
 
   return (
@@ -38,9 +38,9 @@ const GlobalContextSection = () => {
               <div className="space-y-10">
                 <div>
                   <h4 className="text-xs font-body font-bold tracking-[0.15em] text-muted-foreground uppercase mb-5">
-                    {lang === "pt" ? "SISTEMA SOB PRESSÃO" : "SYSTEM UNDER PRESSURE"}
+                    {L("SISTEMA SOB PRESSÃO", "SYSTEM UNDER PRESSURE")}
                   </h4>
-                  {tr.pressureItems[lang].map((item, i) => (
+                  {tLista(tr.pressureItems, lang).map((item, i) => (
                     <div key={i} className="flex items-start gap-3 py-3.5 border-b border-border group hover:border-primary/30 transition-colors">
                       <span className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/25 group-hover:shadow-sm group-hover:shadow-primary/20 transition-all">
                         <span className="text-primary font-body font-bold text-[10px]">+</span>
@@ -51,9 +51,9 @@ const GlobalContextSection = () => {
                 </div>
                 <div>
                   <h4 className="text-xs font-body font-bold tracking-[0.15em] text-muted-foreground uppercase mb-5">
-                    {lang === "pt" ? "INTELIGÊNCIA ALIMENTAR" : "FOOD INTELLIGENCE"}
+                    {L("INTELIGÊNCIA ALIMENTAR", "FOOD INTELLIGENCE")}
                   </h4>
-                  {tr.intelligenceItems[lang].map((item, i) => (
+                  {tLista(tr.intelligenceItems, lang).map((item, i) => (
                     <div key={i} className="flex items-start gap-3 py-3.5 border-b border-border group hover:border-primary/30 transition-colors">
                       <span className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/25 group-hover:shadow-sm group-hover:shadow-primary/20 transition-all">
                         <span className="text-primary font-body font-bold text-[10px]">+</span>
@@ -112,7 +112,7 @@ const GlobalContextSection = () => {
               <p className="text-sm text-muted-foreground font-body leading-relaxed mb-6">
                 {t(tr.minasDescription, lang)}
               </p>
-              {tr.minasOffers[lang].map((item, i) => (
+              {tLista(tr.minasOffers, lang).map((item, i) => (
                 <div key={i} className="flex items-center gap-3 py-3.5 border-b border-border group hover:border-primary/30 transition-colors">
                   <span className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center group-hover:bg-primary/25 transition-all">
                     <span className="text-primary font-body font-bold text-[10px]">✓</span>

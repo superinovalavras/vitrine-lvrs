@@ -1,3 +1,4 @@
+import { t } from "@/i18n/translations";
 import { useEffect, useRef } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { VERTICAIS, ORDEM_ABAS, type Vertical } from "@/data/verticais";
@@ -51,10 +52,10 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
 }
 
 export default function HeroVerticais() {
-  const { lang } = useLanguage();
+  const { lang, L } = useLanguage();
   const { ativa, setAtiva, vertical: v } = useVertical();
 
-  const [antes, destaque, depois] = tituloComEnfase(v.titulo[lang], v.enfase[lang]);
+  const [antes, destaque, depois] = tituloComEnfase(t(v.titulo, lang), t(v.enfase, lang));
   const abas = ORDEM_ABAS.map((id) => VERTICAIS.find((x) => x.id === id)!);
 
   // No celular a regua e mais larga que a tela e rola. Sem isto, a aba ativa
@@ -118,7 +119,7 @@ export default function HeroVerticais() {
           {depois}
         </h1>
         <p className="mt-4 max-w-[640px] text-[14px] font-light leading-[1.7] text-white/80 [text-shadow:0_1px_14px_rgba(0,0,0,0.7)] sm:mt-5 sm:text-[15.5px]">
-          {v.descricao[lang]}
+          {t(v.descricao, lang)}
         </p>
       </div>
 

@@ -21,7 +21,7 @@ import logoVale from "@/assets/logo-vale-ipes.svg";
  * e fixa em todas as paginas.
  */
 export default function BarraFina() {
-  const { lang, toggleLang } = useLanguage();
+  const { L } = useLanguage();
   const { ativa, setAtiva } = useVertical();
   const [visivel, setVisivel] = useState(false);
   const ultimoY = useRef(0);
@@ -56,14 +56,14 @@ export default function BarraFina() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:gap-5 sm:px-6">
-        <a href="#topo" className="flex shrink-0 items-center gap-3" aria-label={lang === "pt" ? "Ir para o topo" : "Back to top"}>
+        <a href="#topo" className="flex shrink-0 items-center gap-3" aria-label={L("Ir para o topo", "Back to top")}>
           <img src={logoGoverno} alt="Governo de Lavras" className="h-7 w-auto object-contain sm:h-8" />
           <img src={logoLvrs} alt="LVRS+" className="hidden h-6 w-auto object-contain sm:block sm:h-7" />
           <img src={logoVale} alt="Vale dos Ipês" className="hidden h-6 w-auto object-contain lg:block lg:h-7" />
         </a>
 
         {/* Trocar de vertical continua possivel longe do hero. */}
-        <nav className="sem-barra ml-auto flex items-center gap-1 overflow-x-auto" aria-label={lang === "pt" ? "Verticais" : "Verticals"}>
+        <nav className="sem-barra ml-auto flex items-center gap-1 overflow-x-auto" aria-label={L("Verticais", "Verticals")}>
           {abas.map((v) => {
             const on = v.id === ativa;
             return (
@@ -82,14 +82,6 @@ export default function BarraFina() {
             );
           })}
         </nav>
-
-        <button
-          type="button"
-          onClick={toggleLang}
-          className="shrink-0 border-l border-white/15 pl-3 text-[11px] tracking-[0.08em] text-white/70 transition-colors hover:text-white sm:pl-4"
-        >
-          {lang === "pt" ? "PT · EN" : "EN · PT"}
-        </button>
       </div>
     </div>
   );

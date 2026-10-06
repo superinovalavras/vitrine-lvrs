@@ -1,8 +1,9 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
+import SeletorIdioma from "@/components/SeletorIdioma";
 import { URL_GESTAO } from "@/data/verticais";
-import type { Language } from "@/i18n/translations";
+import { t } from "@/i18n/translations";
 
 /**
  * Barra fixa no topo de todas as paginas: o menu do site a esquerda e, a
@@ -10,8 +11,7 @@ import type { Language } from "@/i18n/translations";
  * pagina Iniciativas. A ideia (05/10/2026) e que os sites dos programas
  * ganhem esta mesma barra, para a pessoa pular de um para outro.
  *
- * Idiomas: so PT e EN por enquanto. ES, FR, DE e mandarim estao decididos, mas
- * so entram quando o site inteiro estiver traduzido e revisado.
+ * O seletor de idioma (seis idiomas, com bandeira) fica em SeletorIdioma.
  */
 
 export type PaginaSite = "invista" | "pacto" | "iniciativas";
@@ -59,19 +59,17 @@ const GRUPOS: { titulo: { pt: string; en: string }; itens: Item[] }[] = [
   },
 ];
 
-const IDIOMAS: Language[] = ["pt", "en"];
-
 function Destino({ href, children }: { href: string; children: ReactNode }) {
   // Rotas deste site navegam sem recarregar; os outros sites sao links comuns.
   return href.startsWith("/") ? <Link to={href}>{children}</Link> : <a href={href}>{children}</a>;
 }
 
 export default function BarraEcossistema({ pagina }: { pagina: PaginaSite }) {
-  const { lang, setLang } = useLanguage();
+  const { lang, L } = useLanguage();
   const [aberto, setAberto] = useState(false);
 
   return (
-    <nav className="eco" data-aberto={aberto ? "" : undefined} aria-label={lang === "pt" ? "Ecossistema LVRS+" : "LVRS+ ecosystem"}>
+    <nav className="eco" data-aberto={aberto ? "" : undefined} aria-label={L("Ecossistema LVRS+", "LVRS+ ecosystem")}>
       <div className="eco-linha">
         <Link className="eco-marca" to="/" aria-label="LVRS+">
           <img src="/marca/lvrs-pacto.png" alt="LVRS+" />
@@ -79,24 +77,18 @@ export default function BarraEcossistema({ pagina }: { pagina: PaginaSite }) {
         <div className="eco-site">
           {SITE.map((s) => (
             <Link key={s.id} to={s.href} aria-current={s.id === pagina ? "page" : undefined}>
-              {s.rotulo[lang]}
+              {t(s.rotulo, lang)}
             </Link>
           ))}
         </div>
         <div className="eco-dir">
           <button type="button" className="eco-btn" aria-expanded={aberto} aria-controls="eco-menu" onClick={() => setAberto((a) => !a)}>
-            <span className="rot">{lang === "pt" ? "Ecossistema" : "Ecosystem"}</span>
+            <span className="rot">{L("Ecossistema", "Ecosystem")}</span>
             {/* No celular o menu do site some da barra e vai para dentro deste botao. */}
             <span className="rot-m">Menu</span>
             <span className="seta" aria-hidden="true">▾</span>
           </button>
-          <div className="eco-idioma" role="group" aria-label={lang === "pt" ? "Idioma" : "Language"}>
-            {IDIOMAS.map((l) => (
-              <button key={l} type="button" aria-pressed={l === lang} onClick={() => setLang(l)}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          <SeletorIdioma />
         </div>
       </div>
       <div className="eco-menu" id="eco-menu">
@@ -104,15 +96,15 @@ export default function BarraEcossistema({ pagina }: { pagina: PaginaSite }) {
           <div className="eco-grid" onClick={(e) => (e.target as HTMLElement).closest("a") && setAberto(false)}>
             {GRUPOS.map((g) => (
               <div key={g.titulo.pt}>
-                <h5>{g.titulo[lang]}</h5>
+                <h5>{t(g.titulo, lang)}</h5>
                 {g.itens.map((it) =>
                   it.href ? (
                     <Destino key={it.rotulo.pt} href={it.href}>
-                      {it.rotulo[lang]}
+                      {t(it.rotulo, lang)}
                     </Destino>
                   ) : (
                     <span key={it.rotulo.pt} className="breve">
-                      {it.rotulo[lang]} <small>{lang === "pt" ? "em breve" : "soon"}</small>
+                      {t(it.rotulo, lang)} <small>{L("em breve", "soon")}</small>
                     </span>
                   ),
                 )}
