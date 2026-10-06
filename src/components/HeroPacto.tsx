@@ -1,5 +1,4 @@
 import { t } from "@/i18n/translations";
-import { useEffect, useRef } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ABAS_PACTO, type AbaPacto } from "@/data/missoes";
 import { useAbaPacto } from "@/context/AbaPactoContext";
@@ -57,22 +56,6 @@ export default function HeroPacto() {
 
   const [antes, destaque, depois] = tituloComEnfase(t(v.titulo, lang), t(v.enfase, lang));
 
-  // No celular a regua e mais larga que a tela e rola. Sem isto, a aba ativa
-  // pode nascer fora de vista.
-  //
-  // NAO usar scrollIntoView aqui: ele rola TODOS os conteineres rolaveis acima
-  // do elemento, e a secao do hero e um deles (tem overflow-hidden). Centralizar
-  // a aba arrastava a secao inteira 25px para o lado, e o escurecimento, que e
-  // absolute inset-0, ia junto — deixando uma faixa de foto crua na borda
-  // direita. Aqui a regua rola so a si mesma.
-  const regua = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = regua.current;
-    const alvo = el?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!el || !alvo) return;
-    const destino = alvo.offsetLeft - (el.clientWidth - alvo.offsetWidth) / 2;
-    el.scrollTo({ left: Math.max(0, destino), behavior: "smooth" });
-  }, [ativa]);
 
   return (
     <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
@@ -122,11 +105,34 @@ export default function HeroPacto() {
       </div>
 
       <div className="relative z-10">
-        <div ref={regua} className="sem-barra flex items-end gap-2 overflow-x-auto px-[18px] max-md:justify-start md:justify-center">
+        {/* Computador: abas de navegador encostadas na faixa amarela. */}
+        <div className="hidden items-end justify-center gap-2 px-[18px] md:flex">
           {ABAS_PACTO.map((item) => (
             <Aba key={item.id} v={item} ativa={item.id === ativa} onClick={() => setAtiva(item.id)} />
           ))}
         </div>
+        {/* Celular: as cinco abas cabiam so rolando de lado (a ultima ficava
+            cortada). Aqui ficam todas a vista, em duas linhas: 2 + 3. */}
+        <nav aria-label={L("Missões", "Missions")} className="grid grid-cols-6 gap-2 px-4 pb-4 md:hidden">
+          {ABAS_PACTO.map((item, i) => {
+            const on = item.id === ativa;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setAtiva(item.id)}
+                aria-current={on ? "page" : undefined}
+                className={`${i < 2 ? "col-span-3" : "col-span-2"} min-h-[44px] rounded-full border px-2 text-[11.5px] font-semibold uppercase tracking-[0.08em] backdrop-blur-sm transition-colors ${
+                  on
+                    ? "border-accent bg-accent text-accent-foreground"
+                    : "border-white/20 bg-black/25 text-white/80 active:bg-white/10"
+                }`}
+              >
+                {t(item.rotulo, lang)}
+              </button>
+            );
+          })}
+        </nav>
         <div className="h-[7px] bg-accent transition-colors duration-500" />
       </div>
     </section>

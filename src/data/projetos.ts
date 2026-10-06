@@ -126,7 +126,7 @@ export const PROJETOS: Projeto[] = [
       pt: "Promover a transformação digital da Prefeitura de forma inclusiva e humanizada, integrando tecnologia para simplificar processos e melhorar a experiência de servidores e cidadãos.",
       en: "An inclusive, human-centered digital transformation of City Hall, using technology to simplify processes and improve the experience of public employees and citizens.",
     },
-    missao: "feliz",
+    missao: "agrofoodtech",
     painel: "34d02c73-670c-4640-8e89-b80a3b503197",
   },
   {
