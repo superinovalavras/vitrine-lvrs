@@ -1,16 +1,16 @@
 import { t } from "@/i18n/translations";
 import { useEffect, useRef } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { VERTICAIS, ORDEM_ABAS, type Vertical } from "@/data/verticais";
-import { useVertical } from "@/context/VerticalContext";
+import { ABAS_PACTO, type AbaPacto } from "@/data/missoes";
+import { useAbaPacto } from "@/context/AbaPactoContext";
 
 /**
- * Hero da vitrine: a logo LVRS+ grande e centralizada sobre foto, com a regua
- * de abas das verticais encostada na base.
+ * Hero da pagina /pacto: a logo LVRS+ grande sobre foto, com a regua de abas
+ * encostada na base. As abas sao o Pacto e as suas quatro missoes para 2040
+ * (06/10/2026 — antes eram as verticais, que ja abrem a home).
  *
- * Trocar de aba troca de uma vez logo, foto, cor de destaque e texto. A cor sai
- * de [data-vertical] em index.css, que sobrescreve so --accent — nenhum filho
- * precisa saber de cor.
+ * Trocar de aba troca foto, titulo e texto. A logo e a cor ficam as do Pacto
+ * (amarelo): as missoes sao do Pacto, nao verticais com cor propria.
  */
 
 /** Quebra o titulo em torno do trecho que recebe o script, para destaca-lo. */
@@ -20,7 +20,8 @@ function tituloComEnfase(titulo: string, enfase: string) {
   return [titulo.slice(0, i), enfase, titulo.slice(i + enfase.length)] as const;
 }
 
-function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () => void }) {
+function Aba({ v, ativa, onClick }: { v: AbaPacto; ativa: boolean; onClick: () => void }) {
+  const { lang } = useLanguage();
   if (ativa) {
     return (
       <button
@@ -29,7 +30,7 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
         className="relative shrink-0 rounded-t-2xl bg-accent px-4 py-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-accent-foreground sm:px-10 sm:py-5 sm:text-[17px] sm:tracking-[0.15em]"
       >
         <span className="aba-flare-e" aria-hidden="true" />
-        {v.rotulo}
+        {t(v.rotulo, lang)}
         <span className="aba-flare-d" aria-hidden="true" />
       </button>
     );
@@ -38,25 +39,23 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
     <button
       type="button"
       onClick={onClick}
-      style={{ ["--c" as string]: v.cor }}
       className="group relative shrink-0 px-2.5 pb-4 pt-3.5 text-[11.5px] font-medium uppercase tracking-[0.12em] text-white/55 transition-colors hover:text-white sm:px-6 sm:pb-[18px] sm:pt-4 sm:text-[13px] sm:tracking-[0.2em]"
     >
-      {v.rotulo}
+      {t(v.rotulo, lang)}
       <span
         aria-hidden="true"
         className="absolute inset-x-4 bottom-[8px] h-0.5 origin-center scale-x-0 transition-transform duration-300 group-hover:scale-x-100 sm:inset-x-6 sm:bottom-[9px]"
-        style={{ background: "var(--c)" }}
+        style={{ background: "hsl(var(--accent))" }}
       />
     </button>
   );
 }
 
-export default function HeroVerticais() {
+export default function HeroPacto() {
   const { lang, L } = useLanguage();
-  const { ativa, setAtiva, vertical: v } = useVertical();
+  const { ativa, setAtiva, aba: v } = useAbaPacto();
 
   const [antes, destaque, depois] = tituloComEnfase(t(v.titulo, lang), t(v.enfase, lang));
-  const abas = ORDEM_ABAS.map((id) => VERTICAIS.find((x) => x.id === id)!);
 
   // No celular a regua e mais larga que a tela e rola. Sem isto, a aba ativa
   // pode nascer fora de vista.
@@ -77,8 +76,8 @@ export default function HeroVerticais() {
 
   return (
     <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
-      {/* Uma camada por vertical: trocam por opacidade, sem piscar entre fotos. */}
-      {VERTICAIS.map((item) =>
+      {/* Uma camada por aba: trocam por opacidade, sem piscar entre fotos. */}
+      {ABAS_PACTO.map((item) =>
         item.fundo ? (
           <div
             key={item.id}
@@ -106,9 +105,8 @@ export default function HeroVerticais() {
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 pb-10 pt-4 text-center sm:px-6 sm:pb-14">
         <img
-          key={v.id}
-          src={v.logo}
-          alt={`LVRS+ ${v.rotulo}`}
+          src="/marca/lvrs-pacto.png"
+          alt="LVRS+ Pacto Lavras pela Inovação"
           className="w-[min(72vw,clamp(200px,31vw,420px))] drop-shadow-[0_6px_30px_rgba(0,0,0,0.5)]"
         />
         <h1 className="mt-7 max-w-[840px] text-[clamp(20px,5.2vw,36px)] font-normal leading-[1.26] tracking-[-0.015em] [text-shadow:0_2px_22px_rgba(0,0,0,0.55)] sm:mt-10">
@@ -125,7 +123,7 @@ export default function HeroVerticais() {
 
       <div className="relative z-10">
         <div ref={regua} className="sem-barra flex items-end gap-2 overflow-x-auto px-[18px] max-md:justify-start md:justify-center">
-          {abas.map((item) => (
+          {ABAS_PACTO.map((item) => (
             <Aba key={item.id} v={item} ativa={item.id === ativa} onClick={() => setAtiva(item.id)} />
           ))}
         </div>

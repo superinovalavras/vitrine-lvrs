@@ -2,7 +2,7 @@ import type { Language } from "@/i18n/translations";
 import { t } from "@/i18n/translations";
 import type { CSSProperties, MouseEvent } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { useVertical } from "@/context/VerticalContext";
+import { useAbaPacto } from "@/context/AbaPactoContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { PROJETOS, urlProjeto, type Projeto } from "@/data/projetos";
 import { URL_GESTAO } from "@/data/verticais";
@@ -66,17 +66,17 @@ function Card({ p, lang, visivel, ordem }: { p: Projeto; lang: Language; visivel
 }
 
 export default function ProjetosDaAba() {
-  const { vertical } = useVertical();
-  const projetos = PROJETOS.filter((p) => p.aba === vertical.id);
+  const { ativa } = useAbaPacto();
+  const projetos = PROJETOS.filter((p) => p.missao === ativa);
   if (projetos.length === 0) return null;
   // key por aba: remonta a secao a cada troca, entao o observador de scroll e
   // criado com o elemento ja na pagina e a entrada escaneada roda de novo.
-  return <Secao key={vertical.id} projetos={projetos} />;
+  return <Secao key={ativa} projetos={projetos} />;
 }
 
 function Secao({ projetos }: { projetos: Projeto[] }) {
   const { lang, L } = useLanguage();
-  const { vertical } = useVertical();
+  const { aba } = useAbaPacto();
   const { ref, isVisible } = useScrollReveal(0.12);
 
   return (
@@ -84,8 +84,8 @@ function Secao({ projetos }: { projetos: Projeto[] }) {
       <div ref={ref} className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="mb-3 h-1.5 w-14 rounded-full bg-accent" aria-hidden="true" />
         <h2 className="text-[clamp(22px,5vw,34px)] font-medium leading-tight tracking-[-0.02em]">
-          {L("Projetos do Pacto em ", "Pact projects in ")}
-          <span className="text-accent">{vertical.id === "sri" ? "SRI" : vertical.rotulo[0].toUpperCase() + vertical.rotulo.slice(1)}</span>
+          {L("Projetos da missão ", "Projects of the mission ")}
+          <span className="text-accent">{t(aba.titulo, lang)}</span>
         </h2>
         <p className="mt-3 max-w-xl text-[14.5px] font-light leading-relaxed text-white/65 sm:text-[15px]">
           {L("{n} dos 12 projetos prioritários que governo, universidades e empresas tocam juntos.",

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { useVertical } from "@/context/VerticalContext";
-import { VERTICAIS, ORDEM_ABAS } from "@/data/verticais";
+import { useAbaPacto } from "@/context/AbaPactoContext";
+import { ABAS_PACTO } from "@/data/missoes";
+import { t } from "@/i18n/translations";
 import logoGoverno from "@/assets/logo-governo-lavras.svg";
 import logoLvrs from "@/assets/logo-lvrs.svg";
 import logoVale from "@/assets/logo-vale-ipes.svg";
@@ -21,8 +22,8 @@ import logoVale from "@/assets/logo-vale-ipes.svg";
  * e fixa em todas as paginas.
  */
 export default function BarraFina() {
-  const { L } = useLanguage();
-  const { ativa, setAtiva } = useVertical();
+  const { lang, L } = useLanguage();
+  const { ativa, setAtiva } = useAbaPacto();
   const [visivel, setVisivel] = useState(false);
   const ultimoY = useRef(0);
 
@@ -47,8 +48,6 @@ export default function BarraFina() {
     return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
-  const abas = ORDEM_ABAS.map((id) => VERTICAIS.find((v) => v.id === id)!);
-
   return (
     <div
       className={`fixed inset-x-0 top-11 z-40 border-b border-white/10 bg-background/85 backdrop-blur-md transition-transform duration-300 ${
@@ -62,9 +61,9 @@ export default function BarraFina() {
           <img src={logoVale} alt="Vale dos Ipês" className="hidden h-6 w-auto object-contain lg:block lg:h-7" />
         </a>
 
-        {/* Trocar de vertical continua possivel longe do hero. */}
-        <nav className="sem-barra ml-auto flex items-center gap-1 overflow-x-auto" aria-label={L("Verticais", "Verticals")}>
-          {abas.map((v) => {
+        {/* Trocar de aba (Pacto e missoes) continua possivel longe do hero. */}
+        <nav className="sem-barra ml-auto flex items-center gap-1 overflow-x-auto" aria-label={L("Missões", "Missions")}>
+          {ABAS_PACTO.map((v) => {
             const on = v.id === ativa;
             return (
               <button
@@ -72,12 +71,11 @@ export default function BarraFina() {
                 type="button"
                 onClick={() => setAtiva(v.id)}
                 aria-current={on ? "true" : undefined}
-                style={on ? { background: v.cor } : { color: v.cor }}
                 className={`shrink-0 rounded-lg px-2.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] transition-colors sm:px-3 sm:text-[11.5px] ${
-                  on ? "text-accent-foreground" : "hover:bg-white/10"
+                  on ? "bg-accent text-accent-foreground" : "text-accent hover:bg-white/10"
                 }`}
               >
-                {v.rotulo}
+                {t(v.rotulo, lang)}
               </button>
             );
           })}
