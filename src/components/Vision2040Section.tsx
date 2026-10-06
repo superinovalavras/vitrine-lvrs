@@ -108,11 +108,6 @@ const Vision2040Section = () => {
         {/* Vision Statement */}
         <div className="bg-secondary rounded-3xl p-6 sm:p-8 md:p-12 mb-16 text-center">
           <Target className="w-14 h-14 text-icon mx-auto mb-6" />
-          <h3 className="font-display text-xl md:text-2xl lg:text-3xl text-secondary-foreground mb-4">
-            {lang === "pt"
-              ? "LAVRAS CAPITAL BRASILEIRA DO FUTURO DO ALIMENTO"
-              : "LAVRAS BRAZILIAN CAPITAL OF THE FUTURE OF FOOD"}
-          </h3>
           <p className="text-secondary-foreground/70 max-w-2xl mx-auto text-sm md:text-base font-body italic leading-relaxed">
             {lang === "pt"
               ? '"O futuro de Lavras depende da capacidade de alinhar planejamento urbano, inovação tecnológica e políticas sociais em uma estratégia integrada de crescimento sustentável e inteligente."'
@@ -125,7 +120,8 @@ const Vision2040Section = () => {
           <h3 className="font-display text-xl text-foreground text-center mb-8">
             {lang === "pt" ? "Eixos Estratégicos" : "Strategic Axes"}
           </h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Abaixo de 420px, duas colunas deixavam o texto com uma palavra por linha. */}
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-4">
             {strategicAxes.map((axis, i) => {
               const Icon = axis.icon;
               return (
@@ -161,12 +157,12 @@ const Vision2040Section = () => {
                     {mission.desc[lang]}
                   </p>
                   <div>
-                    <p className="text-[10px] font-body font-bold text-icon mb-2 uppercase tracking-wider">
+                    <p className="text-[11px] font-body font-bold text-icon mb-2 uppercase tracking-wider">
                       {lang === "pt" ? "Ideias para 2040:" : "Ideas for 2040:"}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {mission.projects[lang].map((project, idx) => (
-                        <span key={idx} className="text-[10px] font-body font-semibold bg-secondary text-secondary-foreground/70 px-2.5 py-1 rounded-full">
+                        <span key={idx} className="text-[12px] font-body font-semibold bg-secondary text-secondary-foreground/80 px-3 py-1.5 rounded-full">
                           {project}
                         </span>
                       ))}
@@ -193,7 +189,7 @@ const Vision2040Section = () => {
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-3 rounded-xl bg-accent px-6 py-3.5 text-[14px] font-semibold text-accent-foreground transition-transform hover:-translate-y-0.5"
           >
-            {lang === "pt" ? "Ver o que já está em andamento" : "See what is already underway"}
+            {lang === "pt" ? "Ver o andamento" : "See the progress"}
             <span aria-hidden="true">→</span>
           </a>
         </div>

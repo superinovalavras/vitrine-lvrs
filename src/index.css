@@ -89,11 +89,17 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    /* Evita a palavra sozinha na ultima linha (pedido de 05/10/2026, revisao
+       de celular). E herdado, entao vale para paragrafos, listas e botoes. */
+    text-wrap: pretty;
   }
 
+  /* Os titulos pediam 'Inter', que nunca foi carregada: caiam numa Arial
+     pesada. A fonte da marca carregada no site e a Poppins (ate 700). */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 700;
+    text-wrap: balance;
   }
 
   /* Smooth scroll for anchor navigation */
@@ -115,12 +121,12 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 700;
   }
+  /* Era justificado: no celular, a coluna estreita abria buracos entre as palavras. */
   .font-body {
-    font-family: 'Inter', sans-serif;
-    text-align: justify;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
 
   .glow-primary {

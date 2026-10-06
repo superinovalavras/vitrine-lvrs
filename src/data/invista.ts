@@ -16,6 +16,8 @@ import funilDam from "@/assets/funil-dam.jpg";
 import serraBocaina from "@/assets/serra-bocaina.jpg";
 
 type T = { pt: string; en: string };
+/** Nome proprio (empresa, sigla) fica igual nos dois idiomas; o resto traduz. */
+export type Texto = string | T;
 
 /** As quatro portas da home. O Pacto nao e porta: tem pagina propria (/pacto). */
 export type Porta = Exclude<VerticalId, "pacto">;
@@ -46,10 +48,10 @@ export interface DadosPorta {
   titulo: T;
   enfase: T;
   texto: T;
-  mini: { valor: string; legenda: T }[];
+  mini: { valor: Texto; legenda: T }[];
   empresas: string[];
   empresasTitulo?: T;
-  talento: string[];
+  talento: Texto[];
   foto: string;
   legendaFoto: T;
   depoimento?: { texto: T; autor: T };
@@ -72,13 +74,17 @@ export const PORTAS: Record<Porta, DadosPorta> = {
     },
     mini: [
       // CAGED: variacao do estoque da agropecuaria, jan-jul/2026
-      { valor: "+6,6%", legenda: { pt: "emprego formal na agropecuária em 2026, o que mais cresce", en: "formal jobs in agriculture in 2026, the fastest-growing sector" } },
-      { valor: "nº 1", legenda: { pt: "Minas Gerais em café e leite no Brasil", en: "Minas Gerais in coffee and milk in Brazil" } },
+      { valor: { pt: "+6,6%", en: "+6.6%" }, legenda: { pt: "emprego formal na agropecuária em 2026, o que mais cresce", en: "formal jobs in agriculture in 2026, the fastest-growing sector" } },
+      { valor: { pt: "nº 1", en: "No. 1" }, legenda: { pt: "Minas Gerais em café e leite no Brasil", en: "Minas Gerais in coffee and milk in Brazil" } },
       // UFLA, 2026/1
-      { valor: "10,4 mil", legenda: { pt: "alunos de graduação na UFLA", en: "undergraduate students at UFLA" } },
+      { valor: { pt: "10,4 mil", en: "10.4k" }, legenda: { pt: "alunos de graduação na UFLA", en: "undergraduate students at UFLA" } },
     ],
     empresas: ["tbit", "Biomip", "AgScan", "Ceifa", "Vaca Roxa", "Minas Verde"],
-    talento: ["Agronomia", "Zootecnia", "Engenharia Agrícola", "Medicina Veterinária", "Unidade Embrapii Zetta/UFLA", "InovaCafé"],
+    talento: [
+      { pt: "Agronomia", en: "Agronomy" }, { pt: "Zootecnia", en: "Animal Science" },
+      { pt: "Engenharia Agrícola", en: "Agricultural Engineering" }, { pt: "Medicina Veterinária", en: "Veterinary Medicine" },
+      { pt: "Unidade Embrapii Zetta/UFLA", en: "Embrapii Zetta/UFLA unit" }, "InovaCafé",
+    ],
     foto: agroSprayer,
     legendaFoto: { pt: "Pulverização em lavoura do Sul de Minas", en: "Crop spraying in Southern Minas" },
     lista: [
@@ -102,10 +108,13 @@ export const PORTAS: Record<Porta, DadosPorta> = {
       // CAGED: saldo 2025 por grupamento (industria +322, o maior)
       { valor: "+322", legenda: { pt: "empregos na indústria em 2025, maior saldo entre os setores", en: "industry jobs in 2025, the largest net gain of any sector" } },
       { valor: "370 km", legenda: { pt: "de São Paulo, o maior mercado consumidor do país", en: "from São Paulo, Brazil's largest consumer market" } },
-      { valor: "9 bi L", legenda: { pt: "de leite por ano em Minas Gerais", en: "of milk a year in Minas Gerais" } },
+      { valor: { pt: "9 bi L", en: "9 bn L" }, legenda: { pt: "de leite por ano em Minas Gerais", en: "of milk a year in Minas Gerais" } },
     ],
     empresas: ["Verde Campo", "Vida Veg", "Jeito Caseiro", "Doce Fruto", "Alma Gerais"],
-    talento: ["Engenharia de Alimentos", "Nutrição", "Química", "MBA em AgroFoodTech"],
+    talento: [
+      { pt: "Engenharia de Alimentos", en: "Food Engineering" }, { pt: "Nutrição", en: "Nutrition" },
+      { pt: "Química", en: "Chemistry" }, { pt: "MBA em AgroFoodTech", en: "AgroFoodTech MBA" },
+    ],
     foto: dairyFactory,
     legendaFoto: { pt: "Verde Campo — indústria de laticínios", en: "Verde Campo — dairy manufacturing" },
     depoimento: {
@@ -135,12 +144,15 @@ export const PORTAS: Record<Porta, DadosPorta> = {
     },
     mini: [
       // Guia de investimento: Comau ~4.885 empregos
-      { valor: "~4.900", legenda: { pt: "empregos na Comau, automação industrial", en: "jobs at Comau, industrial automation" } },
+      { valor: { pt: "~4.900", en: "~4,900" }, legenda: { pt: "empregos na Comau, automação industrial", en: "jobs at Comau, industrial automation" } },
       { valor: "CERNE 1", legenda: { pt: "certificação da incubadora Inbatec/UFLA", en: "certification of the Inbatec/UFLA incubator" } },
       { valor: "Embrapii", legenda: { pt: "unidade Zetta/UFLA de pesquisa com empresas", en: "Zetta/UFLA unit for research with companies" } },
     ],
     empresas: ["Comau", "Magneti Marelli Cofap", "TRW Automotive", "Gooxxy", "GaussFleet", "Compilart", "Árvore", "Biominas"],
-    talento: ["Ciência da Computação", "Sistemas de Informação", "Engenharias", "InovaHub", "Área 506", "Hive", "NINE"],
+    talento: [
+      { pt: "Ciência da Computação", en: "Computer Science" }, { pt: "Sistemas de Informação", en: "Information Systems" },
+      { pt: "Engenharias", en: "Engineering" }, "InovaHub", "Área 506", "Hive", "NINE",
+    ],
     foto: youxLab,
     legendaFoto: { pt: "YouX Lab — formação tecnológica de jovens", en: "YouX Lab — tech training for young people" },
     lista: [
@@ -163,9 +175,9 @@ export const PORTAS: Record<Porta, DadosPorta> = {
       en: "A regional innovation system with Santa Rita do Sapucaí, Itajubá, Varginha, Pouso Alegre and Poços de Caldas. Setting up in Lavras means access to the whole region: complementary mid-sized cities, without the congestion of a metropolis.",
     },
     mini: [
-      { valor: "2,9 mi", legenda: { pt: "habitantes em 155 municípios do Sul de Minas", en: "people in 155 municipalities of Southern Minas" } },
+      { valor: { pt: "2,9 mi", en: "2.9 m" }, legenda: { pt: "habitantes em 155 municípios do Sul de Minas", en: "people in 155 municipalities of Southern Minas" } },
       // IBGE/SIDRA 5938, 2023
-      { valor: "62,7%", legenda: { pt: "do PIB da microrregião está em Lavras", en: "of the micro-region's GDP is in Lavras" } },
+      { valor: { pt: "62,7%", en: "62.7%" }, legenda: { pt: "do PIB da microrregião está em Lavras", en: "of the micro-region's GDP is in Lavras" } },
       { valor: "150+", legenda: { pt: "empresas de tecnologia no Vale da Eletrônica", en: "tech companies in the Electronics Valley" } },
     ],
     empresas: ["Lavras", "Santa Rita do Sapucaí", "Itajubá", "Varginha", "Pouso Alegre", "Poços de Caldas"],

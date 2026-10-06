@@ -25,7 +25,7 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
       <button
         type="button"
         aria-current="page"
-        className="relative shrink-0 rounded-t-2xl bg-accent px-6 py-4 text-[14px] font-semibold uppercase tracking-[0.12em] text-accent-foreground sm:px-10 sm:py-5 sm:text-[17px] sm:tracking-[0.15em]"
+        className="relative shrink-0 rounded-t-2xl bg-accent px-4 py-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-accent-foreground sm:px-10 sm:py-5 sm:text-[17px] sm:tracking-[0.15em]"
       >
         <span className="aba-flare-e" aria-hidden="true" />
         {v.rotulo}
@@ -38,7 +38,7 @@ function Aba({ v, ativa, onClick }: { v: Vertical; ativa: boolean; onClick: () =
       type="button"
       onClick={onClick}
       style={{ ["--c" as string]: v.cor }}
-      className="group relative shrink-0 px-4 pb-4 pt-3.5 text-[11.5px] font-medium uppercase tracking-[0.16em] text-white/55 transition-colors hover:text-white sm:px-6 sm:pb-[18px] sm:pt-4 sm:text-[13px] sm:tracking-[0.2em]"
+      className="group relative shrink-0 px-2.5 pb-4 pt-3.5 text-[11.5px] font-medium uppercase tracking-[0.12em] text-white/55 transition-colors hover:text-white sm:px-6 sm:pb-[18px] sm:pt-4 sm:text-[13px] sm:tracking-[0.2em]"
     >
       {v.rotulo}
       <span

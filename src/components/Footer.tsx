@@ -58,7 +58,7 @@ const Footer = () => {
             <address className="space-y-3 not-italic">
               {/* Contato institucional decidido em 05/10/2026 (antes era o
                   telefone e o e-mail pessoais do Secretario). */}
-              <a href="mailto:superinovalavras@gmail.com" className="block text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
+              <a href="mailto:superinovalavras@gmail.com" className="block break-all text-sm font-body text-secondary-foreground/50 hover:text-secondary-foreground transition-colors">
                 superinovalavras@gmail.com
               </a>
             </address>

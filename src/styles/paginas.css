@@ -64,7 +64,6 @@
 .inv-arcos circle:nth-child(2) { animation-delay: .2s; } .inv-arcos circle:nth-child(3) { animation-delay: .4s; } .inv-arcos circle:nth-child(4) { animation-delay: .6s; }
 @keyframes lv-desenha { to { stroke-dashoffset: 0; } }
 .inv-hero .lv-wrap { position: relative; width: 100%; }
-.inv-hero-logo { height: 86px; margin-bottom: 28px; }
 .inv-hero h1 { font-size: clamp(2.2rem,5.4vw,4.2rem); line-height: 1.08; font-weight: 600; max-width: 900px; }
 .inv-hero .lv-lead { margin: 1.2rem 0 2.6rem; }
 .inv-pergunta { font-size: 1.05rem; font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem; }
@@ -84,6 +83,7 @@
 .inv-num b { display: block; font-size: clamp(1.5rem,2.6vw,2.1rem); font-weight: 600; color: var(--ac); transition: color .4s; font-variant-numeric: tabular-nums; }
 .inv-num span { font-size: .78rem; color: var(--suave); display: block; line-height: 1.35; }
 .inv-num small { font-size: .66rem; color: var(--fraco); }
+.inv-num span, .inv-mini span, .inv-porta span, .inv-op span span, .inv-aba-onde p, .inv-passo p { text-wrap: balance; }
 
 /* ---------- Setor (troca com cortina na cor da porta) ---------- */
 .inv-setor-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
@@ -131,7 +131,7 @@
 
 /* ---------- Onde se instalar (paineis que se abrem) ---------- */
 .inv-onde { display: flex; gap: 12px; height: 420px; margin-top: 40px; }
-.inv-aba-onde { flex: 1; position: relative; border-radius: var(--r); background-size: cover; background-position: center; overflow: hidden; cursor: pointer; transition: flex .6s cubic-bezier(.6,0,.2,1); border: 1px solid var(--borda); text-align: left; color: var(--texto); padding: 0; }
+.inv-aba-onde { flex: 1; position: relative; border-radius: var(--r); background-size: cover; background-position: center 70%; overflow: hidden; cursor: pointer; transition: flex .6s cubic-bezier(.6,0,.2,1); border: 1px solid var(--borda); text-align: left; color: var(--texto); padding: 0; }
 .inv-aba-onde::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(1,41,40,.2),rgba(1,41,40,.92)); }
 .inv-aba-onde.aberta { flex: 3.2; }
 .inv-aba-onde > div { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px; }
@@ -187,7 +187,7 @@
 .lv-rodape { padding: 48px 0; border-top: 1px solid var(--borda); font-size: .82rem; color: var(--fraco); }
 .lv-rodape .lv-wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 .lv-rodape .logos { display: flex; gap: 28px; align-items: center; }
-.lv-rodape .logos img { height: 34px; width: auto; }
+.lv-rodape .logos img { height: 44px; width: auto; }
 .lv-rodape nav { display: flex; gap: 18px; flex-wrap: wrap; }
 .lv-rodape nav a { color: var(--suave); text-decoration: none; }
 .lv-rodape nav a:hover { color: var(--texto); }
@@ -243,12 +243,12 @@
 @media (max-width: 520px) {
   .lv-wrap, .eco-linha { padding: 0 16px; }
   .inv-num-grid { grid-template-columns: 1fr 1fr; }
-  .inv-hero { padding-top: 88px; }
-  .inv-hero-logo { height: 60px; margin-bottom: 20px; }
+  .inv-hero { padding-top: 96px; align-items: flex-start; }
+  .inv-arcos { width: 420px; right: -300px; top: 30%; opacity: .3; }
   .inv-hero .lv-lead { margin-bottom: 1.8rem; }
   .inv-porta { padding: 16px 14px 14px; }
   .inv-porta img { height: 32px; margin-bottom: 10px; }
-  .lv-sec { padding: 64px 0; }
+  .lv-sec { padding: 56px 0; }
   .inv-setor-top { margin-bottom: 24px; }
   /* No celular os quatro setores viram uma grade 2x2: rolar de lado escondia o ultimo. */
   .inv-chips { display: grid; grid-template-columns: 1fr 1fr; width: 100%; border-radius: 18px; }

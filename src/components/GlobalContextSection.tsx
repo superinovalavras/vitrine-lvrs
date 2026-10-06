@@ -21,7 +21,7 @@ const GlobalContextSection = () => {
                 <p className="text-xs font-body font-semibold tracking-[0.2em] text-primary uppercase mb-5">
                   {t(tr.tag, lang)}
                 </p>
-                <h2 className="font-display text-3xl lg:text-[48px] leading-[1.08] text-foreground mb-8">
+                <h2 className="font-display text-[26px] sm:text-3xl lg:text-[48px] leading-[1.08] text-foreground mb-8">
                   {t(tr.title, lang)}
                 </h2>
                 <p className="text-base text-muted-foreground font-body leading-relaxed mb-8">

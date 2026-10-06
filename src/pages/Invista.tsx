@@ -6,8 +6,11 @@ import { Reveal, useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
 import {
-  EMAIL_CONTATO, FUNDO_HERO, HERO, INCENTIVOS, NUMEROS, ONDE, PASSOS, PORTAS, PORTAS_ORDEM, type Porta,
+  EMAIL_CONTATO, FUNDO_HERO, HERO, INCENTIVOS, NUMEROS, ONDE, PASSOS, PORTAS, PORTAS_ORDEM, type Porta, type Texto,
 } from "@/data/invista";
+
+const tx = (t: Texto, lang: Language) => (typeof t === "string" ? t : t[lang]);
+const chave = (t: Texto) => (typeof t === "string" ? t : t.pt);
 
 /**
  * Home de lvrs.com.br: a introducao a Lavras para empresas que se identificam
@@ -45,7 +48,6 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
   const [hover, setHover] = useState<Porta | null>(null);
   // Antes de escolher, passar o mouse numa porta mostra a foto dela.
   const fundo = porta ?? hover ?? "pacto";
-  const logo = porta ? PORTAS[porta].logo : "/marca/lvrs-pacto.png";
 
   return (
     <header className="inv-hero">
@@ -59,7 +61,6 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
         <circle cx="380" cy="380" r="230" /><circle cx="380" cy="380" r="160" />
       </svg>
       <div className="lv-wrap">
-        <img className="inv-hero-logo" src={logo} alt="LVRS+ Pacto Lavras pela Inovação" />
         <h1>{comEnfase(HERO.titulo[lang], HERO.enfase[lang])}</h1>
         <p className="lv-lead">{HERO.lead[lang]}</p>
         <div className="inv-pergunta">{HERO.pergunta[lang]}</div>
@@ -191,7 +192,7 @@ function ConteudoSetor({ id }: { id: Porta }) {
         <p className="lv-lead">{d.texto[lang]}</p>
         <div className="inv-mini">
           {d.mini.map((m) => (
-            <div key={m.valor}><b>{m.valor}</b><span>{m.legenda[lang]}</span></div>
+            <div key={chave(m.valor)}><b>{tx(m.valor, lang)}</b><span>{m.legenda[lang]}</span></div>
           ))}
         </div>
         <div className="inv-bloco">
@@ -200,7 +201,7 @@ function ConteudoSetor({ id }: { id: Porta }) {
         </div>
         <div className="inv-bloco">
           <h4>{lang === "pt" ? "Talento e pesquisa" : "Talent and research"}</h4>
-          <div className="inv-pills">{d.talento.map((e) => <span key={e}>{e}</span>)}</div>
+          <div className="inv-pills">{d.talento.map((e) => <span key={chave(e)}>{tx(e, lang)}</span>)}</div>
         </div>
       </div>
       <div>

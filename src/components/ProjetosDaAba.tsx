@@ -82,7 +82,7 @@ function Secao({ projetos }: { projetos: Projeto[] }) {
         <div className="mb-3 h-1.5 w-14 rounded-full bg-accent" aria-hidden="true" />
         <h2 className="text-[clamp(22px,5vw,34px)] font-medium leading-tight tracking-[-0.02em]">
           {lang === "pt" ? "Projetos do Pacto em " : "Pact projects in "}
-          <span className="text-accent">{vertical.rotulo}</span>
+          <span className="text-accent">{vertical.id === "sri" ? "SRI" : vertical.rotulo[0].toUpperCase() + vertical.rotulo.slice(1)}</span>
         </h2>
         <p className="mt-3 max-w-xl text-[14.5px] font-light leading-relaxed text-white/65 sm:text-[15px]">
           {lang === "pt"

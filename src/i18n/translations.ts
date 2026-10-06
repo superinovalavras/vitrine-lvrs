@@ -105,7 +105,7 @@ export const translations = {
     },
   },
   ecosystem: {
-    title: { pt: "Ecossistema", en: "Ecosystem" },
+    title: { pt: "Quem sustenta a cidade.", en: "What keeps the city going." },
     cta: { pt: "Saiba mais", en: "Learn more" },
     tabs: {
       education: { pt: "EDUCAÇÃO", en: "EDUCATION" },
