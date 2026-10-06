@@ -38,7 +38,8 @@ export const FUNDO_HERO: Record<Porta | "pacto", string> = {
   agro: "/fundos/fundo-agro.jpg",
   food: "/fundos/fundo-food.jpg",
   tech: "/fundos/fundo-tech.jpg",
-  sri: "/fundos/fundo-sri.jpg",
+  // O SRI tem identidade propria: fundo Noite com o prisma em escala, em linha fina.
+  sri: "/sri/fundo-sri-grafismo.svg",
 };
 
 export interface DadosPorta {
@@ -166,8 +167,8 @@ export const PORTAS: Record<Porta, DadosPorta> = {
   },
   sri: {
     rotulo: { pt: "Sul de Minas", en: "Southern Minas" },
-    resumo: { pt: "Logística, cidades e operação regional", en: "Logistics, cities and regional operations" },
-    logo: "/marca/lvrs-sri.png",
+    resumo: { pt: "Seis cidades conectadas em um só sistema", en: "Six cities connected in one system" },
+    logo: "/sri/sri-logo-branco.png",
     titulo: { pt: "Lavras dentro do Sul de Minas.", en: "Lavras within Southern Minas." },
     enfase: { pt: "Sul de Minas", en: "Southern Minas" },
     texto: {

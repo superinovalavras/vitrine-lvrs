@@ -1,0 +1,115 @@
+/*
+ * SRI Sul de Minas — identidade propria (sri/SRI_Guia_de_Identidade_Visual.pdf)
+ * Noite #0F1E2E (base) · Eletrico #17A2C4 (conexao) · Pedra #F2F2EF.
+ * Sora nos titulos, Inter no texto. O simbolo e sempre em linha, nunca
+ * preenchido, sem sombra.
+ */
+
+/* Com a porta Sul de Minas escolhida, o destaque da home vira o Eletrico. */
+.lv[data-vertical="sri"] { --accent: 192 79% 43%; --accent-foreground: 210 51% 12%; }
+
+/* ---------- Porta do hero ---------- */
+.inv-porta.inv-porta--sri { --c: #17A2C4; background: rgba(15, 30, 46, 0.9); border-color: rgba(23, 162, 196, 0.35); font-family: Inter, system-ui, sans-serif; }
+.inv-porta.inv-porta--sri img { height: 30px; width: auto; margin-bottom: 18px; }
+.inv-porta.inv-porta--sri b { font-family: Sora, Inter, sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+.inv-porta.inv-porta--sri span { color: rgba(242, 242, 239, 0.72); }
+
+/* ---------- Conteudo que a porta abre ---------- */
+.sri {
+  --noite: #0F1E2E; --eletrico: #17A2C4; --pedra: #F2F2EF;
+  position: relative; overflow: hidden;
+  background: var(--noite); color: var(--pedra);
+  border: 1px solid rgba(23, 162, 196, 0.28); border-radius: calc(var(--r) + 8px);
+  padding: 44px; font-family: Inter, system-ui, sans-serif;
+}
+/* o prisma em escala, em linha fina, sangrando a peca (guia, 3.1.1) */
+.sri::before {
+  content: ""; position: absolute; right: -140px; top: -90px; width: 560px; height: 420px;
+  opacity: 0.07; pointer-events: none;
+  background: url(/sri/sri-simbolo-branco.png) no-repeat center / contain;
+}
+.sri > * { position: relative; }
+
+.sri-topo { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 28px; }
+.sri-topo img { height: 46px; width: auto; }
+.sri-topo span { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--eletrico); font-weight: 600; border-left: 1px solid rgba(23, 162, 196, 0.4); padding-left: 18px; }
+
+.sri h3 { font-family: Sora, Inter, sans-serif; font-weight: 600; font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.15; letter-spacing: -0.02em; max-width: 760px; margin-bottom: 1rem; }
+.sri h3 em.s { font-family: Sora, Inter, sans-serif; font-style: normal; font-weight: 600; color: var(--eletrico); }
+.sri-lead { color: rgba(242, 242, 239, 0.75); max-width: 720px; font-size: 1.02rem; margin-bottom: 32px; }
+
+.sri-rede { display: grid; grid-template-columns: 1.35fr 0.9fr; gap: 32px; align-items: center; margin-bottom: 32px; }
+.sri-rede > * { min-width: 0; }
+
+/* ---------- Mapa: as seis cidades -> os pontos -> as conexoes -> o solido ---------- */
+.sri-mapa svg { width: 100%; height: auto; overflow: visible; }
+.sri-mapa line {
+  stroke: var(--pedra); stroke-width: 1.6; stroke-linecap: round; opacity: 0.85;
+  stroke-dasharray: 600; stroke-dashoffset: 600;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.6, 0, 0.2, 1), stroke 0.35s, stroke-width 0.35s, opacity 0.35s;
+}
+.sri-mapa.fase-3 line, .sri-mapa.fase-4 line { stroke-dashoffset: 0; }
+.sri-mapa.fase-4 line { opacity: 0.45; }
+.sri-mapa.fase-4 line.acesa { stroke: var(--eletrico); stroke-width: 2.6; opacity: 1; }
+
+.sri-cidade { cursor: pointer; outline: none; }
+.sri-cidade .alvo { fill: transparent; }
+.sri-cidade .ponto { fill: var(--pedra); transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), fill 0.3s; }
+.sri-cidade .anel { fill: none; stroke: var(--eletrico); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.sri-cidade text { fill: var(--pedra); font-family: Sora, Inter, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; opacity: 0; transition: opacity 0.5s, fill 0.3s; }
+.sri-mapa:not(.fase-0) .sri-cidade text { opacity: 0.9; }
+.sri-mapa.fase-1 .ponto, .sri-mapa.fase-2 .ponto, .sri-mapa.fase-3 .ponto { transform: scale(1); }
+.sri-mapa.fase-4 .ponto { transform: scale(0.75); }
+.sri-mapa.fase-4 .sri-cidade:hover .ponto, .sri-mapa.fase-4 .sri-cidade:focus-visible .ponto { transform: scale(1.1); }
+.sri-mapa.fase-4 .sri-cidade.ativa .ponto { fill: var(--eletrico); transform: scale(1.3); }
+.sri-mapa.fase-4 .sri-cidade.ativa text { fill: var(--eletrico); opacity: 1; }
+.sri-mapa.fase-4 .sri-cidade.ativa .anel { animation: sri-pulso 2.2s ease-out infinite; }
+@keyframes sri-pulso { from { opacity: 0.9; transform: scale(0.6); } to { opacity: 0; transform: scale(2.2); } }
+
+/* ---------- Ficha da cidade ---------- */
+.sri-ficha { border-left: 2px solid var(--eletrico); padding: 4px 0 4px 18px; margin-bottom: 22px; animation: sri-ficha 0.45s ease-out; }
+@keyframes sri-ficha { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
+.sri-papel { display: block; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--eletrico); font-weight: 600; margin-bottom: 0.4rem; }
+.sri-ficha b { display: block; font-family: Sora, Inter, sans-serif; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+.sri-ficha p { color: rgba(242, 242, 239, 0.78); font-size: 0.95rem; }
+.sri-lista { display: flex; flex-wrap: wrap; gap: 6px; }
+.sri-lista button {
+  background: transparent; border: 1px solid rgba(242, 242, 239, 0.22); color: rgba(242, 242, 239, 0.8);
+  border-radius: 999px; padding: 0.4rem 0.85rem; font: 500 0.82rem Inter, sans-serif; cursor: pointer; min-height: 34px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.sri-lista button:hover { border-color: var(--eletrico); color: var(--pedra); }
+.sri-lista button[aria-pressed="true"] { background: var(--eletrico); border-color: var(--eletrico); color: var(--noite); font-weight: 600; }
+
+/* ---------- Numeros, logistica, manifesto ---------- */
+.sri-numeros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(23, 162, 196, 0.22); border: 1px solid rgba(23, 162, 196, 0.22); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+.sri-numeros > div { background: var(--noite); padding: 18px; min-width: 0; }
+.sri-numeros b { display: block; font-family: Sora, Inter, sans-serif; font-size: 1.35rem; font-weight: 600; color: var(--pedra); line-height: 1.2; }
+.sri-numeros > div:last-child b { font-size: 0.95rem; letter-spacing: 0.02em; }
+.sri-numeros span { display: block; margin-top: 0.3rem; font-size: 0.78rem; color: rgba(242, 242, 239, 0.65); text-wrap: balance; }
+
+.sri-logistica { margin-bottom: 28px; }
+.sri-logistica ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.9rem; color: rgba(242, 242, 239, 0.8); }
+.sri-logistica b { color: var(--eletrico); font-weight: 600; margin-right: 0.3rem; }
+
+.sri-manifesto { font-family: Sora, Inter, sans-serif; font-size: 1.15rem; line-height: 1.45; color: var(--pedra); max-width: 620px; margin-bottom: 28px; }
+.sri-manifesto cite { display: block; margin-top: 0.6rem; font-family: Inter, sans-serif; font-style: normal; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(242, 242, 239, 0.5); }
+
+.sri-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--eletrico); color: var(--noite); border-radius: 999px; padding: 0.8rem 1.4rem; font: 600 0.95rem Inter, sans-serif; text-decoration: none; transition: transform 0.2s; }
+.sri-btn:hover { transform: translateY(-2px); }
+
+@media (max-width: 900px) {
+  .sri { padding: 26px; }
+  .sri-rede { grid-template-columns: 1fr; gap: 20px; }
+  .sri-numeros { grid-template-columns: 1fr 1fr; }
+  /* 6 e habitantes lado a lado; empresas e universidades na largura toda (sem quadrado vazio) */
+  .sri-numeros > div:nth-child(n+3) { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .sri-topo img { height: 38px; }
+  .sri-topo span { flex-basis: 100%; border-left: 0; padding-left: 0; }
+  .sri-cidade text { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sri *, .sri *::before { animation: none !important; transition: none !important; }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import BarraEcossistema from "@/components/BarraEcossistema";
+import SetorSRI from "@/components/SetorSRI";
 import RodapeSimples from "@/components/RodapeSimples";
 import { Reveal, useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -62,7 +63,7 @@ function Hero({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) =
               <button
                 key={id}
                 type="button"
-                className="inv-porta"
+                className={`inv-porta${id === "sri" ? " inv-porta--sri" : ""}`}
                 data-vertical={id}
                 style={{ ["--c" as string]: "hsl(var(--accent))" }}
                 aria-pressed={porta === id}
@@ -260,7 +261,8 @@ function Setor({ porta, escolher }: { porta: Porta | null; escolher: (p: Porta) 
         </div>
         <div className="inv-palco">
           <div key={cortina} className={`inv-cortina${cortina ? " vai" : ""}`} />
-          <ConteudoSetor id={mostrada} />
+          {/* O SRI tem identidade propria (guia do SRI Sul de Minas), entao ganha conteudo proprio. */}
+          {mostrada === "sri" ? <SetorSRI /> : <ConteudoSetor id={mostrada} />}
         </div>
       </div>
     </section>

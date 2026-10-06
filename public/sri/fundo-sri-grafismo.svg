@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+<rect width="1600" height="1000" fill="#0F1E2E"/>
+<g fill="none" stroke="#17A2C4" stroke-width="2.2" opacity=".55" transform="translate(180 -60) scale(2.3)">
+<path d="M60 219 533 60M60 219 412 150M60 219 340 341M60 219 246 351M412 150 533 60M412 150 340 341M533 60 340 341M533 60 418 412M246 351 340 341M246 351 418 412M340 341 418 412"/>
+</g>
+</svg>
