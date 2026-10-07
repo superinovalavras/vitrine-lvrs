@@ -37,17 +37,19 @@ const youxLab = { tema: { fundo: "#9E184B", texto: "#FFFFFF", apoio: "#F6DCE6", 
 const avancaCafe = { tema: { fundo: "#0B241E", texto: "#FFFFFF", apoio: "#BFCBC6", destaque: "#C9E86A" } };
 
 function Card({
-  estilo, elemento, marca, texto, praQuem, meta, href, rotuloLink, breve,
+  estilo, elemento, marca, texto, praQuem, meta, href, rotuloLink, breve, centro,
 }: {
   estilo?: CSSProperties; elemento?: ReactNode; marca: ReactNode; texto: string; praQuem?: string;
   meta?: string[]; href?: string; rotuloLink: string; breve?: boolean;
+  /** Logo centrada na coluna, para logos que nao a preenchem sozinhas. */
+  centro?: boolean;
 }) {
   const { lang, L } = useLanguage();
   return (
     <Reveal>
       <article className={`ini${breve ? " breve" : ""}`} style={estilo}>
         {elemento}
-        <div>{marca}</div>
+        <div className={centro ? "marca-centro" : undefined}>{marca}</div>
         <div className="corpo">
           <p>{texto}</p>
           {praQuem && (
@@ -122,10 +124,11 @@ export default function Iniciativas() {
           />
           <Card
             estilo={tema(youxLab)}
+            centro
             marca={
               <>
-                <img className="logo" src="/iniciativas/youx.svg" alt="YouX" style={{ maxHeight: 72 }} />
-                <div className="logo-txt" style={{ marginTop: 10 }}>Lab</div>
+                <img className="logo" src="/iniciativas/youx.svg" alt="YouX" style={{ maxHeight: 110 }} />
+                <div className="logo-txt" style={{ marginTop: 6, fontSize: "2.8rem" }}>Lab</div>
               </>
             }
             texto={L("Programa da YouX Group para alunos do ensino médio de escolas públicas: nove meses de formação técnica e socioemocional, com ponte para o primeiro emprego em tecnologia.", "A YouX Group program for public high school students: nine months of technical and socio-emotional training, with a bridge to a first job in tech.")}
@@ -135,7 +138,8 @@ export default function Iniciativas() {
           />
           <Card
             estilo={tema(avancaCafe)}
-            marca={<img className="logo" src="/iniciativas/avanca-cafe.png" alt="Avança Café" />}
+            centro
+            marca={<img className="logo" src="/iniciativas/avanca-cafe.png" alt="Avança Café" style={{ maxHeight: 180 }} />}
             texto={L("Hackathon e pré-aceleração de soluções digitais, de automação e biotecnologia para a cadeia do café. Realização da Embrapa Café, com execução do Ipêtech/UFLA e do tecnoPARQ/UFV.", "Hackathon and pre-acceleration for digital, automation and biotech solutions for the coffee chain. Organized by Embrapa Café, run by Ipêtech/UFLA and tecnoPARQ/UFV.")}
             praQuem={L("Startups do café nascendo junto da pesquisa da UFLA e da Embrapa.", "Coffee startups born alongside UFLA and Embrapa research.")}
             meta={[L("Mais de R$ 97 mil em prêmios", "Over R$97k in prizes"), L("Demo Day em dezembro/2026", "Demo Day Dec 2026")]}

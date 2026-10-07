@@ -229,6 +229,7 @@ a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
 .ini .el { position: absolute; right: -60px; top: -60px; width: 340px; opacity: var(--eo); pointer-events: none; animation: lv-gira 40s linear infinite; }
 @keyframes lv-gira { to { transform: rotate(360deg); } }
 .ini .logo { max-height: 96px; width: auto; max-width: 100%; position: relative; }
+.ini .marca-centro { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .ini .logo-txt { font-size: 2rem; font-weight: 700; line-height: 1.1; position: relative; white-space: pre-line; }
 .ini .corpo { position: relative; }
 .ini p { color: var(--a); margin-bottom: 14px; }
