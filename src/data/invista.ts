@@ -13,7 +13,7 @@ import dairyFactory from "@/assets/dairy-factory.jpg";
 import youxLab from "@/assets/youx-lab.jpg";
 import aerialLavras from "@/assets/aerial-lavras.jpg";
 import funilDam from "@/assets/funil-dam.jpg";
-import serraBocaina from "@/assets/serra-bocaina.jpg";
+import aeroportoLavras from "@/assets/aeroporto-lavras.jpg";
 import ipetech from "@/assets/ipetech.jpg";
 
 type T = { pt: string; en: string };
@@ -238,7 +238,7 @@ export const ONDE: { titulo: T; texto: T; foto: string; link?: { url: string; ro
       pt: "Aviação executiva na própria cidade. Para voos comerciais, Varginha fica a 90 km.",
       en: "Business aviation in the city itself. For commercial flights, Varginha is 90 km away.",
     },
-    foto: serraBocaina,
+    foto: aeroportoLavras,
   },
 ];
 
