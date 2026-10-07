@@ -16,18 +16,25 @@ import logoVale from "@/assets/logo-vale-ipes.svg";
  * diferente e foi recusada.
  *
  * Lab, Launch e Observatorio vestem a identidade propria, com o mesmo tema
- * usado em verticais.ts. O resto veste o LVRS+.
+ * usado em verticais.ts. Os parceiros (YouX Lab, Avanca Cafe) tambem, com as
+ * cores tiradas dos sites deles. O resto veste o LVRS+.
  */
 
 type T = { pt: string; en: string };
 
-const tema = (i: Iniciativa): CSSProperties =>
+const tema = (i: Pick<Iniciativa, "tema" | "elementoOpacidade">): CSSProperties =>
   ({
     "--f": i.tema.fundo, "--t": i.tema.texto, "--a": i.tema.apoio, "--d": i.tema.destaque,
     "--eo": i.elementoOpacidade ?? 0.12,
   }) as CSSProperties;
 
 const pega = (id: string) => iniciativasTech.find((i) => i.id === id)!;
+
+// Cores dos sites de cada parceiro (lidas em 07/10/2026).
+// YouX Lab: vinho da pagina com o verde-limao dos destaques.
+const youxLab = { tema: { fundo: "#9E184B", texto: "#FFFFFF", apoio: "#F6DCE6", destaque: "#D2F301" } };
+// Avanca Cafe: verde-cafe escuro do topo com o verde claro dos botoes.
+const avancaCafe = { tema: { fundo: "#0B241E", texto: "#FFFFFF", apoio: "#BFCBC6", destaque: "#C9E86A" } };
 
 function Card({
   estilo, elemento, marca, texto, praQuem, meta, href, rotuloLink, breve,
@@ -113,8 +120,8 @@ export default function Iniciativas() {
             meta={[L("Onboarding 04/11/2026", "Onboarding Nov 4, 2026"), L("Demoday 05/03/2027", "Demo Day Mar 5, 2027")]}
             href={launch.url} rotuloLink="launch.lvrs.com.br"
           />
-          {/* Parceiros de fora da Prefeitura: vestem o LVRS+, so a logo e deles. */}
           <Card
+            estilo={tema(youxLab)}
             marca={
               <>
                 <img className="logo" src="/iniciativas/youx.svg" alt="YouX" style={{ maxHeight: 72 }} />
@@ -127,6 +134,7 @@ export default function Iniciativas() {
             href="https://youxgroup.com.br/youx-lab/" rotuloLink="youxgroup.com.br"
           />
           <Card
+            estilo={tema(avancaCafe)}
             marca={<img className="logo" src="/iniciativas/avanca-cafe.png" alt="Avança Café" />}
             texto={L("Hackathon e pré-aceleração de soluções digitais, de automação e biotecnologia para a cadeia do café. Realização da Embrapa Café, com execução do Ipêtech/UFLA e do tecnoPARQ/UFV.", "Hackathon and pre-acceleration for digital, automation and biotech solutions for the coffee chain. Organized by Embrapa Café, run by Ipêtech/UFLA and tecnoPARQ/UFV.")}
             praQuem={L("Startups do café nascendo junto da pesquisa da UFLA e da Embrapa.", "Coffee startups born alongside UFLA and Embrapa research.")}
