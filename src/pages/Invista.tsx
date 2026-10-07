@@ -287,24 +287,41 @@ function OndeSeInstalar() {
           </p>
         </Reveal>
         <div className="inv-onde">
-          {ONDE.map((o, i) => (
-            <button
-              key={o.titulo.pt}
-              type="button"
-              className={`inv-aba-onde${i === aberta ? " aberta" : ""}`}
-              style={{ backgroundImage: `url(${o.foto})` }}
-              aria-expanded={i === aberta}
-              onMouseEnter={() => setAberta(i)}
-              onFocus={() => setAberta(i)}
-              onClick={() => setAberta(i)}
-            >
+          {ONDE.map((o, i) => {
+            const comum = {
+              className: `inv-aba-onde${i === aberta ? " aberta" : ""}`,
+              style: { backgroundImage: `url(${o.foto})` },
+              onMouseEnter: () => setAberta(i),
+              onFocus: () => setAberta(i),
+            };
+            const miolo = (
               <div>
                 <span className="n">0{i + 1}</span>
                 <h3>{t(o.titulo, lang)}</h3>
                 <p>{t(o.texto, lang)}</p>
+                {o.link && <span className="ir">{t(o.link.rotulo, lang)} <span aria-hidden="true">↗</span></span>}
               </div>
-            </button>
-          ))}
+            );
+            // Painel com link: no celular o primeiro toque abre, o segundo leva ao site.
+            return o.link ? (
+              <a
+                key={o.titulo.pt}
+                {...comum}
+                href={o.link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (i !== aberta) { e.preventDefault(); setAberta(i); }
+                }}
+              >
+                {miolo}
+              </a>
+            ) : (
+              <button key={o.titulo.pt} type="button" {...comum} aria-expanded={i === aberta} onClick={() => setAberta(i)}>
+                {miolo}
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>

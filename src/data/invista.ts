@@ -14,6 +14,7 @@ import youxLab from "@/assets/youx-lab.jpg";
 import aerialLavras from "@/assets/aerial-lavras.jpg";
 import funilDam from "@/assets/funil-dam.jpg";
 import serraBocaina from "@/assets/serra-bocaina.jpg";
+import ipetech from "@/assets/ipetech.jpg";
 
 type T = { pt: string; en: string };
 /** Nome proprio (empresa, sigla) fica igual nos dois idiomas; o resto traduz. */
@@ -205,7 +206,7 @@ export const NUMEROS: { valor: number; formato: "mil" | "bi" | "int" | "idh"; le
   { valor: 0.782, formato: "idh", legenda: { pt: "IDHM (alto)", en: "HDI (high)" }, fonte: "IBGE" },
 ];
 
-export const ONDE: { titulo: T; texto: T; foto: string }[] = [
+export const ONDE: { titulo: T; texto: T; foto: string; link?: { url: string; rotulo: T } }[] = [
   {
     titulo: { pt: "Distritos industriais", en: "Industrial districts" },
     texto: {
@@ -220,7 +221,8 @@ export const ONDE: { titulo: T; texto: T; foto: string }[] = [
       pt: "Ipêtech, o Parque Científico e Tecnológico de Lavras: incubação, validação e aceleração de negócios AgroFoodTech.",
       en: "Ipêtech, the Lavras Science and Technology Park: incubation, validation and acceleration of AgroFoodTech businesses.",
     },
-    foto: "/fundos/fundo-tech.jpg",
+    foto: ipetech,
+    link: { url: "https://ipetech.ufla.br/", rotulo: { pt: "Conhecer o Ipêtech", en: "Visit Ipêtech" } },
   },
   {
     titulo: { pt: "Infraestrutura", en: "Infrastructure" },

@@ -154,6 +154,11 @@
 .inv-aba-onde h3 { font-size: 1.15rem; font-weight: 600; margin: .3rem 0; white-space: nowrap; }
 .inv-aba-onde p { font-size: .88rem; color: var(--suave); max-width: 440px; opacity: 0; max-height: 0; overflow: hidden; transition: opacity .4s; }
 .inv-aba-onde.aberta p { opacity: 1; max-height: 200px; transition-delay: .25s; }
+a.inv-aba-onde { display: block; text-decoration: none; }
+.inv-aba-onde .ir { display: inline-flex; align-items: center; gap: .4rem; margin-top: 0; max-height: 0; overflow: hidden; background: var(--ac); color: var(--ac-txt); border-radius: 999px; padding: 0 1rem; font-size: .85rem; font-weight: 600; white-space: nowrap; opacity: 0; transition: opacity .4s; }
+.inv-aba-onde.aberta .ir { opacity: 1; max-height: 3rem; margin-top: .9rem; padding: .5rem 1rem; transition-delay: .35s; }
+.inv-aba-onde .ir span { display: inline-block; transition: transform .2s; }
+a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
 
 /* ---------- Incentivos (cartas que inclinam com o mouse) ---------- */
 .inv-inc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; perspective: 900px; }
