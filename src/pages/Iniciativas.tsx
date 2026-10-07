@@ -114,27 +114,25 @@ export default function Iniciativas() {
             href={launch.url} rotuloLink="launch.lvrs.com.br"
           />
           {/* Parceiros de fora da Prefeitura: vestem o LVRS+, so a logo e deles. */}
-          <div className="ini-dupla">
-            <Card
-              marca={
-                <>
-                  <img className="logo" src="/iniciativas/youx.svg" alt="YouX" style={{ maxHeight: 48 }} />
-                  <div className="logo-txt" style={{ marginTop: 10 }}>Lab</div>
-                </>
-              }
-              texto={L("Programa da YouX Group para alunos do ensino médio de escolas públicas: nove meses de formação técnica e socioemocional, com ponte para o primeiro emprego em tecnologia.", "A YouX Group program for public high school students: nine months of technical and socio-emotional training, with a bridge to a first job in tech.")}
-              praQuem={L("Jovens de Lavras formados para o mercado de tecnologia.", "Young people from Lavras trained for the tech job market.")}
-              meta={[L("Meta: 400 jovens no mercado até 2030", "Goal: 400 young people in jobs by 2030")]}
-              href="https://youxgroup.com.br/youx-lab/" rotuloLink="youxgroup.com.br"
-            />
-            <Card
-              marca={<img className="logo" src="/iniciativas/avanca-cafe.png" alt="Avança Café" />}
-              texto={L("Hackathon e pré-aceleração de soluções digitais, de automação e biotecnologia para a cadeia do café. Realização da Embrapa Café, com execução do Ipêtech/UFLA e do tecnoPARQ/UFV.", "Hackathon and pre-acceleration for digital, automation and biotech solutions for the coffee chain. Organized by Embrapa Café, run by Ipêtech/UFLA and tecnoPARQ/UFV.")}
-              praQuem={L("Startups do café nascendo junto da pesquisa da UFLA e da Embrapa.", "Coffee startups born alongside UFLA and Embrapa research.")}
-              meta={[L("Mais de R$ 97 mil em prêmios", "Over R$97k in prizes"), L("Demo Day em dezembro/2026", "Demo Day Dec 2026")]}
-              href="https://ipetech.ufla.br/index.php/avanca-cafe/" rotuloLink="ipetech.ufla.br"
-            />
-          </div>
+          <Card
+            marca={
+              <>
+                <img className="logo" src="/iniciativas/youx.svg" alt="YouX" style={{ maxHeight: 72 }} />
+                <div className="logo-txt" style={{ marginTop: 10 }}>Lab</div>
+              </>
+            }
+            texto={L("Programa da YouX Group para alunos do ensino médio de escolas públicas: nove meses de formação técnica e socioemocional, com ponte para o primeiro emprego em tecnologia.", "A YouX Group program for public high school students: nine months of technical and socio-emotional training, with a bridge to a first job in tech.")}
+            praQuem={L("Jovens de Lavras formados para o mercado de tecnologia.", "Young people from Lavras trained for the tech job market.")}
+            meta={[L("Meta: 400 jovens no mercado até 2030", "Goal: 400 young people in jobs by 2030")]}
+            href="https://youxgroup.com.br/youx-lab/" rotuloLink="youxgroup.com.br"
+          />
+          <Card
+            marca={<img className="logo" src="/iniciativas/avanca-cafe.png" alt="Avança Café" />}
+            texto={L("Hackathon e pré-aceleração de soluções digitais, de automação e biotecnologia para a cadeia do café. Realização da Embrapa Café, com execução do Ipêtech/UFLA e do tecnoPARQ/UFV.", "Hackathon and pre-acceleration for digital, automation and biotech solutions for the coffee chain. Organized by Embrapa Café, run by Ipêtech/UFLA and tecnoPARQ/UFV.")}
+            praQuem={L("Startups do café nascendo junto da pesquisa da UFLA e da Embrapa.", "Coffee startups born alongside UFLA and Embrapa research.")}
+            meta={[L("Mais de R$ 97 mil em prêmios", "Over R$97k in prizes"), L("Demo Day em dezembro/2026", "Demo Day Dec 2026")]}
+            href="https://ipetech.ufla.br/index.php/avanca-cafe/" rotuloLink="ipetech.ufla.br"
+          />
           <Card
             breve
             marca={<div className="logo-txt">{L("Academia de\nInovação de Lavras", "Lavras Innovation\nAcademy")}</div>}
