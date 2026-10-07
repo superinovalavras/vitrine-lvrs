@@ -240,8 +240,8 @@ a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
 .ini a.ir:hover { transform: translateX(4px); }
 .ini.breve { opacity: .75; }
 .ini .ir.parado { background: transparent; color: var(--a); border: 1px dashed var(--a); }
-.ini-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.ini-dupla .ini { grid-template-columns: 1fr; margin: 0; }
+.ini-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.ini-dupla .ini { grid-template-columns: 1fr; margin: 0; height: 100%; align-content: start; }
 
 @media (max-width: 900px) {
   .inv-portas { grid-template-columns: 1fr 1fr; }
