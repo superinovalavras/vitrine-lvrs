@@ -92,6 +92,38 @@
 .inv-porta b { display: block; font-size: 1rem; font-weight: 600; }
 .inv-porta span { display: block; font-size: .8rem; color: var(--suave); margin-top: .2rem; }
 
+/* ---------- A cidade inteira (mosaico: pecas que se encaixam ao rolar) ---------- */
+.inv-cidade { overflow-x: clip; }
+.inv-mosaico { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(3,minmax(210px,auto)); gap: 12px; margin-top: 40px;
+  grid-template-areas: "polo polo univ univ" "polo polo ind tur" "polo polo vida cta"; }
+.p-polo { grid-area: polo; } .p-univ { grid-area: univ; } .p-ind { grid-area: ind; } .p-tur { grid-area: tur; } .p-vida { grid-area: vida; } .p-cta { grid-area: cta; }
+.inv-peca { position: relative; overflow: hidden; border-radius: var(--r); border: 1px solid var(--borda); background: var(--card); display: flex; align-items: flex-end; color: var(--texto); text-decoration: none;
+  opacity: 0; transform: translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.86);
+  transition: transform .9s cubic-bezier(.2,1.3,.4,1) var(--atraso), opacity .5s ease var(--atraso), background .4s; }
+.inv-mosaico.montado .inv-peca { opacity: 1; transform: none; }
+.inv-peca img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
+.inv-peca::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(1,41,40,.05) 15%,rgba(1,41,40,.94)); }
+.inv-peca:hover img { transform: scale(1.06); }
+.inv-peca .txt { position: relative; z-index: 1; padding: 20px; }
+.inv-peca h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.2; margin-bottom: .4rem; }
+.inv-peca .valor { font-size: .8rem; color: var(--suave); margin-bottom: .45rem; line-height: 1.3; }
+.inv-peca .valor b { display: block; font-size: 1.8rem; font-weight: 600; color: var(--ac); line-height: 1.1; transition: color .4s; }
+.inv-peca p { font-size: .85rem; color: var(--suave); line-height: 1.45; }
+.inv-peca small { display: block; margin-top: .55rem; font-size: .66rem; color: var(--fraco); }
+.p-polo .txt { padding: 34px; max-width: 540px; }
+.p-polo h3 { font-size: 1.65rem; }
+.p-polo .valor { font-size: .95rem; } .p-polo .valor b { font-size: 3.4rem; }
+.p-polo p { font-size: 1rem; }
+.p-univ .txt { max-width: 440px; } .p-univ .valor b { font-size: 2.4rem; }
+/* A peca do contato e cor chapada da vertical, com os arcos grossos da marca. */
+.p-cta { background: var(--ac); color: var(--ac-txt); border-color: transparent; }
+.p-cta::after { display: none; }
+.p-cta p { color: var(--ac-txt); opacity: .85; }
+.p-cta .ir { display: inline-block; margin-top: .7rem; font-weight: 700; font-size: .92rem; }
+.p-cta .arcos { position: absolute; right: 0; top: 0; width: 150px; height: 150px; transition: transform .6s cubic-bezier(.6,0,.2,1); transform-origin: top right; }
+.p-cta .arcos circle { fill: none; stroke: color-mix(in srgb,var(--ac) 78%,#000); stroke-width: 15; transition: stroke .4s; }
+.p-cta:hover .arcos { transform: scale(1.15); }
+
 /* ---------- Numeros (contador) ---------- */
 .inv-numeros { padding: 56px 0; background: var(--chrome); border-block: 1px solid var(--borda); }
 .inv-num-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 20px; }
@@ -254,6 +286,10 @@ a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
   .inv-onde { flex-direction: column; height: auto; }
   .inv-aba-onde { min-height: 110px; } .inv-aba-onde.aberta { min-height: 280px; }
   .inv-arcos { width: 480px; right: -220px; }
+  .inv-mosaico { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: minmax(220px,auto);
+    grid-template-areas: "polo polo" "univ univ" "ind tur" "vida cta"; }
+  .p-polo { min-height: 360px; } .p-polo .txt { padding: 24px; }
+  .p-polo h3 { font-size: 1.35rem; } .p-polo .valor b { font-size: 2.6rem; } .p-polo p { font-size: .92rem; }
   .eco-site { display: none; }
   .eco-btn { border: 1px solid #1e4a47; border-radius: 999px; padding: .3rem .8rem; }
   .eco-btn .rot { display: none; }
@@ -263,6 +299,10 @@ a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
 }
 @media (max-width: 520px) {
   .lv-wrap, .eco-linha { padding: 0 16px; }
+  .inv-mosaico { gap: 8px; }
+  .inv-peca .txt { padding: 14px; } .p-polo .txt { padding: 20px; }
+  .inv-peca h3 { font-size: .95rem; } .inv-peca p { font-size: .8rem; } .inv-peca .valor b { font-size: 1.5rem; }
+  .p-cta .arcos { width: 110px; height: 110px; }
   .inv-num-grid { grid-template-columns: 1fr 1fr; }
   .inv-hero { padding-top: 96px; align-items: flex-start; }
   .inv-arcos { width: 420px; right: -300px; top: 30%; opacity: .3; }
@@ -281,6 +321,7 @@ a.inv-aba-onde:hover .ir span { transform: translate(2px,-2px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .lv *, .lv *::before, .lv *::after, .eco * { animation: none !important; transition: none !important; }
+  .inv-peca { opacity: 1; transform: none; }
   .inv-arcos circle { stroke-dashoffset: 0; }
   .lv-revela { opacity: 1; transform: none; }
   .inv-radar .rotas { stroke-dashoffset: 0; }

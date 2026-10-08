@@ -15,6 +15,11 @@ import aerialLavras from "@/assets/aerial-lavras.jpg";
 import funilDam from "@/assets/funil-dam.jpg";
 import aeroportoLavras from "@/assets/aeroporto-lavras.jpg";
 import ipetech from "@/assets/ipetech.jpg";
+import cidadePolo from "@/assets/cidade-polo.jpg";
+import cidadeVida from "@/assets/cidade-vida.jpg";
+import ufla from "@/assets/ufla.jpg";
+import industria from "@/assets/bakery-production.jpg";
+import casaCultura from "@/assets/culture-house.jpg";
 
 type T = { pt: string; en: string };
 /** Nome proprio (empresa, sigla) fica igual nos dois idiomas; o resto traduz. */
@@ -31,7 +36,7 @@ export const HERO = {
     pt: "Ciência, talento, logística e um governo que facilita. Um território pronto para empresas que querem crescer com a vocação da cidade.",
     en: "Science, talent, logistics and a government that makes things easier. A territory ready for companies that want to grow with the city's economic vocation.",
   } as T,
-  pergunta: { pt: "Qual é o seu negócio?", en: "What is your business?" } as T,
+  pergunta: { pt: "Principais vocações", en: "Key economic vocations" } as T,
 };
 
 export const FUNDO_HERO: Record<Porta | "pacto", string> = {
@@ -204,6 +209,72 @@ export const NUMEROS: { valor: number; formato: "mil" | "bi" | "int" | "idh"; le
   { valor: 14735, formato: "int", legenda: { pt: "universitários na graduação", en: "undergraduate students" }, fonte: "INEP, 2024" },
   { valor: 6110, formato: "int", legenda: { pt: "unidades locais de empresas", en: "local business units" }, fonte: "CEMPRE, 2024" },
   { valor: 0.782, formato: "idh", legenda: { pt: "IDHM (alto)", en: "HDI (high)" }, fonte: "IBGE" },
+];
+
+/**
+ * A cidade inteira, entre os numeros e as portas (pedido de 07/10/2026): agro,
+ * food e tech sao as apostas, mas a economia de hoje e de servicos. A ordem e o
+ * tamanho das pecas seguem o peso de cada uma (servicos = 57% do VAB em 2021).
+ * Numeros de tech/observatorio/dados/lavras-em-numeros.md. Saude fica de fora
+ * ate termos dado de polo regional de saude.
+ */
+export const CIDADE: { id: string; titulo: T; valor?: Texto; legenda?: T; texto: T; fonte?: string; foto: string; alt: T }[] = [
+  {
+    id: "polo",
+    titulo: { pt: "Polo regional de comércio e serviços", en: "Regional hub for retail and services" },
+    valor: { pt: "62,7%", en: "62.7%" },
+    legenda: { pt: "do PIB da microrregião", en: "of the micro-region's GDP" },
+    texto: {
+      pt: "É em Lavras que 14 municípios vêm comprar, estudar e resolver a vida. Comércio e serviços somam 66% do emprego formal.",
+      en: "Lavras is where 14 municipalities come to shop, study and get things done. Retail and services account for 66% of formal jobs.",
+    },
+    fonte: "IBGE, 2023 · CAGED, 2026",
+    foto: cidadePolo,
+    alt: { pt: "Lavras vista do alto", en: "Lavras from above" },
+  },
+  {
+    id: "univ",
+    titulo: { pt: "Cidade universitária", en: "University city" },
+    valor: { pt: "1 em 8", en: "1 in 8" },
+    legenda: { pt: "moradores é universitário", en: "residents is a university student" },
+    texto: {
+      pt: "UFLA, Unilavras, Fadminas e Fagammon: 62 cursos de graduação, e 2.675 alunos de pós só na UFLA.",
+      en: "UFLA, Unilavras, Fadminas and Fagammon: 62 undergraduate programs, and 2,675 graduate students at UFLA alone.",
+    },
+    fonte: "INEP, 2024",
+    foto: ufla,
+    alt: { pt: "Estudantes no campus da UFLA", en: "Students on the UFLA campus" },
+  },
+  {
+    id: "ind",
+    titulo: { pt: "Indústria", en: "Industry" },
+    valor: { pt: "6.115", en: "6,115" },
+    legenda: { pt: "empregos industriais", en: "industrial jobs" },
+    texto: { pt: "O setor que mais abriu vagas em 2025.", en: "The sector that added the most jobs in 2025." },
+    fonte: "CAGED, 2026",
+    foto: industria,
+    alt: { pt: "Linha de produção em Lavras", en: "Production line in Lavras" },
+  },
+  {
+    id: "tur",
+    titulo: { pt: "Turismo e cultura", en: "Tourism and culture" },
+    texto: {
+      pt: "Serra da Bocaina, represa do Funil, Estação Férrea, Igreja do Rosário e Casa de Cultura.",
+      en: "Serra da Bocaina, the Funil reservoir, the Railway Station, Rosário Church and the Cultural House.",
+    },
+    foto: casaCultura,
+    alt: { pt: "Casa de Cultura de Lavras", en: "Lavras Cultural House" },
+  },
+  {
+    id: "vida",
+    titulo: { pt: "Qualidade de vida", en: "Quality of life" },
+    texto: {
+      pt: "Terra dos ipês, dos trilhos e de gente feliz: cidade média, com o campo logo ali.",
+      en: "Land of ipê trees, railways and happy people: a mid-sized city with the countryside right next door.",
+    },
+    foto: cidadeVida,
+    alt: { pt: "Lavras entre o campo e a cidade", en: "Lavras between countryside and city" },
+  },
 ];
 
 export const ONDE: { titulo: T; texto: T; foto: string; link?: { url: string; rotulo: T } }[] = [

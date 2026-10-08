@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import BarraEcossistema from "@/components/BarraEcossistema";
 import SetorSRI from "@/components/SetorSRI";
@@ -9,7 +9,7 @@ import { comEnfase } from "@/i18n/enfase";
 import { t, type Language } from "@/i18n/translations";
 import { localeDe } from "@/i18n/idiomas";
 import {
-  EMAIL_CONTATO, FUNDO_HERO, HERO, INCENTIVOS, NUMEROS, ONDE, PASSOS, PORTAS, PORTAS_ORDEM, type Porta, type Texto,
+  CIDADE, EMAIL_CONTATO, FUNDO_HERO, HERO, INCENTIVOS, NUMEROS, ONDE, PASSOS, PORTAS, PORTAS_ORDEM, type Porta, type Texto,
 } from "@/data/invista";
 
 const tx = (v: Texto, lang: Language) => (typeof v === "string" ? v : t(v, lang));
@@ -25,7 +25,7 @@ const chave = (v: Texto) => (typeof v === "string" ? v : v.pt);
  *
  * Cada secao tem um efeito proprio, sem repetir (pedido de 24/09/2026):
  * hero = arcos que se desenham e fundo que troca no hover; numeros = contador;
- * setor = cortina na cor da porta; mapa = rotas que se desenham; onde se
+ * cidade = pecas do mosaico que se encaixam; setor = cortina na cor da porta; mapa = rotas que se desenham; onde se
  * instalar = paineis que se abrem; incentivos = cartas que inclinam; passos =
  * linha que enche com a rolagem; iniciativas = logos que se afastam.
  */
@@ -143,6 +143,56 @@ function Numeros() {
             <small>{n.fonte}</small>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------ a cidade inteira */
+
+// De onde cada peca do mosaico parte antes de se encaixar (px e graus).
+const ESPALHA = [[-60, 50, -4], [80, -40, 5], [50, 70, -6], [90, 30, 7], [-40, 80, 4], [70, 70, -5]];
+const espalha = (i: number) =>
+  ({ "--dx": `${ESPALHA[i][0]}px`, "--dy": `${ESPALHA[i][1]}px`, "--rot": `${ESPALHA[i][2]}deg`, "--atraso": `${i * 90}ms` }) as CSSProperties;
+
+function Cidade() {
+  const { lang, L } = useLanguage();
+  const { ref, isVisible } = useScrollReveal(0.15);
+  return (
+    <section className="lv-sec inv-cidade">
+      <div className="lv-wrap">
+        <Reveal>
+          <span className="lv-tag">{L("A cidade inteira", "The whole city")}</span>
+          <h2 className="lv-h2">
+            {comEnfase(L("Uma economia que não depende de um setor só.", "An economy that doesn't rely on a single sector."), L("um setor só", "a single sector"))}
+          </h2>
+          <p className="lv-lead">
+            {L("Agro, food e tech são as vocações que Lavras escolheu para crescer. Elas se apoiam numa cidade que já é polo regional de serviços, de ensino e de indústria.", "Agro, food and tech are the vocations Lavras chose to grow. They rest on a city that is already a regional hub for services, education and industry.")}
+          </p>
+        </Reveal>
+        <div ref={ref} className={`inv-mosaico${isVisible ? " montado" : ""}`}>
+          {CIDADE.map((c, i) => (
+            <article key={c.id} className={`inv-peca p-${c.id}`} style={espalha(i)}>
+              <img src={c.foto} alt={t(c.alt, lang)} loading="lazy" />
+              <div className="txt">
+                <h3>{t(c.titulo, lang)}</h3>
+                {c.valor && c.legenda && <p className="valor"><b>{tx(c.valor, lang)}</b>{t(c.legenda, lang)}</p>}
+                <p>{t(c.texto, lang)}</p>
+                {c.fonte && <small>{c.fonte}</small>}
+              </div>
+            </article>
+          ))}
+          <a href="#contato" className="inv-peca p-cta" style={espalha(CIDADE.length)}>
+            <svg className="arcos" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="200" cy="0" r="46" /><circle cx="200" cy="0" r="82" /><circle cx="200" cy="0" r="118" />
+            </svg>
+            <div className="txt">
+              <h3>{L("Seu setor não está aqui?", "Don't see your sector?")}</h3>
+              <p>{L("Logística, varejo, construção, serviços: a gente apresenta a cidade para o seu negócio.", "Logistics, retail, construction, services: we'll introduce the city to your business.")}</p>
+              <span className="ir">{L("Fale com a gente →", "Talk to us →")}</span>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -557,6 +607,7 @@ export default function Invista() {
       <main id="conteudo">
         <Hero porta={porta} escolher={escolher} />
         <Numeros />
+        <Cidade />
         <Setor porta={porta} escolher={(p) => setPorta(p)} />
         <OndeSeInstalar />
         <Incentivos />
