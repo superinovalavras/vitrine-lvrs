@@ -35,6 +35,8 @@ const pega = (id: string) => iniciativasTech.find((i) => i.id === id)!;
 const youxLab = { tema: { fundo: "#9E184B", texto: "#FFFFFF", apoio: "#F6DCE6", destaque: "#D2F301" } };
 // Avanca Cafe: verde-cafe escuro do topo com o verde claro dos botoes.
 const avancaCafe = { tema: { fundo: "#0B241E", texto: "#FFFFFF", apoio: "#BFCBC6", destaque: "#C9E86A" } };
+// Banca de Ideias: papel claro e roxo do site (identidade Vale dos Ipês), com a onda roxo-laranja-verde.
+const banca = { tema: { fundo: "#FBF9F7", texto: "#4F1B60", apoio: "#4A4949", destaque: "#6B2581" }, elementoOpacidade: 1 };
 
 function Card({
   estilo, elemento, marca, texto, praQuem, meta, href, rotuloLink, breve, centro,
@@ -198,12 +200,37 @@ export default function Iniciativas() {
 
         <Grupo id="comunidade" titulo={{ pt: "Comunidade", en: "Community" }}
           sub={{ pt: "Quem faz o ecossistema acontecer.", en: "The people who make the ecosystem happen." }}>
-          <Card
-            marca={<img className="logo" src={logoVale} alt="Vale dos Ipês" style={{ maxHeight: 120 }} />}
-            texto={L("O ecossistema de inovação e empreendedorismo de Lavras, desde 2014: universidades, hubs, startups, empresas e comunidades.", "Lavras' innovation and entrepreneurship ecosystem since 2014: universities, hubs, startups, companies and communities.")}
-            praQuem={L("A porta de entrada para conhecer quem já empreende aqui.", "The way in to meet those already building businesses here.")}
-            rotuloLink={L("Site em breve", "Website coming soon")}
-          />
+          <div className="ini-dupla">
+            <Card
+              marca={<img className="logo" src={logoVale} alt="Vale dos Ipês" style={{ maxHeight: 120 }} />}
+              texto={L("O ecossistema de inovação e empreendedorismo de Lavras, desde 2014: universidades, hubs, startups, empresas e comunidades.", "Lavras' innovation and entrepreneurship ecosystem since 2014: universities, hubs, startups, companies and communities.")}
+              praQuem={L("A porta de entrada para conhecer quem já empreende aqui.", "The way in to meet those already building businesses here.")}
+              rotuloLink={L("Site em breve", "Website coming soon")}
+            />
+            <Card
+              estilo={tema(banca)}
+              elemento={
+                <svg className="el onda" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="banca-onda" x1="0" x2="1">
+                      <stop offset="0" stopColor="#6b2581" /><stop offset=".5" stopColor="#e66f11" /><stop offset="1" stopColor="#94b338" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 60 L0 44 C120 40 200 52 330 46 C470 40 520 18 640 22 C780 27 820 50 930 38 C1030 27 1080 8 1200 6 L1200 60Z" fill="url(#banca-onda)" />
+                </svg>
+              }
+              marca={
+                <>
+                  <img className="logo" src="/iniciativas/vale-dos-ipes-cor.webp" alt="Vale dos Ipês" style={{ maxHeight: 72 }} />
+                  <div className="logo-txt" style={{ marginTop: 12 }}>{L("Banca de\nIdeias", "Idea\nBench")}</div>
+                </>
+              }
+              texto={L("Simulador gratuito que testa uma ideia de negócio com centenas de pessoas simuladas antes de gastar com ela: quem gostaria, quem pagaria, quanto e por que diria não.", "A free simulator that tests a business idea with hundreds of simulated people before you spend money on it: who would like it, who would pay, how much and why they would say no.")}
+              praQuem={L("Empreendedores que chegam ao mercado com a ideia já testada e afiada.", "Entrepreneurs who reach the market with an idea already tested and sharpened.")}
+              meta={[L("Gratuito, sem cadastro", "Free, no sign-up"), L("Perfis calibrados com Sebrae e IBGE", "Profiles calibrated with Sebrae and IBGE data")]}
+              href="https://ideias.lvrs.com.br" rotuloLink="ideias.lvrs.com.br"
+            />
+          </div>
         </Grupo>
         <div style={{ height: 72 }} />
       </main>

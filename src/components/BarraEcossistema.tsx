@@ -55,6 +55,7 @@ const GRUPOS: { titulo: { pt: string; en: string }; itens: Item[] }[] = [
     itens: [
       { rotulo: { pt: "Prêmio Lavras de Inovação", en: "Lavras Innovation Award" }, href: "https://premio.lvrs.com.br" },
       { rotulo: { pt: "Vale dos Ipês", en: "Vale dos Ipês" }, href: null },
+      { rotulo: { pt: "Banca de Ideias", en: "Idea Bench" }, href: "https://ideias.lvrs.com.br" },
     ],
   },
 ];
